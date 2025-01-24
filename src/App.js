@@ -5,6 +5,12 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import StoreDetails from "./pages/store/StoreDetails";
 import InterestStores from "./pages/store/InterestStores";
+import MyPage from "./pages/user/MyPage";
+import MyReview from "./pages/user/MyReview";
+import MyFriend from "./pages/friend/MyFriend";
+import DeleteUser from "./pages/user/DeleteUser";
+import FriendInfo from "./pages/friend/FriendInfo";
+import StoreReviews from "./pages/store/StoreReviews";
 
 function App() {
   return (
@@ -16,6 +22,12 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/store/:storeId" element={<StoreDetails />} />
         <Route path="/interest" element={<InterestStores />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/review" element={<MyReview />} />
+        <Route path="/friends" element={<MyFriend />} />
+        <Route path="/delete-user" element={<DeleteUser />} />
+        <Route path="/friendsinfo" element={<FriendInfo />} />
+        <Route path="/store/:storeId/reviews" element={<StoreReviews />} />
       </Routes>
     </Router>
   );

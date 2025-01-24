@@ -2,7 +2,6 @@
   "name": "earlytable",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
   "dependencies": {
     "@react-native-community/cli": "latest",
     "@react-navigation/native": "^7.0.14",
@@ -20,6 +19,7 @@
     "react-native-web": "^0.19.13",
     "react-native-webview": "^13.13.1",
     "react-redux": "^9.2.0",
+    "react-router-dom": "^7.1.3",
     "react-scripts": "^5.0.1",
     "web-vitals": "^4.2.4"
   },

@@ -1,0 +1,134 @@
+/* 스크롤바 숨김 */
+.store-reviews::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* 가게 상세 정보 컨테이너 */
+  .store-reviews {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 400px;
+    height: 760px;
+    background-color: #fff;
+    overflow-y: auto; /* 위아래 스크롤 가능 */
+    scroll-behavior: smooth; /* 부드러운 스크롤 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 가게 이름 */
+  .store-reviews-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  /* 가게 이미지 */
+  .store-image-gallery {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .store-reviews-image {
+    width: 80%;
+    height: 250px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 가게 설명 */
+  .store-description {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+  }
+  
+  /* 가게 정보 섹션 */
+  .store-info {
+    padding-left: 20px;
+    font-size: 16px;
+    color: #333;
+    margin-top: 20px;
+    width: 90%;
+    background-color: #f9f9f9; /* 배경색을 밝은 회색으로 설정 */
+    border-radius: 8px; /* 모서리를 둥글게 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 효과 */
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .store-info p {
+    margin: 10px 0; /* 항목 간 간격을 넓혀 가독성을 높임 */
+    line-height: 1.6; /* 줄 간격을 넓혀 읽기 쉽게 */
+  }
+  
+  .store-info p span {
+    font-weight: bold;
+    color: #007bff; /* 항목명을 파란색으로 강조 */
+  }
+  
+  .store-info .store-info-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444; /* 제목의 색상을 조금 더 진하게 */
+    margin-bottom: 15px; /* 제목과 내용 간의 여백을 추가 */
+    text-align: left; /* 제목을 왼쪽 정렬 */
+  }
+  
+  .store-info .store-info-detail {
+    font-size: 14px;
+    color: #555; /* 내용은 조금 더 연한 색상으로 */
+    padding-left: 10px; /* 내용에 왼쪽 패딩을 추가해 들여쓰기 효과 */
+  }
+  
+  /* 가게 정보 항목 추가적인 스타일 */
+  .store-info .store-info-detail::before {
+    content: "•"; /* 항목 앞에 원형 점 추가 */
+    color: #007bff; /* 파란색 원형 점 */
+    padding-right: 5px; /* 점과 내용 간 간격을 추가 */
+  }
+  
+  /* 로딩 및 에러 메시지 스타일 */
+  .loading,
+  .error {
+    font-size: 18px;
+    color: #ff6347;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* 예약하기 버튼 */
+  .reserve-button-container {
+    text-align: center; /* 버튼을 중앙 정렬 */
+    width: 100%;
+  }
+  
+  .reserve-button {
+    font-size: 22px;
+    font-weight: bold;
+    background-color: #ff914d;
+    color: #fff;
+    border: none;
+    border-radius: 0px 0px 8px 8px;
+    cursor: pointer;
+    width: 100%;
+    height: 70px;
+  }
+  
+  .reserve-button:hover {
+    background-color: #0056b3;
+    color: white;
+  }
+  
