@@ -1,0 +1,22 @@
+footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff; /* 배경색을 흰색으로 변경 */
+  color: #007bff; /* 텍스트 색상 */
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1000;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+  border-top: 1px solid #ddd; /* 위쪽에 border 추가 */
+  border-radius: 0px 0px 8px 8px;
+}
+
+footer button {
+  background-color: transparent;
+  color: #007bff; /* 버튼 아이콘 색상 */
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}

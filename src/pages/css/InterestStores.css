@@ -1,0 +1,67 @@
+/* InterestStores.css */
+
+.interest-stores-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.interest-stores::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨김 */
+}
+
+.interest-stores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  height: 600px;
+  height: 760px;
+  width: 400px;
+  overflow-y: scroll; /* 위아래 스크롤 가능 */
+  scroll-behavior: smooth; /* 부드러운 스크롤 */
+}
+
+.interest-store-card {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0.2, 0.2, 0.3);
+}
+
+.interest-store-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.interest-store-details {
+  flex: 1;
+}
+
+.interest-store-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  height: 19px;
+  margin: 0px;
+}
+
+.interest-store-contents {
+  font-size: 14px;
+  color: #666;
+  height: 12px;
+}
+
+.interest-store-rating {
+  font-size: 14px;
+  color: #888;
+  height: 12px;
+}
