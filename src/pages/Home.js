@@ -33,7 +33,7 @@ const Home = () => {
     // 가게 정보 가져오기
     const fetchStores = async () => {
       const token = localStorage.getItem("accessToken");
-      if (!token) {
+      if (!token || token === undefined) {
         navigate("/login");
       } else {
         try {

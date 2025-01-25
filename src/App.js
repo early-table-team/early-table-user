@@ -11,6 +11,9 @@ import MyFriend from "./pages/friend/MyFriend";
 import DeleteUser from "./pages/user/DeleteUser";
 import FriendInfo from "./pages/friend/FriendInfo";
 import StoreReviews from "./pages/store/StoreReviews";
+import OrderList from "./pages/OrderList";
+import WaitingDetails from "./pages/waiting/WaitingDetail";
+import ReservationDetails from "./pages/reservation/ReservationDetail";
 
 function App() {
   return (
@@ -23,11 +26,17 @@ function App() {
         <Route path="/store/:storeId" element={<StoreDetails />} />
         <Route path="/interest" element={<InterestStores />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/orderlist" element={<OrderList />} />
         <Route path="/review" element={<MyReview />} />
         <Route path="/friends" element={<MyFriend />} />
         <Route path="/delete-user" element={<DeleteUser />} />
         <Route path="/friendsinfo" element={<FriendInfo />} />
         <Route path="/store/:storeId/reviews" element={<StoreReviews />} />
+        <Route path="/waiting/:waitingId" element={<WaitingDetails />} />
+        <Route
+          path="/reservation/:reservationId"
+          element={<ReservationDetails />}
+        />
       </Routes>
     </Router>
   );
