@@ -14,6 +14,7 @@ import StoreReviews from "./pages/store/StoreReviews";
 import OrderList from "./pages/OrderList";
 import WaitingDetails from "./pages/waiting/WaitingDetail";
 import ReservationDetails from "./pages/reservation/ReservationDetail";
+import Waiting from "./pages/waiting/Waiting";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/interest" element={<InterestStores />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/orderlist" element={<OrderList />} />
+        <Route path="/waiting" element={<Waiting />} />
         <Route path="/review" element={<MyReview />} />
         <Route path="/friends" element={<MyFriend />} />
         <Route path="/delete-user" element={<DeleteUser />} />
