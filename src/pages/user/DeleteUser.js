@@ -14,18 +14,28 @@ const DeleteUser = ({ onEdit }) => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
+      if (!password) {
+        alert("비밀번호를 입력하세요.");
+        return;
+      }
       try {
         // 유저 삭제 API 호출
         const response = await instance
           .delete("/users", {
-            password,
+            data:{password},
           })
           .catch((error) => {
             console.log(error);
           });
   
-        console.log("탈퇴 성공");
-        navigate("/home"); // 홈 페이지로 이동
+        if(response.status === 200) {
+          alert("탈퇴 성공");
+          localStorage.removeItem("accessToken");
+          navigate("/home"); // 홈 페이지로 이동
+        } else {
+          throw new Error("탈퇴 실패.");
+        }
+        
       } catch (error) {
         console.log(error);
         alert("탈퇴 실패!");
@@ -57,7 +67,7 @@ const DeleteUser = ({ onEdit }) => {
                       />
                       <h2 className="delete-user-title">Early Table</h2>
                       <input
-                        type="text"
+                        type="password"
                         placeholder="비밀번호"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}

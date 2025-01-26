@@ -4,7 +4,7 @@ export const fetchUserInfo = async () => {
 
   try {
     //JWT 토큰 가져오기
-    const token = localStorage.getItem("accessToken"); // 로컬스토리지에 저장
+    const token = localStorage.getItem("accessToken");
 
     const response = await axios.get("/users/mine", {
       headers : {
@@ -15,6 +15,25 @@ export const fetchUserInfo = async () => {
     return response.data; // 유저 정보 반환
   } catch (error) {
     console.error("Error fetching user info:", error);
+    throw error;
+  }
+};
+
+export const fetchUserReservationCount = async () => {
+
+  try {
+    //JWT 토큰 가져오기
+    const token = localStorage.getItem("accessToken");
+
+    const response = await axios.get("/users/count", {
+      headers : {
+        Authorization : `Bearer ${token}`,
+      },
+    }); 
+
+    return response.data; // 유저 정보 반환
+  } catch (error) {
+    console.error("Error fetching user reservation count info:", error);
     throw error;
   }
 };
