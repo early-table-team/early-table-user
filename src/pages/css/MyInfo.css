@@ -1,0 +1,72 @@
+/* 기본 레이아웃 설정 */
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.myinfo::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨김 */
+}
+
+.myinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  height: 760px;
+  width: 400px;
+  overflow-y: scroll; /* 위아래 스크롤 가능 */
+  scroll-behavior: smooth; /* 부드러운 스크롤 */
+}
+
+.info-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.info-contents {
+  font-size: 20px;
+  color: #333;
+  margin-left: 15px;
+  margin-bottom: 20px;
+}
+
+.img-container{
+  justify-content: center;
+  display: flex;
+  padding: 20px
+}
+
+.profile-image{
+  width: 200px;
+  height: 200px;
+  display: block;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+}
+.buttons {
+  padding: 8px;
+  background-color: white;
+  border-radius: 5px;
+  border-width: 1px;
+  color: #BDBDBD;
+  font-weight: bold;
+  border-color: #BDBDBD;
+  flex-shrink: 0;
+}
+
+/* Footer 스타일링 */
+.footer-container {
+  width: 100%;
+  border-top: 1px solid #ddd;
+}
