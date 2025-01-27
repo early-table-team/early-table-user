@@ -1,0 +1,192 @@
+/* 전체 컨테이너 */
+.reservation-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 400px;
+  height: 760px;
+  background-color: #fff;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 매장 이름 */
+.reservation-store-name {
+  width: 80%;
+  text-align: left;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* 매장 자세히보기 버튼 */
+.view-store-button {
+  width: 80%;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #ff914d;
+  border: 1px solid #ff914d;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 웨이팅 정보 섹션 */
+.reservation-info {
+  width: 80%;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.reservation-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reservation-info-row span {
+  margin: 4px 0;
+  line-height: 1.4;
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* 메뉴 정보 */
+.menu-info {
+  width: 80%;
+  margin-bottom: 20px;
+  min-height: 150px;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-info h3 {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 10px;
+  margin-top: 3px;
+}
+
+.menu-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-info li {
+  font-size: 16px;
+  color: #333;
+  margin: 5px 0;
+}
+
+/* 함께 방문해요 */
+.reservation-party-info {
+  width: 80%;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* 파티 인원 */
+.reservation-party-people {
+  width: 80%;
+  display: flex;
+  gap: 15px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+}
+
+.reservation-party-person {
+  display: inline-flex; /* inline-flex로 가로 정렬 */
+  flex-direction: column; /* 세로로 정렬 */
+  align-items: center;
+  height: fit-content;
+}
+
+.reservation-party-image {
+  width: 50px;
+  height: 50px; /* 고정된 높이 설정 */
+  border-radius: 50%; /* 원형 모양 */
+  object-fit: cover; /* 이미지를 고정 크기에 맞게 조정 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* 크기 줄어드는 현상 방지 */
+}
+
+.reservation-party-person p {
+  margin-top: 5px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+/* 현재 상태 표시 */
+.reservation-current-status {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #444;
+  text-align: center;
+}
+
+.reservation-invition-button {
+  width: 80%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.reservation-invition-button button {
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #444;
+  border: 1px solid #444;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+  padding: 4px;
+}
+
+.reservation-invition-button button:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+/* 버튼 섹션 */
+.reservation-action-buttons {
+  width: 80%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.reservation-action-buttons button {
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #ff914d;
+  border: 1px solid #ff914d;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.reservation-action-buttons button:hover {
+  background-color: #ff914d;
+  color: #fff;
+}

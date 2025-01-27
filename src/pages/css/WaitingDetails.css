@@ -1,0 +1,213 @@
+/* 스크롤바 숨김 */
+.waiting-details-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* 웨이팅 상세 정보 컨테이너 */
+.waiting-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 400px;
+  height: 760px;
+  background-color: #fff;
+  overflow-y: auto; /* 위아래 스크롤 가능 */
+  scroll-behavior: smooth; /* 부드러운 스크롤 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.waiting-store-name {
+  width: 80%;
+  text-align: left;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+/* 매장 자세히보기 버튼 */
+.view-store-button {
+  width: 80%;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #ff914d;
+  border: 1px solid #ff914d;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  padding: 4px;
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+}
+
+.view-store-button:hover {
+  background-color: #ff914d;
+  color: #fff;
+}
+
+/* 현재 상태 표시 */
+.current-status {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #444;
+  text-align: center;
+}
+
+.waiting-status-message {
+  font-size: 80px;
+  font-weight: bold;
+  color: #ff6347;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.unit {
+  font-size: 20px; /* 크기를 상황에 맞게 조정 */
+  font-weight: bold;
+  color: #333; /* "번" 텍스트 색상 */
+  margin-left: 10px; /* 숫자와의 간격 */
+  vertical-align: baseline; /* 수직 정렬 */
+}
+
+.time-message {
+  font-size: 18px;
+  color: #ff6347;
+  margin-bottom: 10px;
+}
+
+/* 웨이팅 정보 섹션 */
+.waiting-info {
+  width: 80%;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.waiting-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.waiting-info-row span {
+  margin: 4px 0;
+  line-height: 1.4;
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* 텍스트 왼쪽 정렬 */
+.party-info {
+  width: 80%;
+  text-align: left; /* 텍스트를 왼쪽 정렬 */
+  font-size: 16px; /* 필요한 경우 텍스트 크기 지정 */
+  color: #333; /* 텍스트 색상 */
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* 파티 인원 섹션 */
+.party-people {
+  width: 80%;
+  height: fit-content; /* 부모의 높이가 자식 요소에 따라 조정되도록 */
+  display: flex;
+  gap: 15px;
+  padding: 10px 0;
+  white-space: nowrap; /* 자식 요소 줄바꿈 방지 */
+}
+
+.party-people::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨기기 */
+}
+
+.party-person {
+  display: inline-flex; /* inline-flex로 가로 정렬 */
+  flex-direction: column; /* 세로로 정렬 */
+  align-items: center;
+  height: fit-content;
+}
+
+.party-image {
+  width: 50px;
+  height: 50px; /* 고정된 높이 설정 */
+  border-radius: 50%; /* 원형 모양 */
+  object-fit: cover; /* 이미지를 고정 크기에 맞게 조정 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* 크기 줄어드는 현상 방지 */
+}
+
+.party-person p {
+  margin-top: 5px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+.invition-button {
+  width: 80%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.invition-button button {
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #444;
+  border: 1px solid #444;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+  padding: 4px;
+}
+
+.invition-button button:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+/* 액션 버튼 섹션 */
+.action-buttons {
+  width: 80%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.action-buttons button {
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #ff914d;
+  border: 1px solid #ff914d;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.action-buttons button:hover {
+  background-color: #ff914d;
+  color: #fff;
+}
+
+/* 로딩 및 에러 메시지 스타일 */
+.loading,
+.error {
+  font-size: 18px;
+  color: #ff6347;
+  text-align: center;
+  margin-top: 20px;
+}
