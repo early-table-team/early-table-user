@@ -152,6 +152,7 @@ const FilterScreen = () => {
         },
       });
       console.log(response);
+      localStorage.setItem("searchResults", JSON.stringify(response.data));
     } catch (error) {
       console.error("검색 중 오류 발생:", error);
       alert("검색에 실패했습니다!");
@@ -332,7 +333,7 @@ const FilterScreen = () => {
         <input
           type="text"
           className="text-input"
-          value={selectedFilters.searchWord}
+          value={selectedFilters.searchWord || ""}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         />
