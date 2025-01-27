@@ -48,15 +48,13 @@ const MyInfo = () => {
       <div>
         {imageUrl ? (
           <img
-            src=""
+            src={user.imageUrl}
             alt="프로필 이미지"
-            className="profile-image"
           />
         ) : (
           <img
             src={require("../../assets/company-logo.png")}
             alt="기본 프로필 이미지"
-            className="profile-image"
           />)}
       </div>
     );
@@ -73,7 +71,9 @@ const MyInfo = () => {
           {/* 내 정보 섹션 */}
           <div className="categories-container">
             <div className="img-container">
-              <ProfileImage imageUrl={user.imgUrl}></ProfileImage>
+              <ProfileImage imageUrl={user.imageUrl}
+              className="profileImg"
+              ></ProfileImage>
             </div>
             <h2 className="info-title">닉네임</h2>
             <p className="info-contents">{user.nickname}</p>
