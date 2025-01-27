@@ -14,6 +14,7 @@ const MyFriend = () => {
   const [searchType, setSearchType] = useState("nickname"); // 드롭다운 선택 값
   const [searchValue, setSearchValue] = useState(""); // 검색창 입력 값
   const [userList, setUserList] = useState([]);  // 사용자 검색 결과 상태
+  const [activeTab, setActiveTab] = useState("friend");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -151,15 +152,30 @@ const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationS
           </div>
           <div className="myfriend-slide-div">
             <div className="tab-container">
-              <button onClick={() => setIsDiv1Visible(true)}>친구목록</button>
-              <button onClick={() => setIsDiv1Visible(false)}>친구요청</button>
+              <button 
+              className={activeTab === "friend" ? "active" : ""}
+              onClick={() => {
+                setActiveTab("friend");
+                setIsDiv1Visible(true);}
+              }>
+                친구목록
+              </button>
+              <button 
+              className={activeTab === "request" ? "active" : ""}
+              onClick={() => {
+                setActiveTab("request");
+                setIsDiv1Visible(false);}
+              }>
+                친구요청
+              </button>
             </div>
             <div>
               {isDiv1Visible ? (
                 <div className="myfriend-div-1">
-                  친구목록들...
+                  <div className="list-container">
                   {friendList.map((friend) => (
-                    <li key={friend.userId} className="friendlist">
+                    <div className="friend-list-item">
+                    <div key={friend.userId} className="friendlist">
                       <div className="little-profileimage">
                       <img
                         src={friend.profileImageUrl}
@@ -167,15 +183,23 @@ const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationS
                       />
                       </div>
                       <Link to={`/friends/users/${friend.userId}`}>{friend.nickName}</Link>
-                      <button onClick={() => handleButtonDeleteFriendClick(friend.userId)}>친구삭제</button>
-                    </li>
+                      <div className="myfriend-button-group">
+                      <button 
+                      className="myfriend-button"
+                      onClick={() => handleButtonDeleteFriendClick(friend.userId)}>친구삭제</button>
+                      </div>
+                    </div>
+                    </div>
                   ))}
                 </div>
+                </div>
+                
               ) : (
                 <div className="myfriend-div-2">
-                  친구요청들...
+                  <div className="list-container">
                   {friendRequestList.map((request) => (
-                    <li key={request.friendRequestId} className="requestlist">
+                    <div className="list-item">
+                    <div key={request.friendRequestId} className="requestlist">
                       <div className="little-profileimage">
                       <img
                         src={request.profileImageUrl}
@@ -183,10 +207,18 @@ const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationS
                       />
                       </div>
                       <Link to={`/friends/users/${request.sendUserId}`}>{request.sendUserNickname}</Link>
-                      <button onClick={() => handleButtonUpdateFriendRequestClick(request.friendRequestId, 'ACCEPTED')}>수락</button>
-                      <button onClick={() => handleButtonUpdateFriendRequestClick(request.friendRequestId, 'REJECTED')}>거절</button>
-                    </li>
+                      <div className="myfriend-button-group">
+                      <button 
+                      className="myfriend-button"
+                      onClick={() => handleButtonUpdateFriendRequestClick(request.friendRequestId, 'ACCEPTED')}>수락</button>
+                      <button 
+                      className="myfriend-button"
+                      onClick={() => handleButtonUpdateFriendRequestClick(request.friendRequestId, 'REJECTED')}>거절</button>
+                      </div>
+                    </div>
+                    </div>
                   ))}
+                </div>
                 </div>
               )}
               {isModalOpen && (
@@ -194,7 +226,7 @@ const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationS
                   <div className="modal-content">
                     <h2>유저찾기</h2>
                     <div className="modal-search">
-                      <select
+                      <select 
                         value={searchType}
                         onChange={(e) => setSearchType(e.target.value)}
                         className="search-criteria-dropdown"
@@ -209,12 +241,14 @@ const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationS
                         onChange={(e) => setSearchValue(e.target.value)}
                         className="search-user-input"
                       />
-                      <button onClick={handleSearch}>검색</button>
+                      <button 
+                      className="search-button"
+                      onClick={handleSearch}>검색</button>
                     </div>
                     <div className="modal-search-list">
                       {userList.length > 0 ? (
                         userList.map((user) => (
-                          <div key={user.id} className="search-result-item">
+                          <div key={user.id} className="friend-list-item">
                           <Link to={`/friends/users/${user.id}`}>
                           <div className="little-profileimage">
                             <img
@@ -224,24 +258,28 @@ const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationS
                           </div>
                             {user.nickname} ({user.phoneNumberBottom})
                             </Link>
-                            <button onClick={() => handleAddFriend(user.id)}>친구 요청</button>
+                            <button 
+                            className="myfriend-button"
+                            onClick={() => handleAddFriend(user.id)}>친구 요청</button>
                           </div>
                         ))
                       ) : (
                         <p>검색 결과가 없습니다.</p>
                       )}
                     </div>
-                    <button onClick={closeModal}>닫기</button>
+                    <button 
+                    className="search-button"
+                    onClick={closeModal}>닫기</button>
                   </div>
                 </div>
               )}
             </div>
-            <div>
+          </div>
+          <div className="friend-button-container">
               <button 
               className="plus-button" 
-              onClick={() => setIsModalOpen(true)}>플러스버튼</button>
+              onClick={() => setIsModalOpen(true)}>+</button>
             </div>
-          </div>
         </div>
         <div className="footer-container">
           <Footer />

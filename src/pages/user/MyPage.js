@@ -66,27 +66,28 @@ const MyPage = ({ onEdit }) => {
             <Header />
           </div>
         <div className="home">
-          <div className="mypage-div">
-            <h2 className="section-title">
+          <div className="mypage-top-div">
+            <h2 className="mypage-sub-header-container">
               <div className="little-profileimage">
                 <img
                   src={user.imageUrl}
                   alt="프로필 이미지"
                 />
               </div>
-              {user.nickname}님 
-              <button
+              <div>
+              {user.nickname}님 </div>
+              <button className="back-button"
                 onClick={() => navigate("/myinfo")}
               >▶</button>
             </h2> 
         
-            <div>
-              이용 예정 내역<br></br>
-              예약 : {userReservationCount.reservationCount} 건<br></br>
-              웨이팅 : {userReservationCount.waitingCount} 건<br></br>
-              <br></br>
+            <div className="mypage-list-item">
+              <h3>이용 예정 내역</h3>
+              예약 | {userReservationCount.reservationCount} 건<br></br>
+              웨이팅 | {userReservationCount.waitingCount} 건<br></br>
+              <br />
               <Link to ="/home">
-              <button>매장 둘러보기</button>
+              <button className="mypage-button">매장 둘러보기</button>
               </Link>
             </div>
           </div>  
@@ -104,21 +105,17 @@ const MyPage = ({ onEdit }) => {
               친구 관리
             </div><br></br>
             </Link>
-            <Link to="/party">
             <div onClick={onEdit} style={{ marginTop: "10px" }}>
               모임 관리
             </div>
-            </Link>
             <br></br>
             <br></br>
           </div>
           <div className="mypage-div">
             <h2 className="section-title">서비스 안내</h2>
-            <Link to="/notice">
             <div onClick={onEdit} style={{ marginTop: "10px" }}>
               공지사항
             </div>
-            </Link>
             <br></br>
             <br></br>
           </div>

@@ -98,7 +98,7 @@ const MyReview = () => {
             {reviews.length === 0 ? (
               <p>작성한 리뷰가 없습니다.</p>
             ) : (
-              <ul className="review-list-container">
+              <div className="review-list-container">
                 {reviews.map((review) => (
                   <li key={review.reviewId} className="review-list-item">
                     <p>가게 이름: {review.storeName}</p>
@@ -117,14 +117,17 @@ const MyReview = () => {
                     )}
                     <p>리뷰 내용: {review.reviewContents || "내용 없음"}</p>
                     <p>작성일: {new Date(review.createdAt).toLocaleDateString()}</p>
-                    <button
-                    onClick={() => handleButtonModifyClick(review)}>수정</button>
-                    <button
-                    onClick={() => handleButtonDeleteClick(review.reviewId)}>삭제</button>
-
+                    <div className="myreview-button-group">
+                      <button
+                      className="myreview-button"
+                      onClick={() => handleButtonModifyClick(review)}>수정</button>
+                      <button
+                      className="myreview-button"
+                      onClick={() => handleButtonDeleteClick(review.reviewId)}>삭제</button>
+                    </div>
                   </li>
                 ))}
-              </ul>
+              </div>
             )}
           </div>
         </div>
