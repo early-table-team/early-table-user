@@ -68,7 +68,10 @@ const MyPage = ({ onEdit }) => {
         <div className="home">
           <div className="mypage-div">
             <h2 className="section-title">
-              {user.nickname}님 <button>화살표버튼</button>
+              {user.nickname}님 
+              <button
+                onClick={() => navigate("/myinfo")}
+              >화살표버튼</button>
             </h2> 
         
             <div>

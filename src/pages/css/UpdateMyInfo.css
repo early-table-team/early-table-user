@@ -23,6 +23,10 @@
   scroll-behavior: smooth; /* 부드러운 스크롤 */
 }
 
+.register-preview-container{
+  background: white;
+}
+
 .inputs-container{
   display: flex;
   flex-direction: column; /* 세로로 정렬 */
