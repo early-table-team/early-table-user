@@ -1,112 +1,19 @@
-/* 기존 스타일 유지, 로그인 버튼과 회원가입 버튼 스타일 변경 */
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f2f5;
-  }
-  
-  .login-form-container {
-    background-color: #ff914d;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    height: 760px;
-    width: 400px;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .login-title {
-    font-family: Arial, sans-serif;
-    font-size: 48px;
-    margin-bottom: 5px;
-    height: 80px;
-    color: #ffffff;
-  }
-  
-  .login-image {
-    width: 220px;
-    height: auto;
-    margin: 0 auto 0px;
-    display: block;
-  }
-  
-  .login-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: 40px;
-  }
-  
-  .login-input {
-    margin-bottom: 15px;
-    padding: 10px;
-    margin-left: 50px;
-    margin-right: 50px;
-    font-size: 20px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-  }
-  
-  .login-button {
-    padding: 10px;
-    font-size: 22px;
-    font-weight: bold;
-    background-color: #ffffff;
-    color: #959494;
-    border: none;
-    cursor: pointer;
-    display: block;
-    border-radius: 10px;
-    width: 140px;
-  }
-  
-  .login-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .login-button-group {
-    margin-left: 50px;
-    margin-right: 50px;
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  
-  .login-link {
-    text-decoration: none;
-  }
-  
-  .login-secondary-button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #a9b0b6;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .login-secondary-button:hover {
-    background-color: #5a6268;
-  }
-  
-  .forgot-password {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #3c99fd;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center; /* 오른쪽 정렬 */
-  }
-  
-  .forgot-password:hover {
-    text-decoration: underline;
-  }
+.tab-container div {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  font-weight: bold;
+  color: #767574b0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.tab-container div.active {
+  color: #414141;
+  border-bottom: 2px solid #414141;
+}
 
   .myfriend-div-name {
     margin-left: 50px;
@@ -152,4 +59,23 @@
       opacity: 1;
       transform: scale(1);
     }
+  }
+
+  .friendlist {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .little-profileimage {
+    width: 20px;
+    display: flex;
+  }
+
+  .little-profileimage img {
+    width: 50px; /* 원하는 너비 */
+    height: 50px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지 비율 유지 */
+    border-radius: 50%; /* 동그랗게 표시 (선택 사항) */
   }

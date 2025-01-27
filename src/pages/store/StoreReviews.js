@@ -85,7 +85,7 @@ const StoreReviews = () => {
         </div>
 
         <div className="store-reviews">
-            <button>뒤로가기</button>
+            <button>◀</button>
           <h2 className="store-reviews-name">{storeName || "가게이름"}</h2>
 
           {/* 가게 이미지들 표시 */}

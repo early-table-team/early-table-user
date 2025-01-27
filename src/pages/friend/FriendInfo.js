@@ -46,6 +46,12 @@ const FriendInfo = () => {
                 유저 정보
             </div>
           <div className="friend-info-container">
+            <div className="little-profileimage">
+                <img
+                  src={friend.imageUrl}
+                  alt="프로필 이미지"
+                />
+            </div>
             <div>
                 <h2>닉네임</h2>
                 {friend.nickname}

@@ -54,7 +54,7 @@ const DeleteUser = ({ onEdit }) => {
         <div className="home">
             <div>
                 <Link to="/mypage">
-                <button>뒤로가기</button>
+                <button>◀</button>
                 </Link>
                  회원 탈퇴
             </div>
