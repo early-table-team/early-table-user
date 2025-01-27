@@ -32,7 +32,7 @@ function App() {
         <Route path="/review" element={<MyReview />} />
         <Route path="/friends" element={<MyFriend />} />
         <Route path="/delete-user" element={<DeleteUser />} />
-        <Route path="/friendsinfo" element={<FriendInfo />} />
+        <Route path="/friends/users/:userId" element={<FriendInfo />} />
         <Route path="/store/:storeId/reviews" element={<StoreReviews />} />
         <Route path="/waiting/:waitingId" element={<WaitingDetails />} />
         <Route

@@ -14,33 +14,33 @@ const StoreReviews = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      navigate("/login"); // 로그인 페이지로 리다이렉트
-      return;
-    }
+        const token = localStorage.getItem("accessToken");
+        if (!token) {
+        navigate("/login"); // 로그인 페이지로 리다이렉트
+        return;
+        }
 
-    const fetchData = async () => {
-      try {
-        const [reviewsResponse, statsResponse] = await Promise.all([
-          instance.get(`/stores/${storeId}/reviews`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          instance.get(`/stores/${storeId}/reviews/total`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
+        const fetchData = async () => { //리뷰 통계 가져오기
+        try {
+            const [reviewsResponse, statsResponse] = await Promise.all([
+            instance.get(`/stores/${storeId}/reviews`, {
+                headers: { Authorization: `Bearer ${token}` },
+            }),
+            instance.get(`/stores/${storeId}/reviews/total`, {
+                headers: { Authorization: `Bearer ${token}` },
+            }),
+            ]);
 
-        setStoreReviews(reviewsResponse.data); // 리뷰 데이터 저장
-        setStoreStats(statsResponse.data); // 통계 데이터 저장
-      } catch (err) {
-        setError("가게 정보를 가져오는 데 실패했습니다.");
-      } finally {
-        setLoading(false); // 로딩 완료
-      }
-    };
+            setStoreReviews(reviewsResponse.data); // 리뷰 데이터 저장
+            setStoreStats(statsResponse.data); // 통계 데이터 저장
+        } catch (err) {
+            setError("가게 정보를 가져오는 데 실패했습니다.");
+        } finally {
+            setLoading(false); // 로딩 완료
+        }
+        };
 
-    fetchData();
+        fetchData();
   }, [storeId, navigate]);
 
   if (loading) {
@@ -121,7 +121,20 @@ const StoreReviews = () => {
 
           {/* 리뷰 전체 리스트 */}
           <div className="store-reviews-list">
-            reviews..
+            {storeReviews.length === 0 ? (
+              <p>작성된 리뷰가 없습니다.</p>
+            ) : (
+              <ul>
+                {storeReviews.map((review) => (
+                  <li key={review.reviewId} className="review-item">
+                    <p>작성자 : {review.reviewerNickname}</p>
+                    <p>별점 : {review.rating}</p>
+                    <p>내용 : {review.reviewContents}</p>
+                    <p>작성일 : {new Date(review.createdAt).toLocaleDateString()}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 
