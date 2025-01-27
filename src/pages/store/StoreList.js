@@ -7,8 +7,8 @@ import { useLocation } from "react-router-dom";
 
 const StoreList = () => {
   const location = useLocation();
-  const { keyword } = location.state || {}; // 전달된 state를 가져옴
-  const [KeywordStores, setInterestStores] = useState([]);
+  const { keyword } = location.state; // 전달된 state를 가져옴
+  const [keywordStores, setInterestStores] = useState([]);
   const navigate = useNavigate(); // useNavigate 훅을 사용
 
   useEffect(() => {
@@ -17,14 +17,12 @@ const StoreList = () => {
 
       try {
         const response = await instance.get(
-          "/stores/search/keywords",
-          { keyword },
+          `/stores/search/keywords?keyword=${keyword}`,
           {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
-
-        setInterestStores(response.data.stores);
+        setInterestStores(response.data);
       } catch (error) {
         console.error("키워드 가게 목록을 가져오는 데 실패:", error);
       }
@@ -42,11 +40,11 @@ const StoreList = () => {
 
         <div className="interest-stores">
           <p className="section-title">{keyword}</p>
-          {KeywordStores.length > 0 ? (
-            KeywordStores.map((store) => (
+          {keywordStores.length > 0 ? (
+            keywordStores.map((store) => (
               <div key={store.storeId} className="interest-store-card">
                 <img
-                  src={store.storeImageUrl}
+                  src={store.imageUrl}
                   alt={store.storeName}
                   className="interest-store-image"
                 />
