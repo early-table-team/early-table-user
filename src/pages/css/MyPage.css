@@ -31,6 +31,35 @@
     margin-bottom: 30px;
   }
 
+  .mypage-top-div {
+    width: 85%;
+    text-align: center;
+  }
+
+  .mypage-sub-header-container {
+    display: flex; /*내부의 모든 div가 가로로 정렬*/
+    justify-content: space-between;
+    text-align: justify;
+    width: 95%;
+    margin: 10px 20px 20px 10px;
+  }
+
+  .mypage-list-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 0px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0.2, 0.3);
+    text-align: center;
+  }
+
+  .mypage-div {
+    text-align: left;
+    width: 85%;
+  }
+
   .mypage-button-group {
     margin-left: 50px;
     margin-right: 50px;
@@ -41,11 +70,13 @@
 
   .mypage-button {
     padding: 10px;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: bold;
     background-color: #ffffff;
     color: #959494;
-    border: none;
+    border: #bbbbbb;
+    border-style: solid;
+    border-width: 1px;
     cursor: pointer;
     display: block;
     border-radius: 10px;
@@ -53,7 +84,18 @@
   }
   
   .mypage-button:hover {
-    background-color: #0056b3;
+    background-color: #FF914D;
+  }
+
+  .list-type {
+    font-size: 14px;
+    font-weight: bold;
+    color: #565656;
+    background-color: #c2c1c1;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 10px;
   }
 
   

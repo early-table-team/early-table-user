@@ -39,13 +39,19 @@ const FriendInfo = () => {
             <Header />
           </div>
         <div className="home">
-            <div>
+            <div className="sub-header-container">
                 <Link to="/friends">
-                <button>뒤로가기</button>
+                <button className="back-button">◀</button>
                 </Link>
-                유저 정보
+                <div className="sub-header-text">유저 정보</div>
             </div>
           <div className="friend-info-container">
+            <div className="medium-profileimage">
+                <img
+                  src={friend.imageUrl}
+                  alt="프로필 이미지"
+                />
+            </div>
             <div>
                 <h2>닉네임</h2>
                 {friend.nickname}

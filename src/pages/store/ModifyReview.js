@@ -18,7 +18,7 @@ const ModifyReview = () => {
 
   const [rating, setRating] = useState(initialRating);
   const [reviewContent, setReviewContent] = useState(initialReviewContent);
-  const [fileUrlList, setFileUrlList] = useState(initialReviewImageList);
+  const [fileUrlList, setFileUrlList] = useState(initialReviewImageList || []);
   const [newReviewImageList, setNewReviewImageList] = useState([]);
 
   // 별점 선택 핸들러
