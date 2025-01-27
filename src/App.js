@@ -21,6 +21,7 @@ import Waiting from "./pages/waiting/Waiting";
 import WriteReview from "./pages/store/WriteReview";
 import StoreList from "./pages/store/StoreList";
 import ModifyReview from "./pages/store/ModifyReview";
+import SearchFilter from "./pages/SearchFilter";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           path="/reservation/:reservationId"
           element={<ReservationDetails />}
         />
+        <Route path="/filter" element={<SearchFilter />} />
       </Routes>
     </Router>
   );
