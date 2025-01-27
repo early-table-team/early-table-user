@@ -4,29 +4,33 @@ import axios from "../../api/axios";
 import Header from "../Header";
 import Footer from "../Footer";
 import "../css/MyPage.css";
-import { fetchUserInfo } from "./userService";
+import { fetchUserInfo, fetchUserReservationCount } from "./userService";
 //import "./css/Register.css"; /////수정//
 
 const MyPage = ({ onEdit }) => {
     const navigate = useNavigate(); // useNavigate 훅 초기화
 
     const [user, setUser] = useState(null); // 유저 정보를 저장할 상태
+    const [userReservationCount, setUserReservationCount] = useState(null);
         const [loading, setLoading] = useState(true); // 로딩 상태
         const [error, setError] = useState(null); // 에러 상태
 
         useEffect(() => {
-          const getUserInfo = async () => {
+          const fetchData = async () => {
             try {
-              const userData = await fetchUserInfo(); // API 호출
-              setUser(userData); // 유저 정보 저장
+              const userData = await fetchUserInfo();
+              setUser(userData);
+
+              const countData = await fetchUserReservationCount();
+              setUserReservationCount(countData);
             } catch (err) {
               setError("Failed to load user info.");
             } finally {
-              setLoading(false); // 로딩 종료
+              setLoading(false);
             }
           };
-      
-          getUserInfo();
+
+          fetchData();
         }, []); // 컴포넌트 마운트 시 한 번 실행
       
         if (loading) return <p>Loading...</p>; // 로딩 중일 때
@@ -46,6 +50,7 @@ const MyPage = ({ onEdit }) => {
                 Authorization: `Bearer ${token}`,
               },
             });
+            localStorage.removeItem("accessToken");
             alert("로그아웃 성공");
             navigate("/");
           } catch (error) {
@@ -66,7 +71,15 @@ const MyPage = ({ onEdit }) => {
               {user.nickname}님 <button>화살표버튼</button>
             </h2> 
         
-            <div>이용 예정인 내역이 없어요..</div>
+            <div>
+              이용 예정 내역<br></br>
+              예약 : {userReservationCount.reservationCount} 건<br></br>
+              웨이팅 : {userReservationCount.waitingCount} 건<br></br>
+              <br></br>
+              <Link to ="/home">
+              <button>매장 둘러보기</button>
+              </Link>
+            </div>
           </div>  
           <br></br>
           <br></br>

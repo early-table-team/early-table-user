@@ -27,7 +27,7 @@
 }
 
 /* 가게 이미지 */
-.store-image-gallery {
+.store-detail-image-gallery {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@
   margin-bottom: 20px;
 }
 
-.store-details-image {
+.store-detail-image {
   width: 80%;
   height: 250px;
   object-fit: cover;
@@ -44,59 +44,50 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 가게 설명 */
-.store-description {
-  font-size: 16px;
-  color: #666;
-  text-align: center;
-  margin-bottom: 20px;
-  line-height: 1.5;
-  letter-spacing: 0.5px;
+.store-contents-info-title {
+  width: 80%;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.store-contents-info-title span {
+  font-weight: bold;
+  background-color: #fff;
+  margin-bottom: 10px;
 }
 
 /* 가게 정보 섹션 */
-.store-info {
-  padding-left: 20px;
+.store-detail-info {
+  width: 80%;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.store-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.store-info-row span {
+  margin: 4px 0;
+  line-height: 1.4;
   font-size: 16px;
   color: #333;
-  margin-top: 20px;
-  width: 90%;
-  background-color: #f9f9f9; /* 배경색을 밝은 회색으로 설정 */
-  border-radius: 8px; /* 모서리를 둥글게 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 효과 */
-  display: flex;
-  flex-direction: column;
-}
-
-.store-info p {
-  margin: 10px 0; /* 항목 간 간격을 넓혀 가독성을 높임 */
-  line-height: 1.6; /* 줄 간격을 넓혀 읽기 쉽게 */
-}
-
-.store-info p span {
   font-weight: bold;
-  color: #007bff; /* 항목명을 파란색으로 강조 */
 }
 
-.store-info .store-info-title {
+.store-info-row p {
+  margin: 8px 0;
+  line-height: 1.4;
   font-size: 16px;
-  font-weight: bold;
-  color: #444; /* 제목의 색상을 조금 더 진하게 */
-  margin-bottom: 15px; /* 제목과 내용 간의 여백을 추가 */
-  text-align: left; /* 제목을 왼쪽 정렬 */
-}
-
-.store-info .store-info-detail {
-  font-size: 14px;
-  color: #555; /* 내용은 조금 더 연한 색상으로 */
-  padding-left: 10px; /* 내용에 왼쪽 패딩을 추가해 들여쓰기 효과 */
-}
-
-/* 가게 정보 항목 추가적인 스타일 */
-.store-info .store-info-detail::before {
-  content: "•"; /* 항목 앞에 원형 점 추가 */
-  color: #007bff; /* 파란색 원형 점 */
-  padding-right: 5px; /* 점과 내용 간 간격을 추가 */
+  color: #333;
+  word-wrap: break-word; /* 단어 단위로 줄바꿈 */
+  word-break: break-word; /* 필요시 단어를 자르면서 줄바꿈 */
+  white-space: normal; /* 텍스트 줄바꿈을 허용 */
 }
 
 /* 로딩 및 에러 메시지 스타일 */
@@ -108,13 +99,44 @@
   margin-top: 20px;
 }
 
+/* Store Header */
+.store-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+.store-detail-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  text-align: left;
+}
+
+.store-review-info {
+  font-size: 18px;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.store-review-info:hover {
+  color: #007bff;
+}
+
 /* 예약하기 버튼 */
 .reserve-button-container {
   text-align: center; /* 버튼을 중앙 정렬 */
   width: 100%;
 }
 
-.reserve-button {
+.store-detail-reserve-button {
   font-size: 22px;
   font-weight: bold;
   background-color: #ff914d;
@@ -126,7 +148,27 @@
   height: 70px;
 }
 
-.reserve-button:hover {
+.store-detail-reserve-button:hover {
   background-color: #0056b3;
   color: white;
+}
+
+/* 버튼 행 */
+.button-row {
+  display: flex;
+  justify-content: center;
+}
+
+/* Disabled button */
+.store-detail-reserve-button.disabled {
+  background-color: #d3d3d3;
+  color: #666;
+  cursor: not-allowed;
+  pointer-events: none; /* hover와 클릭 무력화 */
+}
+
+/* Disabled button 무효화: hover 효과 */
+.store-detail-reserve-button.disabled:hover {
+  background-color: #d3d3d3; /* hover 색상 변화 없음 */
+  color: #666;
 }
