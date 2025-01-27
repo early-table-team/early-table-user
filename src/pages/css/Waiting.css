@@ -1,0 +1,97 @@
+/* Waiting.css */
+
+.guest-count-title {
+  font-size: 18px;
+  font-weight: bold;
+  width: 70%;
+  text-align: center;
+  border: 1px dashed #ccc;
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+.guest-count-box {
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  text-align: center;
+}
+
+/* 예약 인원 컨테이너 */
+.guest-count-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.guest-count {
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* 증가/감소 버튼 */
+.guest-count-button-minus {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  font-weight: bold;
+  border: 0px;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  color: #ff914d;
+  margin-bottom: 6px;
+}
+
+/* 증가/감소 버튼 */
+.guest-count-button-plus {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  font-weight: bold;
+  border: 0px;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  color: #ff914d;
+  margin-bottom: 8px;
+}
+
+.guest-count-button:hover {
+  background-color: #e0e0e0;
+}
+
+.store-detail-reserve-button:hover {
+  background-color: #ff914d;
+  color: white;
+}
+
+.waiting-type-options {
+  display: flex;
+  gap: 10px;
+}
+
+.waiting-type-button {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+  color: #ff914d;
+}
+
+.waiting-type-button.selected {
+  background-color: #ff914d;
+  color: white;
+  border-color: #ff914d;
+}
+
+.waiting-type-button:hover {
+  background-color: #ff914d;
+  color: white;
+}

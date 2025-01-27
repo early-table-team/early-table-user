@@ -10,7 +10,7 @@ const StoreSlider = ({ stores, handleCardClick }) => (
         style={{ cursor: "pointer" }}
       >
         <img src={store.image} alt={store.name} className="store-image" />
-        <p className="store-name">{store.name}</p>
+        <p className="home-store-name">{store.name}</p>
       </div>
     ))}
   </div>

@@ -1,34 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import instance from "../../api/axios"; // axios 인스턴스
+import instance from "../../api/axios";
 import Header from "../Header";
 import "../css/StoreDetails.css";
 
 const StoreDetails = () => {
-  const [storeDetails, setStoreDetails] = useState(null); // 상태 변수
-  const [loading, setLoading] = useState(true); // 로딩 상태
-  const [error, setError] = useState(null); // 에러 상태
-  const { storeId } = useParams(); // URL 파라미터로 storeId 받기
+  const [storeDetails, setStoreDetails] = useState(null);
+  const [error, setError] = useState(null);
+  const { storeId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // JWT 토큰 확인
     const token = localStorage.getItem("accessToken");
     if (!token) {
-      navigate("/login"); // 로그인 페이지로 리다이렉트
+      navigate("/login");
     } else {
       const fetchStoreDetails = async () => {
         try {
           const response = await instance.get(`/stores/${storeId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`, // 토큰 포함
-            },
+            headers: { Authorization: `Bearer ${token}` },
           });
-          setStoreDetails(response.data); // 받은 데이터 상태에 저장
-          setLoading(false); // 로딩 완료
+          setStoreDetails(response.data);
         } catch (error) {
-          setError("가게 정보를 가져오는 데 실패했습니다."); // 에러 처리
-          setLoading(false); // 로딩 완료
+          setError("가게 정보를 가져오는 데 실패했습니다.");
         }
       };
 
@@ -36,22 +30,9 @@ const StoreDetails = () => {
     }
   }, [storeId, navigate]);
 
-  // 로딩 중일 때 표시할 내용
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
+  if (error) return <div>{error}</div>;
+  if (!storeDetails) return <div>가게 정보가 없습니다.</div>;
 
-  // 에러가 있을 때 표시할 내용
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  // 가게 정보가 없을 때 표시할 내용
-  if (!storeDetails) {
-    return <div>가게 정보가 없습니다.</div>;
-  }
-
-  // storeDetails에서 필요한 정보 추출
   const {
     storeName,
     storeTel,
@@ -60,58 +41,114 @@ const StoreDetails = () => {
     storeCategory,
     ownerName,
     storeImageUrlMap,
+    storeTypeList,
+    waitingTypeList,
     starPoint,
     reviewCount,
   } = storeDetails;
 
-  // 이미지 URL 순서대로 가져오기
   const imageUrls = Object.keys(storeImageUrlMap).map(
     (key) => storeImageUrlMap[key]
   );
 
-  const handleReserveClick = () => {
-    // 예약하기 버튼 클릭 시 예약 화면으로 이동 또는 기능 구현
-    navigate(`/reserve/${storeId}`);
-  };
-
   return (
     <div className="app">
       <div className="store-details-container">
-        <div className="header-container">
-          <Header />
-        </div>
-
+        <Header />
         <div className="store-details">
-          <h2 className="store-details-name">{storeName}</h2>
-
-          {/* 가게 이미지들 표시 */}
-          <div className="store-image-gallery">
+          {/* 가게 이름과 평점/리뷰 개수 */}
+          <div className="store-header">
+            <h2 className="store-detail-name">{storeName}</h2>
+            <div
+              className="store-review-info"
+              onClick={() =>
+                navigate(`/review`, { state: { storeId: storeId } })
+              }
+            >
+              <span>⭐ {starPoint}</span>
+              <span> 리뷰 {reviewCount}개 &gt;</span>
+            </div>
+          </div>
+          <div className="store-detail-image-gallery">
             {imageUrls.map((url, index) => (
               <img
                 key={index}
                 src={url}
                 alt={`store-image-${index}`}
-                className="store-details-image"
+                className="store-detail-image"
               />
             ))}
           </div>
-
-          <p className="store-description">{storeContents}</p>
-
-          <div className="store-info">
-            <p>전화번호: {storeTel}</p>
-            <p>주소: {storeAddress}</p>
-            <p>카테고리: {storeCategory}</p>
-            <p>사장님: {ownerName}</p>
-            <p>평점: {starPoint}</p>
-            <p>리뷰 수: {reviewCount}</p>
+          <div className="store-contents-info-title">
+            <span>가게 설명</span>
+            <p>{storeContents}</p>
+          </div>
+          <div className="store-detail-info">
+            <div className="store-info-row">
+              <span>전화번호</span>
+              <p>{storeTel}</p>
+            </div>
+            <div className="store-info-row">
+              <span>카테고리</span>
+              <p>{storeCategory}</p>
+            </div>
+            <div className="store-info-row">
+              <span>사장님</span>
+              <p> {ownerName}</p>
+            </div>
+            <div className="store-info-row">
+              <span>주소</span>
+            </div>
+            <div className="store-info-row">
+              <p>{storeAddress}</p>
+            </div>
           </div>
         </div>
-        {/* 예약하기 버튼 */}
-        <div className="reserve-button-container">
-          <button className="reserve-button" onClick={handleReserveClick}>
-            예약하기
-          </button>
+        {/* 버튼 렌더링 */}
+        <div>
+          {storeTypeList.includes("RESERVATION") && (
+            <button
+              className="store-detail-reserve-button"
+              onClick={() =>
+                navigate("/reservation", {
+                  state: {
+                    storeId: storeId,
+                    storeName: storeName,
+                    storeImageUrls: imageUrls,
+                    storeContents: storeContents,
+                  },
+                })
+              }
+            >
+              예약하기
+            </button>
+          )}
+          {storeTypeList.includes("REMOTE") && (
+            <button
+              className="store-detail-reserve-button"
+              onClick={() =>
+                navigate("/waiting", {
+                  state: {
+                    storeId: storeId,
+                    storeName: storeName,
+                    storeImageUrls: imageUrls,
+                    storeContents: storeContents,
+                    waitingTypeList: waitingTypeList,
+                  },
+                })
+              }
+            >
+              웨이팅하기
+            </button>
+          )}
+          {!storeTypeList.includes("RESERVATION") &&
+            !storeTypeList.includes("REMOTE") &&
+            (storeTypeList.length === 0 ||
+              storeTypeList.includes("ONSITE")) && (
+              <button className="store-detail-reserve-button disabled">
+                현장 이용
+              </button>
+            )}
         </div>
       </div>
     </div>
