@@ -11,6 +11,9 @@ import MyFriend from "./pages/friend/MyFriend";
 import DeleteUser from "./pages/user/DeleteUser";
 import FriendInfo from "./pages/friend/FriendInfo";
 import StoreReviews from "./pages/store/StoreReviews";
+import MyInfo from "./pages/user/MyInfo";
+import UpdatePassword from "./pages/user/UpdatePassword";
+import UpdateMyInfo from "./pages/user/UpdateMyInfo";
 import OrderList from "./pages/OrderList";
 import WaitingDetails from "./pages/waiting/WaitingDetail";
 import ReservationDetails from "./pages/reservation/ReservationDetail";
@@ -40,6 +43,9 @@ function App() {
         <Route path="/delete-user" element={<DeleteUser />} />
         <Route path="/friends/users/:userId" element={<FriendInfo />} />
         <Route path="/store/:storeId/reviews" element={<StoreReviews />} />
+        <Route path="/myinfo" element={<MyInfo />} />
+        <Route path="/myinfo/password" element={<UpdatePassword />} />
+        <Route path="/myinfo/info" element={<UpdateMyInfo />} />
         <Route path="/waiting/:waitingId" element={<WaitingDetails />} />
         <Route
           path="/reservation/:reservationId"

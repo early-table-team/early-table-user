@@ -40,7 +40,6 @@ const ModifyReview = () => {
   // 새로운 이미지 추가 핸들러
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
-    const newImages = files.map((file) => URL.createObjectURL(file));
     const newFileNames = files.map((file) => file.name);
 
     setNewReviewImageList((prev) => [...prev, ...files]);
