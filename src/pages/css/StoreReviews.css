@@ -55,12 +55,12 @@
   }
   
   /* 가게 정보 섹션 */
-  .store-info {
-    padding-left: 20px;
+  .store-review-info {
+    padding: 20px;
     font-size: 16px;
     color: #333;
     margin-top: 20px;
-    width: 90%;
+    width: 80%;
     background-color: #f9f9f9; /* 배경색을 밝은 회색으로 설정 */
     border-radius: 8px; /* 모서리를 둥글게 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 효과 */
@@ -69,17 +69,17 @@
     gap: 10px;
   }
   
-  .store-info p {
+  .store-review-info p {
     margin: 10px 0; /* 항목 간 간격을 넓혀 가독성을 높임 */
     line-height: 1.6; /* 줄 간격을 넓혀 읽기 쉽게 */
   }
   
-  .store-info p span {
+  .store-review-info p span {
     font-weight: bold;
     color: #007bff; /* 항목명을 파란색으로 강조 */
   }
   
-  .store-info .store-info-title {
+  .store-review-info .store-review-info-title {
     font-size: 16px;
     font-weight: bold;
     color: #444; /* 제목의 색상을 조금 더 진하게 */
@@ -87,17 +87,21 @@
     text-align: left; /* 제목을 왼쪽 정렬 */
   }
   
-  .store-info .store-info-detail {
+  .store-review-info .store-review-info-detail {
     font-size: 14px;
     color: #555; /* 내용은 조금 더 연한 색상으로 */
     padding-left: 10px; /* 내용에 왼쪽 패딩을 추가해 들여쓰기 효과 */
   }
   
   /* 가게 정보 항목 추가적인 스타일 */
-  .store-info .store-info-detail::before {
+  .store-review-info .store-review-info-detail::before {
     content: "•"; /* 항목 앞에 원형 점 추가 */
     color: #007bff; /* 파란색 원형 점 */
     padding-right: 5px; /* 점과 내용 간 간격을 추가 */
+  }
+
+  .store-review-star {
+    text-align: center;
   }
   
   /* 로딩 및 에러 메시지 스타일 */
@@ -131,4 +135,22 @@
     background-color: #0056b3;
     color: white;
   }
+
+  .store-reviews-list {
+    width: 85%;
+  }
   
+  .store-review-list-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 0px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0.2, 0.3);
+    margin: 12px 12px 12px;
+  }
+
+  .store-review-images{
+    width: 100%;
+  }
