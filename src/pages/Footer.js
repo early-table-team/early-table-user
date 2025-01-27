@@ -8,7 +8,7 @@ const Footer = () => {
       <Link to="/home" className="login-link">
         <button>🏠</button>
       </Link>
-      <Link to="/search" className="login-link">
+      <Link to="/filter" className="login-link">
         <button>🔍</button>
       </Link>
       <Link to="/orderlist" className="login-link">
