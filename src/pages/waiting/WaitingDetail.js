@@ -83,16 +83,22 @@ const WaitingDetails = () => {
 
   const handleCancel = async () => {
     await fetchWaitingCancel();
-    navigate("/orderlist");
+    navigate(-1);
   };
 
   const handleDefer = async () => {
     await fetchWaitinDelay();
-    navigate("/orderlist");
+    navigate(-1);
   };
 
   const handleReview = () => {
-    navigate(`/review/waiting/${waitingId}`);
+    navigate(`/review/write`, {
+      state: {
+        storeName: waitingDetails.storeName,
+        targetId: waitingId,
+        targetObject: "WAITING",
+      },
+    });
   };
 
   if (!waitingDetails) {
@@ -150,7 +156,7 @@ const WaitingDetails = () => {
               <span> {waitingDetails.personnelCount} 명</span>
             </div>
           </div>
-          <div class="party-info">
+          <div className="party-info">
             함께 방문해요!(
             {Object.keys(waitingDetails.partyPeople).length}/
             {waitingDetails.personnelCount}명)
