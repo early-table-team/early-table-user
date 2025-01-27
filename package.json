@@ -9,6 +9,7 @@
     "event-source-polyfill": "^1.0.31",
     "js-cookie": "^3.0.5",
     "react": "^18.3.1",
+    "react-beautiful-dnd": "^13.1.1",
     "react-cookie": "^7.2.2",
     "react-dom": "^18.3.1",
     "react-native": "latest",
