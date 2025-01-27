@@ -34,8 +34,15 @@ const ReservationDetails = () => {
   }
 
   const handleReview = () => {
-    navigate(`/review/reservation/${reservationId}`);
+    navigate(`/review/write`, {
+      state: {
+        storeName: reservationDetails.storeName,
+        targetId: reservationId,
+        targetObject: "RESERVATION",
+      },
+    });
   };
+
   const handleModify = (item) => {
     navigate(`/reservation/${reservationId}/change`);
   };
