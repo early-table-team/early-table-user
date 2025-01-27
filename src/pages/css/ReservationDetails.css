@@ -141,7 +141,7 @@
 }
 
 .reservation-invition-button {
-  width: 80%;
+  width: 70%;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -166,7 +166,7 @@
 
 /* 버튼 섹션 */
 .reservation-action-buttons {
-  width: 80%;
+  width: 100%;
   text-align: center;
   display: flex;
   justify-content: center;
