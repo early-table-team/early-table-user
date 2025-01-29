@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 import instance from "../../api/axios";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const StoreList = () => {
   const location = useLocation();

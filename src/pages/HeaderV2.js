@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // React Router 사용
 import { useSSE } from "../SSEProvider.js"; // SSE Context 사용
 import "./css/Header.css"; // CSS 파일 불러오기
-import logoImage from "../assets/company-logo.png"; // 로고 이미지 경로 설정
+import back from "../assets/preview.jpg"; // 로고 이미지 경로 설정
 
-const Header = () => {
+const HeaderV2 = () => {
   const navigate = useNavigate();
   const { messages } = useSSE(); // 전역 메시지 가져오기
   const [count, setCount] = useState(0);
@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <header>
       <div className="logo" onClick={() => navigate("/home")}>
-        <img src={logoImage} alt="Logo" style={{ height: "40px" }} />
+        <img src={back} alt="Logo" style={{ height: "28px" }} />
       </div>
       <div className="nav">
         <Link to="/interest" className="login-link">
@@ -37,4 +37,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderV2;
