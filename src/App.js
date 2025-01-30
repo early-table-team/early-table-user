@@ -23,9 +23,6 @@ import StoreList from "./pages/store/StoreList";
 import ModifyReview from "./pages/store/ModifyReview";
 import SearchFilter from "./pages/SearchFilter";
 import Reservation from "./pages/reservation/Reservation";
-import WriteReview from "./pages/store/WriteReview";
-import StoreList from "./pages/store/StoreList";
-import ModifyReview from "./pages/store/ModifyReview";
 
 function App() {
   return (

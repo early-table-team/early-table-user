@@ -176,7 +176,6 @@
   /* 선택된 버튼 색상 변경 */
   color: #ff914d;
   font-weight: bold;
-  cursor: not-allowed;
   border: 1px solid #ff914d;
   border-radius: 5px;
   flex: 0 0 auto;
