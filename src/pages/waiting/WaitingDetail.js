@@ -95,6 +95,7 @@ const WaitingDetails = () => {
     navigate(`/review/write`, {
       state: {
         storeName: waitingDetails.storeName,
+        storeId: waitingDetails.storeId,
         targetId: waitingId,
         targetObject: "WAITING",
       },

@@ -37,6 +37,7 @@ const ReservationDetails = () => {
     navigate(`/review/write`, {
       state: {
         storeName: reservationDetails.storeName,
+        storeId: reservationDetails.storeId,
         targetId: reservationId,
         targetObject: "RESERVATION",
       },
