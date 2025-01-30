@@ -5,7 +5,6 @@ import instance from "../../api/axios";
 import Header from "../Header";
 import Footer from "../Footer";
 //import { fetchUserInfo } from "../../services/userService";
-//import "./css/Register.css"; /////수정//
 
 const DeleteUser = ({ onEdit }) => {
     const navigate = useNavigate(); // useNavigate 훅 초기화
@@ -52,20 +51,15 @@ const DeleteUser = ({ onEdit }) => {
             <Header />
           </div>
         <div className="home">
-            <div>
-                <Link to="/mypage">
-                <button>뒤로가기</button>
-                </Link>
-                 회원 탈퇴
+            <div className="sub-header-container">
+              <div><Link to="/mypage">
+                <button className="back-button">◀</button>
+              </Link>
+              </div>
+              <div className="sub-header-text">회원 탈퇴</div>
             </div>
           <div className="deleteuser-container">
             <form onSubmit={handleSubmit} className="delete-user-form">
-                      <img
-                        src={require("../../assets/company-logo.png")}
-                        alt="Company Logo"
-                        className="login-image"
-                      />
-                      <h2 className="delete-user-title">Early Table</h2>
                       <input
                         type="password"
                         placeholder="비밀번호"
@@ -73,9 +67,8 @@ const DeleteUser = ({ onEdit }) => {
                         onChange={(e) => setPassword(e.target.value)}
                         className="delete-user-input"
                       />
-            
                       <div className="delete-user-button-group">
-                        <button type="submit" className="delete-user-button">
+                        <button type="submit" className="mypage-button">
                           회원탈퇴
                         </button>
                       </div>
