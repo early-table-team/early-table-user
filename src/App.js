@@ -18,6 +18,7 @@ import OrderList from "./pages/OrderList";
 import WaitingDetails from "./pages/waiting/WaitingDetail";
 import ReservationDetails from "./pages/reservation/ReservationDetail";
 import Waiting from "./pages/waiting/Waiting";
+import Reservation from "./pages/reservation/Reservation";
 import WriteReview from "./pages/store/WriteReview";
 import StoreList from "./pages/store/StoreList";
 import ModifyReview from "./pages/store/ModifyReview";
@@ -36,6 +37,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/orderlist" element={<OrderList />} />
         <Route path="/waiting" element={<Waiting />} />
+        <Route path="/reservation" element={<Reservation />} />
         <Route path="/review" element={<MyReview />} />
         <Route path="/review/write" element={<WriteReview />} />
         <Route path="/review/modify" element={<ModifyReview />} />
