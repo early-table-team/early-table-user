@@ -152,7 +152,7 @@ const ReservationDetails = () => {
             {reservationDetails.reservationStatus === "COMPLETED" && (
               <>
                 <button onClick={() => navigate(-1)}>목록</button>
-                {!reservationDetails.isExist && (
+                {!reservationDetails.exist && (
                   <>
                     <button onClick={handleReview}>리뷰 작성하기</button>
                   </>

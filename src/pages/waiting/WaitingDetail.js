@@ -204,7 +204,11 @@ const WaitingDetails = () => {
             {waitingDetails.waitingStatus === "COMPLETED" && (
               <>
                 <button onClick={() => navigate(-1)}>목록</button>
-                <button onClick={handleReview}>리뷰 작성하기</button>
+                {!waitingDetails.exist && (
+                  <>
+                    <button onClick={handleReview}>리뷰 작성하기</button>
+                  </>
+                )}
               </>
             )}
             {waitingDetails.waitingStatus === "CANCELED" && (
