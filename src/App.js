@@ -22,7 +22,7 @@ import Waiting from "./pages/waiting/Waiting";
 import WriteReview from "./pages/store/WriteReview";
 import StoreList from "./pages/store/StoreList";
 import ModifyReview from "./pages/store/ModifyReview";
-import SearchFilter from "./pages/SearchFilter"ㅋ
+import SearchFilter from "./pages/SearchFilter"
 import Reservation from "./pages/reservation/Reservation";
 import SearchResult from "./pages/store/SearchStoreList";
 import Notification from "./pages/Notification";
