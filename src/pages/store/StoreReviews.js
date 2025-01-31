@@ -14,33 +14,34 @@ const StoreReviews = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-        const token = localStorage.getItem("accessToken");
-        if (!token) {
-        navigate("/login"); // 로그인 페이지로 리다이렉트
-        return;
-        }
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      navigate("/login"); // 로그인 페이지로 리다이렉트
+      return;
+    }
 
-        const fetchData = async () => { //리뷰 통계 가져오기
-        try {
-            const [reviewsResponse, statsResponse] = await Promise.all([
-            instance.get(`/stores/${storeId}/reviews`, {
-                headers: { Authorization: `Bearer ${token}` },
-            }),
-            instance.get(`/stores/${storeId}/reviews/total`, {
-                headers: { Authorization: `Bearer ${token}` },
-            }),
-            ]);
+    const fetchData = async () => {
+      //리뷰 통계 가져오기
+      try {
+        const [reviewsResponse, statsResponse] = await Promise.all([
+          instance.get(`/stores/${storeId}/reviews`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          instance.get(`/stores/${storeId}/reviews/total`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ]);
 
-            setStoreReviews(reviewsResponse.data); // 리뷰 데이터 저장
-            setStoreStats(statsResponse.data); // 통계 데이터 저장
-        } catch (err) {
-            setError("가게 정보를 가져오는 데 실패했습니다.");
-        } finally {
-            setLoading(false); // 로딩 완료
-        }
-        };
+        setStoreReviews(reviewsResponse.data); // 리뷰 데이터 저장
+        setStoreStats(statsResponse.data); // 통계 데이터 저장
+      } catch (err) {
+        setError("가게 정보를 가져오는 데 실패했습니다.");
+      } finally {
+        setLoading(false); // 로딩 완료
+      }
+    };
 
-        fetchData();
+    fetchData();
   }, [storeId, navigate]);
 
   if (loading) {
@@ -87,7 +88,7 @@ const StoreReviews = () => {
         <div className="home">
           <div className="sub-header-container">
             <button className="back-button">◀</button>
-          <h2 className="sub-header-text">{storeName || "가게이름"}</h2>
+            <h2 className="sub-header-text">{storeName || "가게이름"}</h2>
           </div>
 
           {/* 가게 이미지들 표시 */}
@@ -106,19 +107,19 @@ const StoreReviews = () => {
             )}
           </div>
 
-            {/* 리뷰 통계 */}
+          {/* 리뷰 통계 */}
           <div className="store-review-info">
             <div className="store-review-star">
-                <h2>{storeStats.countTotal}개 리뷰 별점 평균</h2>
-                <h1>★</h1>
-                <h2>{storeStats.ratingAverage}</h2>
+              <h2>{countTotal}개 리뷰 별점 평균</h2>
+              <h1>★</h1>
+              <h2>{ratingAverage}</h2>
             </div>
             <div>
-                5점 : {storeStats.ratingStat5}개 <br></br>
-                4점 : {storeStats.ratingStat4}개 <br></br>
-                3점 : {storeStats.ratingStat3}개 <br></br>
-                2점 : {storeStats.ratingStat2}개 <br></br>
-                1점 : {storeStats.ratingStat1}개 <br></br>
+              5점 : {ratingStat5}개 <br></br>
+              4점 : {ratingStat4}개 <br></br>
+              3점 : {ratingStat3}개 <br></br>
+              2점 : {ratingStat2}개 <br></br>
+              1점 : {ratingStat1}개 <br></br>
             </div>
           </div>
 
@@ -134,14 +135,16 @@ const StoreReviews = () => {
                     <p>★ {review.rating}</p>
                     {review.reviewImageUrlMap && (
                       <div className="store-review-images">
-                        {Object.values(review.reviewImageUrlMap).map((url, index) => (
-                          <img
-                            key={index}
-                            src={url}
-                            alt={`리뷰 이미지 ${index + 1}`}
-                            className="review-image"
-                          />
-                        ))}
+                        {Object.values(review.reviewImageUrlMap).map(
+                          (url, index) => (
+                            <img
+                              key={index}
+                              src={url}
+                              alt={`리뷰 이미지 ${index + 1}`}
+                              className="review-image"
+                            />
+                          )
+                        )}
                       </div>
                     )}
                     <h4>{review.reviewContents}</h4>
@@ -152,7 +155,6 @@ const StoreReviews = () => {
             )}
           </div>
         </div>
-
 
         <div className="footer-container">
           <Footer />
