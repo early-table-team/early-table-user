@@ -324,88 +324,112 @@ const FilterScreen = () => {
     }
   };
   return (
-    <div className="container">
+    <div className="app">
       <div className="header-container">
         <Header />
       </div>
-
-      <div className="input-container">
-        <input
-          type="text"
-          className="text-input"
-          value={selectedFilters.searchWord || ""}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-        />
-      </div>
-
-      {/* 상단 필터 텍스트 */}
-      <div className="filters">
-        <div
-          className={activeIndex === 0 ? "active" : ""}
-          onClick={() => handleTextClick(0)} // 클릭 시 첫 번째 슬라이드로 이동
-        >
-          지역
+      <div className="container">
+        <div className="input-container">
+          <input
+            type="text"
+            className="text-input"
+            value={selectedFilters.searchWord || ""}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+          />
         </div>
-        <div
-          className={activeIndex === 1 ? "active" : ""}
-          onClick={() => handleTextClick(1)} // 클릭 시 두 번째 슬라이드로 이동
-        >
-          가격대
-        </div>
-        <div
-          className={activeIndex === 2 ? "active" : ""}
-          onClick={() => handleTextClick(2)} // 클릭 시 세 번째 슬라이드로 이동
-        >
-          카테고리
-        </div>
-        <div
-          className={activeIndex === 3 ? "active" : ""}
-          onClick={() => handleTextClick(3)} // 클릭 시 네 번째 슬라이드로 이동
-        >
-          알러지
-        </div>
-      </div>
 
-      {/* 슬라이드 필터 영역 */}
-      <Swiper
-        ref={swiperRef}
-        spaceBetween={10}
-        slidesPerView={1}
-        onSlideChange={handleSlideChange} // 슬라이드가 변경될 때마다 호출
-      >
-        {/* 지역 필터 */}
-        <SwiperSlide>
-          <div className="region-filter">
-            <div className="region-buttons">
-              {filters.regions.map((region, index) => (
-                <div key={index} className="region-container">
-                  <button
-                    className={`region-button ${
-                      selectedRegion === region.topRegion ? "selected" : ""
-                    }`}
-                    onClick={() => {
-                      handleRegionSelect(region.topRegion);
-                      const newExpandedRegion = region.topRegion;
-                      setExpandedRegion(newExpandedRegion);
-                    }}
-                  >
-                    {region.topRegion.split(" (")[1].slice(0, -1)}{" "}
-                    {/* 한국어 이름만 추출 */}
-                  </button>
-                </div>
-              ))}
-            </div>
+        {/* 상단 필터 텍스트 */}
+        <div className="filters">
+          <div
+            className={activeIndex === 0 ? "active" : ""}
+            onClick={() => handleTextClick(0)} // 클릭 시 첫 번째 슬라이드로 이동
+          >
+            지역
+          </div>
+          <div
+            className={activeIndex === 1 ? "active" : ""}
+            onClick={() => handleTextClick(1)} // 클릭 시 두 번째 슬라이드로 이동
+          >
+            가격대
+          </div>
+          <div
+            className={activeIndex === 2 ? "active" : ""}
+            onClick={() => handleTextClick(2)} // 클릭 시 세 번째 슬라이드로 이동
+          >
+            카테고리
+          </div>
+          <div
+            className={activeIndex === 3 ? "active" : ""}
+            onClick={() => handleTextClick(3)} // 클릭 시 네 번째 슬라이드로 이동
+          >
+            알러지
+          </div>
+        </div>
 
-            {/* 상위 지역을 클릭했을 때 새로운 영역에 하위 지역 버튼들이 표시됨 */}
-            {filters.regions.map((region, index) =>
-              expandedRegion === region.topRegion ? (
-                <div key={index} className="sub-region-section">
-                  <div className="sub-regions-wrapper">
-                    {Array.isArray(region.bottomRegions) ? (
-                      region.bottomRegions.length > 0 ? (
-                        <div className="sub-regions-container">
-                          {region.bottomRegions.map((subRegion, subIndex) => (
+        {/* 슬라이드 필터 영역 */}
+        <Swiper
+          ref={swiperRef}
+          spaceBetween={10}
+          slidesPerView={1}
+          onSlideChange={handleSlideChange} // 슬라이드가 변경될 때마다 호출
+        >
+          {/* 지역 필터 */}
+          <SwiperSlide>
+            <div className="region-filter">
+              <div className="region-buttons">
+                {filters.regions.map((region, index) => (
+                  <div key={index} className="region-container">
+                    <button
+                      className={`region-button ${
+                        selectedRegion === region.topRegion ? "selected" : ""
+                      }`}
+                      onClick={() => {
+                        handleRegionSelect(region.topRegion);
+                        const newExpandedRegion = region.topRegion;
+                        setExpandedRegion(newExpandedRegion);
+                      }}
+                    >
+                      {region.topRegion.split(" (")[1].slice(0, -1)}{" "}
+                      {/* 한국어 이름만 추출 */}
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* 상위 지역을 클릭했을 때 새로운 영역에 하위 지역 버튼들이 표시됨 */}
+              {filters.regions.map((region, index) =>
+                expandedRegion === region.topRegion ? (
+                  <div key={index} className="sub-region-section">
+                    <div className="sub-regions-wrapper">
+                      {Array.isArray(region.bottomRegions) ? (
+                        region.bottomRegions.length > 0 ? (
+                          <div className="sub-regions-container">
+                            {region.bottomRegions.map((subRegion, subIndex) => (
+                              <button
+                                key={subIndex}
+                                className="sub-region-button"
+                                onDoubleClick={() =>
+                                  handleBottomRegionDoubleClick(
+                                    region.topRegion,
+                                    subRegion
+                                  )
+                                }
+                              >
+                                {subRegion.split(" (")[1].slice(0, -1)}{" "}
+                                {/* 한국어 이름만 추출 */}
+                              </button>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="no-sub-regions">
+                            하위 지역이 없습니다
+                          </div>
+                        )
+                      ) : region.bottomRegions ? (
+                        region.bottomRegions
+                          .split(", ")
+                          .map((subRegion, subIndex) => (
                             <button
                               key={subIndex}
                               className="sub-region-button"
@@ -419,271 +443,250 @@ const FilterScreen = () => {
                               {subRegion.split(" (")[1].slice(0, -1)}{" "}
                               {/* 한국어 이름만 추출 */}
                             </button>
-                          ))}
-                        </div>
+                          ))
                       ) : (
                         <div className="no-sub-regions">
                           하위 지역이 없습니다
                         </div>
-                      )
-                    ) : region.bottomRegions ? (
-                      region.bottomRegions
-                        .split(", ")
-                        .map((subRegion, subIndex) => (
+                      )}
+                    </div>
+                  </div>
+                ) : null
+              )}
+            </div>
+          </SwiperSlide>
+
+          {/* 가격대 필터 */}
+          <SwiperSlide>
+            <div className="price-filter">
+              {/* 상단의 가격대 버튼들 */}
+              <div className="price-buttons">
+                <button
+                  className="price-button"
+                  onClick={() => handlePriceButtonClick(1)}
+                >
+                  1만원대
+                </button>
+                <button
+                  className="price-button"
+                  onClick={() => handlePriceButtonClick(3)}
+                >
+                  3만원대
+                </button>
+                <button
+                  className="price-button"
+                  onClick={() => handlePriceButtonClick(5)}
+                >
+                  5만원대
+                </button>
+                <button
+                  className="price-button"
+                  onClick={() => handlePriceButtonClick(10)}
+                >
+                  10만원 이상
+                </button>
+              </div>
+
+              {/* 가격 입력 필드 */}
+              <div className="custom-price">
+                <label>최소 가격</label>
+                <div className="input-container-min">
+                  <input
+                    type="text"
+                    value={customPrice.min}
+                    onChange={(e) => handleCustomPriceChange(e, "min")}
+                    onFocus={() => handleFocus("min")}
+                    min="0"
+                    pattern="\d*"
+                  />
+                  <span>만원</span>
+                </div>
+
+                <label>최대 가격</label>
+                <div className="input-container-max">
+                  <input
+                    type="text"
+                    value={customPrice.max}
+                    onChange={(e) => handleCustomPriceChange(e, "max")}
+                    onFocus={() => handleFocus("max")}
+                    min="0"
+                    pattern="\d*"
+                  />
+                  <span>만원</span>
+                </div>
+              </div>
+
+              {/* 설정하기 버튼 */}
+              <button className="set-filter-button" onClick={handleSetFilter}>
+                설정하기
+              </button>
+            </div>
+          </SwiperSlide>
+          {/* 카테고리 필터 */}
+          <SwiperSlide>
+            <div className="category-filter">
+              <div className="category-buttons">
+                {filters.storeCategories.map((category, index) => (
+                  <div key={index} className="category-container">
+                    <button
+                      className={`category-button ${
+                        selectedFilters.category === category.name
+                          ? "selected"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        handleFilterChange("category", category.name);
+                      }}
+                    >
+                      {category.name}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </SwiperSlide>
+
+          {/* 알러지 필터 */}
+          <SwiperSlide>
+            <div className="allergy-filter">
+              <div className="allergy-buttons">
+                {filters.allergyStuff.map((allergy, index) => (
+                  <div key={index} className="allergy-container">
+                    <button
+                      className={`allergy-button ${
+                        selectedAllergyCategory === allergy.Category
+                          ? "selected"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        handleAllergyCategorySelect(allergy.Category);
+                        const newExpandedAllergyCategory = allergy.Category;
+                        setExpandedAllergyCategory(newExpandedAllergyCategory);
+                      }}
+                    >
+                      {allergy.Category}
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* 알러지 카테고리를 클릭했을 때 하위 원재료 버튼들이 표시됨 */}
+              {filters.allergyStuff.map((allergy, index) =>
+                expandedAllergyCategory === allergy.Category ? (
+                  <div key={index} className="sub-allergy-section">
+                    <div className="allergy-substances-wrapper">
+                      {Array.isArray(allergy.Stuff) ? (
+                        allergy.Stuff.length > 0 ? (
+                          <div className="allergy-substances-container">
+                            {allergy.Stuff.map((stuff, stuffIndex) => (
+                              <button
+                                key={stuffIndex}
+                                className="substance-button"
+                                onDoubleClick={() =>
+                                  handleAllergyStuffDoubleClick(
+                                    allergy.Category,
+                                    stuff
+                                  )
+                                }
+                              >
+                                {stuff}
+                              </button>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="no-substances">
+                            알러지 원재료가 없습니다
+                          </div>
+                        )
+                      ) : allergy.Stuff ? (
+                        allergy.Stuff.split(", ").map((stuff, stuffIndex) => (
                           <button
-                            key={subIndex}
-                            className="sub-region-button"
+                            key={stuffIndex}
+                            className="substance-button"
                             onDoubleClick={() =>
-                              handleBottomRegionDoubleClick(
-                                region.topRegion,
-                                subRegion
+                              handleAllergyStuffDoubleClick(
+                                allergy.Category,
+                                stuff
                               )
                             }
                           >
-                            {subRegion.split(" (")[1].slice(0, -1)}{" "}
-                            {/* 한국어 이름만 추출 */}
+                            {stuff}
                           </button>
                         ))
-                    ) : (
-                      <div className="no-sub-regions">하위 지역이 없습니다</div>
-                    )}
-                  </div>
-                </div>
-              ) : null
-            )}
-          </div>
-        </SwiperSlide>
-
-        {/* 가격대 필터 */}
-        <SwiperSlide>
-          <div className="price-filter">
-            {/* 상단의 가격대 버튼들 */}
-            <div className="price-buttons">
-              <button
-                className="price-button"
-                onClick={() => handlePriceButtonClick(1)}
-              >
-                1만원대
-              </button>
-              <button
-                className="price-button"
-                onClick={() => handlePriceButtonClick(3)}
-              >
-                3만원대
-              </button>
-              <button
-                className="price-button"
-                onClick={() => handlePriceButtonClick(5)}
-              >
-                5만원대
-              </button>
-              <button
-                className="price-button"
-                onClick={() => handlePriceButtonClick(10)}
-              >
-                10만원 이상
-              </button>
-            </div>
-
-            {/* 가격 입력 필드 */}
-            <div className="custom-price">
-              <label>최소 가격</label>
-              <div className="input-container-min">
-                <input
-                  type="text"
-                  value={customPrice.min}
-                  onChange={(e) => handleCustomPriceChange(e, "min")}
-                  onFocus={() => handleFocus("min")}
-                  min="0"
-                  pattern="\d*"
-                />
-                <span>만원</span>
-              </div>
-
-              <label>최대 가격</label>
-              <div className="input-container-max">
-                <input
-                  type="text"
-                  value={customPrice.max}
-                  onChange={(e) => handleCustomPriceChange(e, "max")}
-                  onFocus={() => handleFocus("max")}
-                  min="0"
-                  pattern="\d*"
-                />
-                <span>만원</span>
-              </div>
-            </div>
-
-            {/* 설정하기 버튼 */}
-            <button className="set-filter-button" onClick={handleSetFilter}>
-              설정하기
-            </button>
-          </div>
-        </SwiperSlide>
-        {/* 카테고리 필터 */}
-        <SwiperSlide>
-          <div className="category-filter">
-            <div className="category-buttons">
-              {filters.storeCategories.map((category, index) => (
-                <div key={index} className="category-container">
-                  <button
-                    className={`category-button ${
-                      selectedFilters.category === category.name
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() => {
-                      handleFilterChange("category", category.name);
-                    }}
-                  >
-                    {category.name}
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        </SwiperSlide>
-
-        {/* 알러지 필터 */}
-        <SwiperSlide>
-          <div className="allergy-filter">
-            <div className="allergy-buttons">
-              {filters.allergyStuff.map((allergy, index) => (
-                <div key={index} className="allergy-container">
-                  <button
-                    className={`allergy-button ${
-                      selectedAllergyCategory === allergy.Category
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() => {
-                      handleAllergyCategorySelect(allergy.Category);
-                      const newExpandedAllergyCategory = allergy.Category;
-                      setExpandedAllergyCategory(newExpandedAllergyCategory);
-                    }}
-                  >
-                    {allergy.Category}
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            {/* 알러지 카테고리를 클릭했을 때 하위 원재료 버튼들이 표시됨 */}
-            {filters.allergyStuff.map((allergy, index) =>
-              expandedAllergyCategory === allergy.Category ? (
-                <div key={index} className="sub-allergy-section">
-                  <div className="allergy-substances-wrapper">
-                    {Array.isArray(allergy.Stuff) ? (
-                      allergy.Stuff.length > 0 ? (
-                        <div className="allergy-substances-container">
-                          {allergy.Stuff.map((stuff, stuffIndex) => (
-                            <button
-                              key={stuffIndex}
-                              className="substance-button"
-                              onDoubleClick={() =>
-                                handleAllergyStuffDoubleClick(
-                                  allergy.Category,
-                                  stuff
-                                )
-                              }
-                            >
-                              {stuff}
-                            </button>
-                          ))}
-                        </div>
                       ) : (
                         <div className="no-substances">
                           알러지 원재료가 없습니다
                         </div>
-                      )
-                    ) : allergy.Stuff ? (
-                      allergy.Stuff.split(", ").map((stuff, stuffIndex) => (
-                        <button
-                          key={stuffIndex}
-                          className="substance-button"
-                          onDoubleClick={() =>
-                            handleAllergyStuffDoubleClick(
-                              allergy.Category,
-                              stuff
-                            )
-                          }
-                        >
-                          {stuff}
-                        </button>
-                      ))
-                    ) : (
-                      <div className="no-substances">
-                        알러지 원재료가 없습니다
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
-                </div>
-              ) : null
-            )}
-          </div>
-        </SwiperSlide>
-      </Swiper>
-      {/* 하단 버튼 영역 */}
+                ) : null
+              )}
+            </div>
+          </SwiperSlide>
+        </Swiper>
+        {/* 하단 버튼 영역 */}
 
-      {/* 선택된 필터 버튼들이 나타날 공간 */}
-      <div className="selected-filters">
-        {Object.entries(selectedFilters).map(([key, value]) => {
-          if (key !== "searchWord" && value) {
-            if (key === "allergies" && Array.isArray(value)) {
-              // 알러지 배열을 개별 요소로 렌더링
-              return value.map((allergy, index) => (
-                <div key={`${key}-${index}`} className="filter-value-button">
-                  {`${allergy.category} - ${allergy.stuff}`}
-                  <button
-                    className="remove-filter-button"
-                    onClick={() =>
-                      handleAllergyStuffDoubleClick(
-                        allergy.category,
-                        allergy.stuff
-                      )
-                    }
-                  >
-                    ✖
-                  </button>
-                </div>
-              ));
-            } else if (typeof value === "string" && value.includes(" (")) {
-              // 지역 정보를 가진 경우, 한국어만 추출
-              const formattedValue = value
-                .split(" - ")
-                .map((regionPair) => {
-                  return regionPair.split(" (")[1].slice(0, -1); // 한국어 이름만 추출
-                })
-                .join(" - "); // 상위-하위 지역을 '-'로 연결
+        {/* 선택된 필터 버튼들이 나타날 공간 */}
+        <div className="selected-filters">
+          {Object.entries(selectedFilters).map(([key, value]) => {
+            if (key !== "searchWord" && value) {
+              if (key === "allergies" && Array.isArray(value)) {
+                // 알러지 배열을 개별 요소로 렌더링
+                return value.map((allergy, index) => (
+                  <div key={`${key}-${index}`} className="filter-value-button">
+                    {`${allergy.category} - ${allergy.stuff}`}
+                    <button
+                      className="remove-filter-button"
+                      onClick={() =>
+                        handleAllergyStuffDoubleClick(
+                          allergy.category,
+                          allergy.stuff
+                        )
+                      }
+                    >
+                      ✖
+                    </button>
+                  </div>
+                ));
+              } else if (typeof value === "string" && value.includes(" (")) {
+                // 지역 정보를 가진 경우, 한국어만 추출
+                const formattedValue = value
+                  .split(" - ")
+                  .map((regionPair) => {
+                    return regionPair.split(" (")[1].slice(0, -1); // 한국어 이름만 추출
+                  })
+                  .join(" - "); // 상위-하위 지역을 '-'로 연결
 
-              return (
-                <div key={key} className="filter-value-button">
-                  {formattedValue}
-                  <button
-                    className="remove-filter-button"
-                    onClick={() => handleFilterRemove(key)}
-                  >
-                    ✖
-                  </button>
-                </div>
-              );
-            } else {
-              // 지역 정보가 아닌 경우, 기존 value 그대로 사용
-              return (
-                <div key={key} className="filter-value-button">
-                  {value}
-                  <button
-                    className="remove-filter-button"
-                    onClick={() => handleFilterRemove(key)}
-                  >
-                    ✖
-                  </button>
-                </div>
-              );
+                return (
+                  <div key={key} className="filter-value-button">
+                    {formattedValue}
+                    <button
+                      className="remove-filter-button"
+                      onClick={() => handleFilterRemove(key)}
+                    >
+                      ✖
+                    </button>
+                  </div>
+                );
+              } else {
+                // 지역 정보가 아닌 경우, 기존 value 그대로 사용
+                return (
+                  <div key={key} className="filter-value-button">
+                    {value}
+                    <button
+                      className="remove-filter-button"
+                      onClick={() => handleFilterRemove(key)}
+                    >
+                      ✖
+                    </button>
+                  </div>
+                );
+              }
             }
-          }
-          return null;
-        })}
+            return null;
+          })}
+        </div>
       </div>
       <div className="buttons-container">
         <button className="filter-button" onClick={handleClose}>
