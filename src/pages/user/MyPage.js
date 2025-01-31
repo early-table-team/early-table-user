@@ -71,10 +71,19 @@ const MyPage = ({ onEdit }) => {
         <div className="home">
           <div className="mypage-top-div">
             <h2 className="mypage-sub-header-container">
-              <div className="little-profileimage">
-                <img src={user.imageUrl} alt="프로필 이미지" />
-              </div>
-              <div>{user.nickname}님 </div>
+              {user.imageUrl ? (
+                <img
+                  className="profile-img"
+                  src={user.imageUrl}
+                  alt="프로필 이미지"
+                />
+              ) : (
+                <img
+                  className="profile-img"
+                  src={require("../../assets/company-logo.png")}
+                  alt="기본 프로필 이미지"
+                />)}
+              <div className="nickname">{user.nickname} 님</div>
               <button
                 className="back-button"
                 onClick={() => navigate("/myinfo")}
@@ -97,29 +106,47 @@ const MyPage = ({ onEdit }) => {
           <br></br>
           <div className="mypage-div">
             <h2 className="section-title">이용 정보</h2>
-            <Link to="/review">
+            <Link to="/review" className="link-container">
+              <img
+                src={require("../../assets/icon-review.png")}
+              />
               <div onClick={onEdit} style={{ marginTop: "10px" }}>
-                내 리뷰 관리
+                내 리뷰
               </div>
               <br></br>
             </Link>
-            <Link to="/friends">
+            <Link to="/friends" className="link-container">
+              <img
+                src={require("../../assets/icon-person.png")}
+              />
               <div onClick={onEdit} style={{ marginTop: "10px" }}>
                 친구 관리
               </div>
               <br></br>
             </Link>
-            <div onClick={onEdit} style={{ marginTop: "10px" }}>
-              모임 관리
-            </div>
+            {/* <Link className="link-container">
+              <img
+                src={require("../../assets/icon-people.png")}
+              />
+              <div onClick={onEdit} style={{ marginTop: "10px" }}>
+                모임 관리
+              </div>
+            </Link> */}
             <br></br>
             <br></br>
           </div>
           <div className="mypage-div">
             <h2 className="section-title">서비스 안내</h2>
-            <div onClick={onEdit} style={{ marginTop: "10px" }}>
-              공지사항
-            </div>
+            <Link className="link-container">
+
+              <img
+                src={require("../../assets/icon-announce.png")}
+              />
+              <div onClick={onEdit} style={{ marginTop: "10px" }}>
+                공지사항
+              </div>
+            </Link>
+
             <br></br>
             <br></br>
           </div>
