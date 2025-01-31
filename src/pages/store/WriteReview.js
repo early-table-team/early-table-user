@@ -8,8 +8,7 @@ import "../css/WriteReview.css";
 const WriteReview = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { storeName, targetId, targetObject } = location.state;
-  const storeId = 1; // 서버에서 사용하는 storeId (예제용)
+  const { storeName, storeId, targetId, targetObject } = location.state;
 
   const [rating, setRating] = useState(0);
   const [reviewContent, setReviewContent] = useState("");

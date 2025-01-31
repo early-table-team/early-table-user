@@ -32,12 +32,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .store-detail-image {
-  width: 80%;
+  width: 100%;
   height: 250px;
+  object-position: center; /* 이미지의 중앙을 기준으로 잘라짐 */
   object-fit: cover;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -94,30 +94,37 @@
 .loading,
 .error {
   font-size: 18px;
-  color: #ff6347;
+  color: #ff914d;
   text-align: center;
   margin-top: 20px;
 }
 
 /* Store Header */
 .store-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 80%;
   padding: 0 10px;
-  margin-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .store-detail-name {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   color: #333;
   margin: 0;
   text-align: left;
 }
 
-.store-review-info {
+.store-view-count {
+  width: 90%;
+}
+.store-view-count p {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  text-align: right;
+  color: #ff914d;
+}
+
+.store-detail-review-info {
   font-size: 18px;
   color: #555;
   cursor: pointer;

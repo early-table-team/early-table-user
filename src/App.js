@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { SSEProvider } from "./SSEProvider";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -21,8 +22,11 @@ import Waiting from "./pages/waiting/Waiting";
 import WriteReview from "./pages/store/WriteReview";
 import StoreList from "./pages/store/StoreList";
 import ModifyReview from "./pages/store/ModifyReview";
-import SearchFilter from "./pages/SearchFilter";
+import SearchFilter from "./pages/SearchFilter"ㅋ
 import Reservation from "./pages/reservation/Reservation";
+import SearchResult from "./pages/store/SearchStoreList";
+import Notification from "./pages/Notification";
+
 
 function App() {
   return (
@@ -55,7 +59,10 @@ function App() {
           element={<ReservationDetails />}
         />
         <Route path="/filter" element={<SearchFilter />} />
-      </Routes>
+          <Route path="/searchResult" element={<SearchResult />} />
+        </Routes>
+      </SSEProvider>
+
     </Router>
   );
 }

@@ -11,6 +11,13 @@ const StoreSlider = ({ stores, handleCardClick }) => (
       >
         <img src={store.image} alt={store.name} className="store-image" />
         <p className="home-store-name">{store.name}</p>
+        <p className="home-store-start">
+          ⭐{store.starPoint}
+          {"("}
+          {store.reviewCount}
+          {")"}
+          {"  "} {store.category}
+        </p>
       </div>
     ))}
   </div>
