@@ -42,7 +42,7 @@ const MyReview = () => {
       }
     };
     fetchReviews();
-  }, []); // 컴포넌트 마운트 시 한 번 실행
+  }, [token]); // 컴포넌트 마운트 시 한 번 실행
 
   if (loading) return <p>Loading...</p>; // 로딩 중일 때
   if (error) return <p>리뷰 데이터를 불러오는 중 문제가 발생했습니다.</p>; // 에러가 발생했을 때
@@ -61,7 +61,9 @@ const MyReview = () => {
             내리뷰 관리
           </div>
           <div className="mypage-div">
-            <h2 className="section-title">내가 쓴 리뷰 총 {reviews.length}개</h2>
+            <h2 className="section-title">
+              내가 쓴 리뷰 총 {reviews.length}개
+            </h2>
           </div>
           <br />
           <br />
@@ -76,7 +78,23 @@ const MyReview = () => {
                     <h3>가게 이름: {review.storeName}</h3>
                     <p>평점: {review.rating} / 5</p>
                     <p>리뷰 내용: {review.reviewContents || "내용 없음"}</p>
-                    <p>작성일: {new Date(review.createdAt).toLocaleDateString()}</p>
+                    <p>
+                      작성일: {new Date(review.createdAt).toLocaleDateString()}
+                    </p>
+                    <Link
+                      to="/review/modify"
+                      state={{
+                        storeName: review.storeName,
+                        reviewId: review.reviewId,
+                        rating: review.rating,
+                        reviewContent: review.reviewContents,
+                        reviewImageList: Object.values(
+                          review.reviewImageUrlMap || {}
+                        ),
+                      }}
+                    >
+                      <button className="modify-button">수정하기</button>
+                    </Link>
                   </li>
                 ))}
               </ul>

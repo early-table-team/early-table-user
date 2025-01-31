@@ -18,7 +18,13 @@ const ModifyReview = () => {
 
   const [rating, setRating] = useState(initialRating);
   const [reviewContent, setReviewContent] = useState(initialReviewContent);
-  const [fileUrlList, setFileUrlList] = useState(initialReviewImageList);
+  const [fileUrlList, setFileUrlList] = useState(
+    Object.entries(initialReviewImageList || {}).map(([key, value]) => ({
+      id: key.toString(),
+      url: value,
+      name: value,
+    }))
+  );
   const [newReviewImageList, setNewReviewImageList] = useState([]);
 
   // 별점 선택 핸들러
@@ -28,22 +34,34 @@ const ModifyReview = () => {
   const handleContentChange = (e) => setReviewContent(e.target.value);
 
   // 기존 이미지 삭제 핸들러
-  const handleImageRemove = (indexToRemove) => {
-    setFileUrlList((prev) =>
-      prev.filter((_, index) => index !== indexToRemove)
-    );
-    setNewReviewImageList((prev) =>
-      prev.filter((_, index) => index !== indexToRemove)
-    );
+  const handleImageRemove = (idToRemove) => {
+    // fileUrlList에서 삭제
+    setFileUrlList((prev) => prev.filter(({ id }) => id !== idToRemove));
+
+    // newReviewImageList에서 삭제
+    setNewReviewImageList((prev) => {
+      const indexToRemove = fileUrlList.findIndex(
+        ({ id }) => id === idToRemove
+      );
+      if (indexToRemove !== -1) {
+        return prev.filter((_, index) => index !== indexToRemove);
+      }
+      return prev;
+    });
   };
 
   // 새로운 이미지 추가 핸들러
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
-    const newFileNames = files.map((file) => file.name);
+    const count = fileUrlList.length;
+    const newFiles = files.map((file, index) => ({
+      id: (count + index).toString(),
+      url: URL.createObjectURL(file),
+      name: file.name,
+    }));
 
     setNewReviewImageList((prev) => [...prev, ...files]);
-    setFileUrlList((prev) => [...prev, ...newFileNames]);
+    setFileUrlList((prev) => [...prev, ...newFiles]);
   };
 
   // 드래그 종료 핸들러
@@ -55,15 +73,6 @@ const ModifyReview = () => {
     reorderedFileUrlList.splice(result.destination.index, 0, movedItem);
 
     setFileUrlList(reorderedFileUrlList);
-
-    const reorderedNewReviewImageList = Array.from(newReviewImageList);
-    const [movedImage] = reorderedNewReviewImageList.splice(
-      result.source.index,
-      1
-    );
-    reorderedNewReviewImageList.splice(result.destination.index, 0, movedImage);
-
-    setNewReviewImageList(reorderedNewReviewImageList);
   };
 
   // 서버로 리뷰 수정 요청
@@ -77,10 +86,13 @@ const ModifyReview = () => {
       const formData = new FormData();
       formData.append("rating", rating);
       formData.append("reviewContent", reviewContent);
+
       newReviewImageList.forEach((file) =>
         formData.append("newReviewImageList", file)
       );
-      fileUrlList.forEach((url) => formData.append("fileUrlList", url));
+      fileUrlList.forEach(({ name }) => {
+        formData.append("fileUrlList", name);
+      });
 
       await instance.put(`/reviews/${reviewId}`, formData, {
         headers: {
@@ -148,25 +160,17 @@ const ModifyReview = () => {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  {fileUrlList.map((src, index) => (
-                    <Draggable
-                      key={index}
-                      draggableId={`${index}`}
-                      index={index}
-                    >
+                  {fileUrlList.map(({ id, url }, index) => (
+                    <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
                         <img
-                          src={
-                            src.startsWith("http")
-                              ? src
-                              : URL.createObjectURL(src)
-                          }
+                          src={url}
                           alt={`review-${index}`}
                           className="review-image-preview"
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          onClick={() => handleImageRemove(index)}
+                          onClick={() => handleImageRemove(id)}
                         />
                       )}
                     </Draggable>

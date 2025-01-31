@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Header from "../Header";
+import Header from "../HeaderV2";
 import Footer from "../Footer";
 import instance from "../../api/axios";
 import "../css/WaitingDetails.css";
@@ -95,6 +95,7 @@ const WaitingDetails = () => {
     navigate(`/review/write`, {
       state: {
         storeName: waitingDetails.storeName,
+        storeId: waitingDetails.storeId,
         targetId: waitingId,
         targetObject: "WAITING",
       },
@@ -203,7 +204,11 @@ const WaitingDetails = () => {
             {waitingDetails.waitingStatus === "COMPLETED" && (
               <>
                 <button onClick={() => navigate(-1)}>목록</button>
-                <button onClick={handleReview}>리뷰 작성하기</button>
+                {!waitingDetails.exist && (
+                  <>
+                    <button onClick={handleReview}>리뷰 작성하기</button>
+                  </>
+                )}
               </>
             )}
             {waitingDetails.waitingStatus === "CANCELED" && (

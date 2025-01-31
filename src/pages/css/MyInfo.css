@@ -36,26 +36,24 @@
   margin-bottom: 20px;
 }
 
-.img-container{
+.img-container {
   justify-content: center;
   display: flex;
-  padding: 20px
+  padding: 20px;
 }
 
 .buttons-container {
   display: flex;
   justify-content: center;
-  gap: 10px;
-
 }
 .buttons {
   padding: 8px;
   background-color: white;
   border-radius: 5px;
   border-width: 1px;
-  color: #BDBDBD;
+  color: #bdbdbd;
   font-weight: bold;
-  border-color: #BDBDBD;
+  border-color: #bdbdbd;
   flex-shrink: 0;
 }
 
