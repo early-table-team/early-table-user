@@ -8,13 +8,13 @@ const Waiting = () => {
   const location = useLocation();
   const storeInfo = { ...location.state };
   const navigate = useNavigate();
-  const [personnelCount, setPersonnelCount] = useState(1); // 기본 예약 인원 1명
+  const [personnelCount, setPersonnelCount] = useState(1); // 기본 웨이팅 인원 1명
   const [waitingType, setWaitingType] = useState(""); // 선택한 대기 타입
 
-  // 예약 인원 증가
+  // 대기 인원 증가
   const increaseGuestCount = () => setPersonnelCount((prev) => prev + 1);
 
-  // 예약 인원 감소 (최소값 1)
+  // 대기 인원 감소 (최소값 1)
   const decreaseGuestCount = () =>
     setPersonnelCount((prev) => Math.max(1, prev - 1));
 
@@ -31,7 +31,7 @@ const Waiting = () => {
     try {
       await instance.post(
         `/stores/${storeInfo.storeId}/waiting/online`,
-        { personnelCount, waitingType }, // 예약 인원과 대기 타입 전달
+        { personnelCount, waitingType }, // 대기 인원과 대기 타입 전달
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -72,9 +72,9 @@ const Waiting = () => {
             <p>{storeInfo.storeContents}</p>
           </div>
 
-          {/* 예약 인원 */}
+          {/* 대기 인원 */}
           <div className="guest-count-title">
-            <p>예약 인원</p>
+            <p>대기 인원</p>
             <div className="guest-count-box">
               <div className="guest-count-container">
                 <button
