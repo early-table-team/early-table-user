@@ -1,0 +1,26 @@
+.banner-container {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.banner-image {
+  width: 100%;
+  height: 240px; /* 원하는 높이로 조정 */
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* 화살표 숨기기 */
+.slick-prev,
+.slick-next {
+  display: none !important;
+}
+
+/* 도트 스타일 */
+.slick-dots li button:before {
+  color: #fff; /* 도트 색상 */
+}
+
+.slick-dots li.slick-active button:before {
+  color: #000; /* 활성화된 도트 색상 */
+}
