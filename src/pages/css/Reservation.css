@@ -1,0 +1,413 @@
+/* Waiting.css */
+
+.store-details {
+  margin-bottom: 0;
+  /* 부모 요소의 margin 제거 */
+  padding-bottom: 0;
+  position: relative; /* button-container의 기준점 */
+}
+
+/* 일시 및 인원 컨테이너 */
+.select1-container {
+  display: flex;
+  flex-direction: column;
+  /* 세로로 정렬 */
+  justify-content: center;
+  /* 세로 방향 중앙 정렬 */
+  align-items: center;
+  /* 수평 중앙 정렬 */
+  text-align: center;
+  /* 텍스트 중앙 정렬 */
+  max-width: 90%;
+  /* 부모 요소를 넘지 않도록 설정 */
+}
+
+.guest-count-title {
+  font-size: 18px;
+  font-weight: bold;
+  width: 70%;
+  text-align: center;
+  border: 1px dashed #ccc;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.guest-count-box {
+  display: flex;
+  justify-content: center;
+  /* 수평 중앙 정렬 */
+  align-items: center;
+  /* 수직 중앙 정렬 */
+  text-align: center;
+}
+
+
+
+/* 예약 인원 컨테이너 */
+.guest-count-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.guest-count {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* 증가/감소 버튼 */
+.guest-count-button {
+  width: 30px;
+  height: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  border: 0px;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  color: #ff914d;
+  margin-bottom: 2px
+}
+
+.guest-count-button:hover {
+  background-color: white;
+}
+
+.calendar-title {
+  font-size: 18px;
+  font-weight: bold;
+  width: 70%;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  max-width: 90%;
+  /* 부모 요소를 넘지 않도록 설정 */
+  min-width: 350px;
+  /* 캘린더가 줄어들지 않도록 최소 너비 설정 */
+}
+
+.month-header {
+  grid-column: span 7;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #007bff;
+}
+
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #555;
+  text-align: center;
+  /* 텍스트 중앙 정렬 */
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.calendar-day {
+  padding: 10px;
+  color: #ff914d;
+  border: 1px solid #ff914d;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: 0 0 auto;
+  /* 버튼 크기가 고정되도록 설정 */
+}
+
+.calendar-day.disabled {
+  background-color: white;
+  color: #ccc;
+  border: none;
+  cursor: not-allowed;
+}
+
+.calendar-day:hover:not(.disabled) {
+  background-color: #f0f0f0;
+}
+
+.calendar-day.selected {
+  background-color: #ff914d;
+  color: white;
+  font-weight: bold;
+}
+
+.selected-date-info {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  color: #333;
+  min-height: 30px;
+  /* 요소가 없어도 높이 유지 */
+  visibility: visible;
+  /* 기본적으로 표시 */
+}
+
+.selected-date-info.hidden {
+  visibility: hidden;
+  /* 숨기지만 공간은 유지 */
+}
+
+.reservation-times {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  white-space: nowrap;
+  max-width: 100%;
+  /* 부모 요소를 넘지 않도록 설정 */
+  margin-top: 20px;
+  scrollbar-width: none
+}
+
+.time-button {
+  padding: 8px 12px;
+  background-color: white;
+  /* 선택된 버튼 색상 변경 */
+  color: #ff914d;
+  font-weight: bold;
+  border: 1px solid #ff914d;
+  border-radius: 5px;
+  flex: 0 0 auto;
+  /* 버튼 크기가 고정되도록 설정 */
+}
+
+.time-button.selected {
+  padding: 8px 12px;
+  border: 1px solid;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #ff914d;
+  color: white;
+  flex: 0 0 auto;
+  /* 버튼 크기가 고정되도록 설정 */
+}
+
+.time-button.disabled {
+  background-color: #f9f9f9;
+  color: #ccc;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+}
+
+/* select2-container */
+.select2-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+/* 메뉴 제목 */
+.menu-title p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* 개별 메뉴 */
+.select2-container>div>div {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.select2-container>div>div>div {
+  background-color: white;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.select2-container>div>div>div>div {
+  background-color: white;
+  display: flex;
+  width: 100%;
+  height: max-content;
+  align-items: center;
+  flex-direction: row; /* 세로로 정렬 */
+  justify-content: space-between; /* 좌우 끝으로 배치 */
+}
+
+/* 메뉴 이름 */
+.select2-container .menu-title h4 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+/* 추천! 텍스트 */
+.select2-container .menu-title .recommended {
+  color: #ff914d;
+  background-color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: #ff914d 1px solid;
+  font-size: 14px;
+  height: 18px;
+  margin-left: 10px;
+  display: inline-block;
+}
+
+/* 메뉴 가격 */
+.select2-container .menu-title .price {
+  font-size: 17px;
+  color: #666;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* 수량 조정 버튼 컨테이너 */
+.quantity-container {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  /* 버튼을 여러 줄로 나누어 표시 */
+}
+
+/* 수량 조정 버튼 스타일 */
+.quantity-container button {
+  width: 30px;
+  height: 30px;
+  font-size: 29px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  color: #ff914d;
+  cursor: pointer;
+}
+
+
+/* 수량 표시 스타일 */
+.select2-container .menu-title .quantity-container span {
+  font-size: 21px;
+  font-weight: bold;
+  color: #333;
+}
+
+.select3-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  width: 90%;
+  margin: 0 30px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.select3-container > h4 {
+  color: #ff914d;
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0 auto;
+  display: block;
+  padding: 15px;
+}
+
+.select3-container > p {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.select3-container > span {
+  font-size: 20px;
+  margin-bottom: 5px;
+  background: white;
+  border: none;
+  padding: 5px;
+}
+
+.button-container {
+  bottom: 0;
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  z-index: 10;
+  /* 다른 요소보다 위에 배치 */
+}
+
+/* isSelect1Visible이 true일 때 (sticky 적용) */
+.button-container.sticky {
+  position: sticky;
+  bottom: 0;
+}
+
+/* isSelect1Visible이 false일 때 (absolute 적용) */
+.button-container.absolute {
+  position: absolute;
+  bottom: 0;
+}
+
+
+.prev-button {
+  padding: 10px 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: bold;
+  /* 글씨 두껍게 설정 */
+  transition: background-color 0.3s, color 0.3s;
+  color: #ff914d;
+}
+
+.next-button {
+  padding: 10px 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ff914d;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: bold;
+  /* 글씨 두껍게 설정 */
+  transition: background-color 0.3s, color 0.3s;
+  color: white;
+}
+
+
+.done-button {
+  width: 50%;
+  padding: 10px 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ff914d;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: bold;
+  /* 글씨 두껍게 설정 */
+  transition: background-color 0.3s, color 0.3s;
+  color: white;
+  /* 가운데 정렬 */
+  display: flex;
+  justify-content: center;  /* 수평 중앙 */
+  align-items: center;      /* 수직 중앙 */
+}

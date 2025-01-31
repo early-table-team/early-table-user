@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import instance from "../../api/axios";
-import Header from "../Header";
+import Header from "../HeaderV2";
 import Footer from "../Footer";
 import "../css/ReservationDetails.css";
 
@@ -37,6 +37,7 @@ const ReservationDetails = () => {
     navigate(`/review/write`, {
       state: {
         storeName: reservationDetails.storeName,
+        storeId: reservationDetails.storeId,
         targetId: reservationId,
         targetObject: "RESERVATION",
       },
@@ -151,7 +152,11 @@ const ReservationDetails = () => {
             {reservationDetails.reservationStatus === "COMPLETED" && (
               <>
                 <button onClick={() => navigate(-1)}>목록</button>
-                <button onClick={handleReview}>리뷰 작성하기</button>
+                {!reservationDetails.exist && (
+                  <>
+                    <button onClick={handleReview}>리뷰 작성하기</button>
+                  </>
+                )}
               </>
             )}
             {reservationDetails.reservationStatus === "CANCELED" && (

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import instance from "../../api/axios";
-import Header from "../Header";
+import Header from "../HeaderV2";
+import { useSSE } from "../../SSEProvider.js"; // SSE Context 사용
 import "../css/StoreDetails.css";
 
 const StoreDetails = () => {
   const [storeDetails, setStoreDetails] = useState(null);
   const [error, setError] = useState(null);
+  const [currentViewers, setCurrentViewers] = useState(0); // 실시간 조회자 수
   const { storeId } = useParams();
+  const { messages } = useSSE(); // 전역 메시지 가져오기
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,8 +30,53 @@ const StoreDetails = () => {
       };
 
       fetchStoreDetails();
+
+      // 입장 시 API 호출
+      const startView = async () => {
+        try {
+          await instance.post(
+            `/stores/${storeId}/view/start`,
+            {},
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+        } catch (error) {
+          console.error("입장 시 API 호출 실패", error);
+        }
+      };
+
+      startView();
+
+      // cleanup 시 퇴장 API 호출
+      return () => {
+        const stopView = async () => {
+          try {
+            await instance.post(
+              `/stores/${storeId}/view/stop`,
+              {},
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
+          } catch (error) {
+            console.error("퇴장 시 API 호출 실패", error);
+          }
+        };
+
+        stopView();
+      };
     }
   }, [storeId, navigate]);
+
+  // "STORE_VIEW" 메시지 처리
+  useEffect(() => {
+    messages.forEach((message) => {
+      if (message.type === "STORE_VIEW" && message.data) {
+        setCurrentViewers(message.data); // 실시간 조회자 수 업데이트
+      }
+    });
+  }, [messages, storeId]);
 
   if (error) return <div>{error}</div>;
   if (!storeDetails) return <div>가게 정보가 없습니다.</div>;
@@ -43,8 +91,8 @@ const StoreDetails = () => {
     storeImageUrlMap,
     storeTypeList,
     waitingTypeList,
-    starPoint,
-    reviewCount,
+    starPoint = 0, // 기본값 설정
+    reviewCount = 0, // 기본값 설정
   } = storeDetails;
 
   const imageUrls = Object.keys(storeImageUrlMap).map(
@@ -56,19 +104,6 @@ const StoreDetails = () => {
       <div className="store-details-container">
         <Header />
         <div className="store-details">
-          {/* 가게 이름과 평점/리뷰 개수 */}
-          <div className="store-header">
-            <h2 className="store-detail-name">{storeName}</h2>
-            <div
-              className="store-review-info"
-              onClick={() =>
-                navigate(`/review`, { state: { storeId: storeId } })
-              }
-            >
-              <span>⭐ {starPoint}</span>
-              <span> 리뷰 {reviewCount}개 &gt;</span>
-            </div>
-          </div>
           <div className="store-detail-image-gallery">
             {imageUrls.map((url, index) => (
               <img
@@ -78,6 +113,19 @@ const StoreDetails = () => {
                 className="store-detail-image"
               />
             ))}
+          </div>
+          <div className="store-view-count">
+            <p>지금 {currentViewers}명이 보고 있어요</p>
+          </div>
+          <div className="store-header">
+            <h2 className="store-detail-name">{storeName}</h2>
+            <div
+              className="store-detail-review-info"
+              onClick={() => navigate(`/store/${storeId}/reviews`)}
+            >
+              <span>⭐ {starPoint}</span>
+              <span> 리뷰 {reviewCount}개 &gt;</span>
+            </div>
           </div>
           <div className="store-contents-info-title">
             <span>가게 설명</span>
@@ -104,7 +152,6 @@ const StoreDetails = () => {
             </div>
           </div>
         </div>
-        {/* 버튼 렌더링 */}
         <div>
           {storeTypeList.includes("RESERVATION") && (
             <button
