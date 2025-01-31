@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 30px;
   background-color: #ffffff;
   height: 760px;
   width: 400px;
@@ -24,13 +24,13 @@
 }
 
 .info-title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   color: #333;
 }
 
 .info-contents {
-  font-size: 20px;
+  font-size: 18px;
   color: #333;
   margin-left: 15px;
   margin-bottom: 20px;
@@ -39,13 +39,15 @@
 .img-container {
   justify-content: center;
   display: flex;
-  padding: 20px;
+  padding: 10px;
 }
 
 .buttons-container {
   display: flex;
   justify-content: center;
+  max-width: 100%;
 }
+
 .buttons {
   padding: 8px;
   background-color: white;
@@ -55,6 +57,7 @@
   font-weight: bold;
   border-color: #bdbdbd;
   flex-shrink: 0;
+  max-width: 40%;
 }
 
 /* Footer 스타일링 */
