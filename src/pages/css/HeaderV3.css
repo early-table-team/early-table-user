@@ -1,0 +1,38 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff; /* 배경을 흰색으로 변경 */
+  color: #000000; /* 텍스트 색상을 검정으로 변경 */
+  width: 100%;
+  height: 60px; /* 높이를 약간 키움 */
+  z-index: 1000;
+  border-bottom: 1px solid #ddd; /* 하단에 border 추가 */
+  border-radius: 8px 8px 0px 0px;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  margin-left: 10px;
+}
+
+header .nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+header .nav button {
+  background-color: transparent;
+  color: #000000; /* 버튼 아이콘 색상 변경 */
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 10px;
+}

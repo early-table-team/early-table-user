@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
-import Header from "../Header";
+import Header from "../HeaderV3";
 import Footer from "../Footer";
 import "../css/MyFriend.css";
 import { fetchFriendList, fetchFriendRequestList, deleteFriend, updateFriendRequest } from "./friendService";
@@ -63,7 +63,7 @@ const MyFriend = () => {
       alert("로그인이 필요합니다.");
       return;
     }
-  
+
     try {
       const response = await axios.post(
         "/friends/request",  // 엔드포인트
@@ -74,7 +74,7 @@ const MyFriend = () => {
           },
         }
       );
-      
+
       // 성공적으로 친구 요청이 전송되었을 때
       console.log(response.data);
       alert("친구 요청 전송에 성공하였습니다.");
@@ -98,41 +98,41 @@ const MyFriend = () => {
 
   const handleButtonDeleteFriendClick = async (userId) => {
     try {
-        await deleteFriend(userId);
-        alert("친구삭제 성공");
-        setFriendList(friendList.filter((friend) => friend.userId !== userId)); // 삭제된 친구 제거
-      } catch (error) {
-        alert("친구삭제 실패");
-      }
-};
-
-const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationStatus) => {
-  try {
-    await updateFriendRequest(friendRequestId, invitationStatus);
-    alert(`친구요청 ${invitationStatus === 'ACCEPTED' ? '수락' : '거절'} 성공`);
-
-    // 친구 요청을 수락한 경우
-    if (invitationStatus === 'ACCEPTED') {
-      // 친구 요청 수락 후 친구 목록 갱신
-      const acceptedRequest = friendRequestList.find(
-        (request) => request.friendRequestId === friendRequestId
-      );
-
-      // 친구 목록에 추가
-      if (acceptedRequest) {
-        setFriendList((prevList) => [
-          ...prevList,
-          { userId: acceptedRequest.sendUserId, nickName: acceptedRequest.sendUserNickname },
-        ]);
-      }
+      await deleteFriend(userId);
+      alert("친구삭제 성공");
+      setFriendList(friendList.filter((friend) => friend.userId !== userId)); // 삭제된 친구 제거
+    } catch (error) {
+      alert("친구삭제 실패");
     }
+  };
 
-    // 친구 요청 목록에서 해당 요청 제거
-    setFriendRequestList(friendRequestList.filter((request) => request.friendRequestId !== friendRequestId));
-  } catch (error) {
-    alert(`친구요청 ${invitationStatus === 'ACCEPTED' ? '수락' : '거절'} 실패`);
-  }
-};
+  const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationStatus) => {
+    try {
+      await updateFriendRequest(friendRequestId, invitationStatus);
+      alert(`친구요청 ${invitationStatus === 'ACCEPTED' ? '수락' : '거절'} 성공`);
+
+      // 친구 요청을 수락한 경우
+      if (invitationStatus === 'ACCEPTED') {
+        // 친구 요청 수락 후 친구 목록 갱신
+        const acceptedRequest = friendRequestList.find(
+          (request) => request.friendRequestId === friendRequestId
+        );
+
+        // 친구 목록에 추가
+        if (acceptedRequest) {
+          setFriendList((prevList) => [
+            ...prevList,
+            { userId: acceptedRequest.sendUserId, nickName: acceptedRequest.sendUserNickname },
+          ]);
+        }
+      }
+
+      // 친구 요청 목록에서 해당 요청 제거
+      setFriendRequestList(friendRequestList.filter((request) => request.friendRequestId !== friendRequestId));
+    } catch (error) {
+      alert(`친구요청 ${invitationStatus === 'ACCEPTED' ? '수락' : '거절'} 실패`);
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -141,84 +141,104 @@ const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationS
     <div className="app">
       <div className="home-container">
         <div className="header-container">
-          <Header />
+          <Header navText="친구 관리" navLink="/mypage" />
         </div>
         <div className="home">
           <div className="sub-header-container">
             <Link to="/mypage">
-              <button className = "back-button">◀</button>
+              <button className="back-button">◀</button>
             </Link>
-            <div className="sub-header-text">친구 관리</div>
           </div>
           <div className="myfriend-slide-div">
             <div className="tab-container">
-              <button 
-              className={activeTab === "friend" ? "active" : ""}
-              onClick={() => {
-                setActiveTab("friend");
-                setIsDiv1Visible(true);}
-              }>
+              <button
+                className={activeTab === "friend" ? "active" : ""}
+                onClick={() => {
+                  setActiveTab("friend");
+                  setIsDiv1Visible(true);
+                }
+                }>
                 친구목록
               </button>
-              <button 
-              className={activeTab === "request" ? "active" : ""}
-              onClick={() => {
-                setActiveTab("request");
-                setIsDiv1Visible(false);}
-              }>
+              <button
+                className={activeTab === "request" ? "active" : ""}
+                onClick={() => {
+                  setActiveTab("request");
+                  setIsDiv1Visible(false);
+                }
+                }>
                 친구요청
               </button>
             </div>
             <div>
               {isDiv1Visible ? (
+                // 친구 목록 
                 <div className="myfriend-div-1">
                   <div className="list-container">
-                  {friendList.map((friend) => (
-                    <div className="friend-list-item">
-                    <div key={friend.userId} className="friendlist">
-                      <div className="little-profileimage">
-                      <img
-                        src={friend.profileImageUrl}
-                        alt="프로필 이미지"
-                      />
+                    {friendList.map((friend) => (
+                      <div className="friend-list-item">
+                        <div key={friend.userId} className="friendlist">
+                          <Link to={`/friends/users/${friend.userId}`} className="link-container">
+                            <div className="little-profileimage">
+                              {friend.profileImageUrl ? (
+                                <img
+                                  src={friend.profileImageUrl}
+                                  alt="프로필 이미지"
+                                />
+                              ) : (
+                                <img
+                                  src={require("../../assets/company-logo.png")}
+                                  alt="기본 프로필 이미지"
+                                />)}
+                            </div>
+                            <p className="friend-info">{friend.nickName}</p>
+                          </Link>
+                          <div className="myfriend-button-group">
+                            <button
+                              className="myfriend-button"
+                              onClick={() => handleButtonDeleteFriendClick(friend.userId)}>
+                              친구삭제
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      <Link to={`/friends/users/${friend.userId}`}>{friend.nickName}</Link>
-                      <div className="myfriend-button-group">
-                      <button 
-                      className="myfriend-button"
-                      onClick={() => handleButtonDeleteFriendClick(friend.userId)}>친구삭제</button>
-                      </div>
-                    </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-                </div>
-                
               ) : (
+                // 친구 요청
                 <div className="myfriend-div-2">
                   <div className="list-container">
-                  {friendRequestList.map((request) => (
-                    <div className="list-item">
-                    <div key={request.friendRequestId} className="requestlist">
-                      <div className="little-profileimage">
-                      <img
-                        src={request.profileImageUrl}
-                        alt="프로필 이미지"
-                      />
+                    {friendRequestList.map((request) => (
+                      <div className="friend-list-item">
+                        <div key={request.friendRequestId} className="friendlist">
+                          <Link to={`/friends/users/${request.sendUserId}`} className="link-container">
+                            <div className="little-profileimage">
+                              {request.profileImageUrl ? (
+                                <img
+                                  src={request.profileImageUrl}
+                                  alt="프로필 이미지"
+                                />
+                              ) : (
+                                <img
+                                  src={require("../../assets/company-logo.png")}
+                                  alt="기본 프로필 이미지"
+                                />)}
+                            </div>
+                           <p className="friend-info">{request.sendUserNickname}</p>
+                          </Link>
+                          <div className="myfriend-button-group">
+                            <button
+                              className="myfriend-button"
+                              onClick={() => handleButtonUpdateFriendRequestClick(request.friendRequestId, 'ACCEPTED')}>수락</button>
+                            <button
+                              className="myfriend-button"
+                              onClick={() => handleButtonUpdateFriendRequestClick(request.friendRequestId, 'REJECTED')}>거절</button>
+                          </div>
+                        </div>
                       </div>
-                      <Link to={`/friends/users/${request.sendUserId}`}>{request.sendUserNickname}</Link>
-                      <div className="myfriend-button-group">
-                      <button 
-                      className="myfriend-button"
-                      onClick={() => handleButtonUpdateFriendRequestClick(request.friendRequestId, 'ACCEPTED')}>수락</button>
-                      <button 
-                      className="myfriend-button"
-                      onClick={() => handleButtonUpdateFriendRequestClick(request.friendRequestId, 'REJECTED')}>거절</button>
-                      </div>
-                    </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
                 </div>
               )}
               {isModalOpen && (
@@ -226,7 +246,7 @@ const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationS
                   <div className="modal-content">
                     <h2>유저찾기</h2>
                     <div className="modal-search">
-                      <select 
+                      <select
                         value={searchType}
                         onChange={(e) => setSearchType(e.target.value)}
                         className="search-criteria-dropdown"
@@ -241,45 +261,51 @@ const handleButtonUpdateFriendRequestClick = async (friendRequestId, invitationS
                         onChange={(e) => setSearchValue(e.target.value)}
                         className="search-user-input"
                       />
-                      <button 
-                      className="search-button"
-                      onClick={handleSearch}>검색</button>
+                      <button
+                        className="search-button"
+                        onClick={handleSearch}>검색</button>
                     </div>
                     <div className="modal-search-list">
                       {userList.length > 0 ? (
                         userList.map((user) => (
-                          <div key={user.id} className="friend-list-item">
-                          <Link to={`/friends/users/${user.id}`}>
-                          <div className="little-profileimage">
-                            <img
-                              src={user.profileImageUrl}
-                              alt="프로필 이미지"
-                            />
-                          </div>
-                            {user.nickname} ({user.phoneNumberBottom})
+                          <div key={user.id} className="search-list-item">
+                            <Link to={`/friends/users/${user.id}`}>
+                              <div className="little-profileimage">
+                                {user.profileImageUrl ? (
+                                  <img
+                                    src={user.profileImageUrl}
+                                    alt="프로필 이미지"
+                                  />
+                                ) : (
+                                  <img
+                                    src={require("../../assets/company-logo.png")}
+                                    alt="기본 프로필 이미지"
+                                  />)}
+                              </div>
+                              <p>{user.nickname} ({user.phoneNumberBottom})</p>
                             </Link>
-                            <button 
-                            className="myfriend-button"
-                            onClick={() => handleAddFriend(user.id)}>친구 요청</button>
+                            <button
+                              className="myfriend-button"
+                              onClick={() => handleAddFriend(user.id)}>친구 요청</button>
                           </div>
                         ))
                       ) : (
                         <p>검색 결과가 없습니다.</p>
                       )}
                     </div>
-                    <button 
-                    className="search-button"
-                    onClick={closeModal}>닫기</button>
+                    <button
+                      className="search-button"
+                      onClick={closeModal}>닫기</button>
                   </div>
                 </div>
               )}
             </div>
           </div>
           <div className="friend-button-container">
-              <button 
-              className="plus-button" 
+            <button
+              className="plus-button"
               onClick={() => setIsModalOpen(true)}>+</button>
-            </div>
+          </div>
         </div>
         <div className="footer-container">
           <Footer />
