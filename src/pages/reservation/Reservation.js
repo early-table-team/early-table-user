@@ -210,14 +210,16 @@ const Reservation = () => {
       if (menus === null) {
         getMenuList();
       }
+      
+    } else if (isSelect1Visible) {
+      alert("예약 일시를 선택해주세요.")
+      
     } else if (isSelect2Visible && selectedDate && reservationTimes && quantities.reduce((sum, count) => sum + count, 0) != 0) {
-      updateMenuList();
+      // updateMenuList();
       setReservation();
-
-
-      setSelect1Visible(false);
-      setSelect2Visible(false);
-      setSelect3Visible(true);
+    } else if (isSelect2Visible) {
+      alert("메뉴는 한 가지 이상 선택해야합니다.")
+      
     }
   };
 
@@ -249,26 +251,20 @@ const Reservation = () => {
     }
   };
 
-  const updateMenuList = () => {
-    const menuList = menus
-      .map((menu, index) => ({
-        menuId: menu.menuId,
-        menuCount: quantities[index] || 0, // 수량이 없으면 기본값 0
-      }))
-      .filter(item => item.menuCount > 0); // 수량이 0인 항목 제거
-
-    setForm(prevForm => ({
-      ...prevForm,
-      menuList: menuList
-    }));
-  };
 
   const setReservation = async () => {
+    const menuList = menus
+    .map((menu, index) => ({
+      menuId: menu.menuId,
+      menuCount: quantities[index] || 0, // 수량이 없으면 기본값 0
+    }))
+    .filter(item => item.menuCount > 0); // 수량이 0인 항목 제거
 
+    console.log(menuList);
     const requestData = {
       personnelCount: form.personnelCount,
       reservationDate: form.reservationDate,
-      menuList: form.menuList,
+      menuList: menuList,
     };
 
 
@@ -284,6 +280,11 @@ const Reservation = () => {
       );
 
       console.log(response.data);
+
+
+      setSelect1Visible(false);
+      setSelect2Visible(false);
+      setSelect3Visible(true);
 
     } catch (error) {
       console.error("예약 실패:", error);
