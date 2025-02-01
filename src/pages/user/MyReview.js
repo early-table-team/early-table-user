@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import instance from "../../api/axios";
-import Header from "../Header";
+import Header from "../HeaderV3";
 import Footer from "../Footer";
-import "../css/MyPage.css";
+import "../css/MyReviews.css";
 import { fetchStoreInfo } from "../store/storeService";
 
 const MyReview = () => {
@@ -51,50 +51,46 @@ const MyReview = () => {
     <div className="app">
       <div className="home-container">
         <div className="header-container">
-          <Header />
+          <Header navText="내 리뷰" navLink="/mypage"/>
         </div>
         <div className="home">
-          <div>
-            <Link to="/mypage">
-              <button>뒤로가기</button>
-            </Link>
-            내리뷰 관리
-          </div>
           <div className="mypage-div">
             <h2 className="section-title">
               내가 쓴 리뷰 총 {reviews.length}개
             </h2>
           </div>
-          <br />
-          <br />
           <div className="myreview-div">
-            <h2>내가 쓴 리뷰</h2>
             {reviews.length === 0 ? (
-              <p>작성한 리뷰가 없습니다.</p>
+              <p>
+                <br />
+                <br />
+                작성한 리뷰가 없습니다.</p>
             ) : (
-              <ul>
+              <ul className="reviews-container">
                 {reviews.map((review) => (
                   <li key={review.reviewId} className="review-item">
-                    <h3>가게 이름: {review.storeName}</h3>
-                    <p>평점: {review.rating} / 5</p>
-                    <p>리뷰 내용: {review.reviewContents || "내용 없음"}</p>
-                    <p>
-                      작성일: {new Date(review.createdAt).toLocaleDateString()}
-                    </p>
+                    <div className="review-info">
+                      <h3>{review.storeName}</h3>
+                      <p>평점: {Array.from({ length: review.rating }, (_, i) => "⭐").join("")}</p>
+                      <p>리뷰 내용: {review.reviewContents || "내용 없음"}</p>
+                      <p>
+                        작성일: {new Date(review.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
                     <Link
-                      to="/review/modify"
-                      state={{
-                        storeName: review.storeName,
-                        reviewId: review.reviewId,
-                        rating: review.rating,
-                        reviewContent: review.reviewContents,
-                        reviewImageList: Object.values(
-                          review.reviewImageUrlMap || {}
-                        ),
-                      }}
-                    >
-                      <button className="modify-button">수정하기</button>
-                    </Link>
+                    className="modify-button"
+                        to="/review/modify"
+                        state={{
+                          storeName: review.storeName,
+                          reviewId: review.reviewId,
+                          rating: review.rating,
+                          reviewContent: review.reviewContents,
+                          reviewImageList: Object.values(
+                            review.reviewImageUrlMap || {}
+                          ),
+                        }}
+                      >수정하기</Link>
+                    
                   </li>
                 ))}
               </ul>

@@ -170,11 +170,18 @@ const WaitingDetails = () => {
                 onClick={() => navigate(`/user/${person.userId}`)}
                 style={{ cursor: "pointer" }}
               >
-                <img
-                  src={person.userImage}
-                  alt={person.userName}
-                  className="party-image"
-                />
+                {person.userImage ? (
+                  <img
+                    className="party-image"
+                    src={person.userImage}
+                    alt="프로필 이미지"
+                  />
+                ) : (
+                  <img
+                    className="party-image"
+                    src={require("../../assets/company-logo.png")}
+                    alt="기본 프로필 이미지"
+                  />)}
                 <p>{person.userName}</p>
               </div>
             ))}
