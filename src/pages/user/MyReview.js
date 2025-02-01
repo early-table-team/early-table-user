@@ -51,7 +51,7 @@ const MyReview = () => {
     <div className="app">
       <div className="home-container">
         <div className="header-container">
-          <Header navText="내 리뷰" navLink="/mypage" />
+          <Header navText="내 리뷰" navLink="/mypage"/>
         </div>
         <div className="home">
           <div className="mypage-div">

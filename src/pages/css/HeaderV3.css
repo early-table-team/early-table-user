@@ -18,7 +18,7 @@ header .logo {
   margin-left: 10px;
 }
 
-header .nav {
+header .navText {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

@@ -22,7 +22,7 @@ const HeaderV3 = ({ navText , navLink }) => {
       <div className="logo" onClick={() => navigate(navLink)}>
         <img src={back} alt="Logo" style={{ height: "28px" }} />
       </div>
-      <div className="nav">{navText}
+      <div className="navText">{navText}
       </div>
     </header>
   );
