@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
-import Header from "../HeaderV3";
+import Header from "../HeaderV2";
 import Footer from "../Footer";
 import "../css/MyPage.css";
 import { fetchUserInfo, fetchUserReservationCount } from "./userService";
@@ -70,8 +70,10 @@ const MyPage = ({ onEdit }) => {
         </div>
         <div className="home">
           <div className="mypage-top-div">
-            <h2 className="mypage-sub-header-container"
-              onClick={() => navigate("/myinfo")}>
+            <h2
+              className="mypage-sub-header-container"
+              onClick={() => navigate("/myinfo")}
+            >
               {user.imageUrl ? (
                 <img
                   className="profile-img"
@@ -83,7 +85,8 @@ const MyPage = ({ onEdit }) => {
                   className="profile-img"
                   src={require("../../assets/company-logo.png")}
                   alt="기본 프로필 이미지"
-                />)}
+                />
+              )}
               <div className="nickname">{user.nickname} 님</div>
             </h2>
 
@@ -93,8 +96,8 @@ const MyPage = ({ onEdit }) => {
               웨이팅 | {userReservationCount.waitingCount} 건<br></br>
               <br />
               <Link to="/home">
-                <button className="stores-button"><img
-                  src={require("../../assets/icon-spot.png")}/>
+                <button className="stores-button">
+                  <img src={require("../../assets/icon-spot.png")} />
                   <p>매장 둘러보기</p>
                 </button>
               </Link>
@@ -105,18 +108,14 @@ const MyPage = ({ onEdit }) => {
           <div className="mypage-div">
             <h2 className="section-title">이용 정보</h2>
             <Link to="/review" className="link-container">
-              <img
-                src={require("../../assets/icon-review.png")}
-              />
+              <img src={require("../../assets/icon-review.png")} />
               <div onClick={onEdit} style={{ marginTop: "10px" }}>
                 내 리뷰
               </div>
               <br></br>
             </Link>
             <Link to="/friends" className="link-container">
-              <img
-                src={require("../../assets/icon-person.png")}
-              />
+              <img src={require("../../assets/icon-person.png")} />
               <div onClick={onEdit} style={{ marginTop: "10px" }}>
                 친구 관리
               </div>
@@ -136,10 +135,7 @@ const MyPage = ({ onEdit }) => {
           <div className="mypage-div">
             <h2 className="section-title">서비스 안내</h2>
             <Link className="link-container">
-
-              <img
-                src={require("../../assets/icon-announce.png")}
-              />
+              <img src={require("../../assets/icon-announce.png")} />
               <div onClick={onEdit} style={{ marginTop: "10px" }}>
                 공지사항
               </div>

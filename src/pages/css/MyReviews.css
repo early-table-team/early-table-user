@@ -1,80 +1,69 @@
 /* 기본 레이아웃 설정 */
 .app {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f2f5;
-  }
-  
-  .home::-webkit-scrollbar {
-    display: none; /* 스크롤바 숨김 */
-  }
-  
-  .home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #ffffff;
-    height: 760px;
-    width: 400px;
-    overflow-y: scroll; /* 위아래 스크롤 가능 */
-    scroll-behavior: smooth; /* 부드러운 스크롤 */
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
 
+.home::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨김 */
+}
 
-  /* 리뷰 이미지 */
-.review-image-gallery {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .review-image {
-    width: 80%;
-    height: 250px;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  height: 760px;
+  width: 400px;
+  overflow-y: scroll; /* 위아래 스크롤 가능 */
+  scroll-behavior: smooth; /* 부드러운 스크롤 */
+}
 
-  .review-item {
-    display: flex;
-    justify-content: space-between; /* 양쪽 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-    padding: 10px; /* 내부 여백 */
-  }
-  
-  .myreview-div {
-    width: 90%;
-  } 
+.review-image {
+  width: 80%;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+.review-item {
+  display: flex;
+  justify-content: space-between; /* 양쪽 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  padding: 10px; /* 내부 여백 */
+  margin-bottom: 20px;
+}
 
-  .review-info h3 {
-    height: fit-content;
-    width: fit-content;
-    margin: 7px 0 15px 0;
-  }
-  
-  .review-info p {
-    height: fit-content;
-    width: fit-content;
-    margin: 7px 0 0 0;
-  }
-  .reviews-container {
-    width: 90%;
-    padding: 15px;
-    margin: 10px auto;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
+.myreview-div {
+  width: 100%;
+}
 
-  .modify-button {
-  padding:  3px 7px;
+.review-info h3 {
+  height: fit-content;
+  width: fit-content;
+  margin: 7px 0 15px 0;
+}
+
+.review-info p {
+  height: fit-content;
+  width: fit-content;
+  margin: 7px 0 0 0;
+}
+.reviews-container {
+  width: 90%;
+  padding: 15px;
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+.modify-button {
+  padding: 3px 7px;
   font-size: 13px;
   background-color: #ffffff;
   color: #959494;
@@ -86,4 +75,4 @@
   border-radius: 10px;
   margin-left: auto;
   margin-top: auto;
-  }
+}

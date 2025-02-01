@@ -49,15 +49,14 @@
 }
 
 .buttons {
-  padding: 8px;
+  padding: 10px 20px;
+  margin: 10px;
   background-color: white;
   border-radius: 5px;
   border-width: 1px;
   color: #bdbdbd;
   font-weight: bold;
   border-color: #bdbdbd;
-  flex-shrink: 0;
-  max-width: 40%;
 }
 
 /* Footer 스타일링 */

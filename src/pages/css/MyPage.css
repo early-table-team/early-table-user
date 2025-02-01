@@ -1,13 +1,3 @@
-/* 기본 레이아웃 설정 */
-.app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f2f5;
-}
-
-
 a {
   text-decoration: none;
 }
@@ -45,7 +35,7 @@ a {
   height: fit-content;
 }
 
-.link-container > div{
+.link-container > div {
   font-size: 20px;
   font-weight: bold;
   height: 100%;
@@ -64,7 +54,6 @@ a {
 
 .mypage-sub-header-container {
   display: flex; /*내부의 모든 div가 가로로 정렬*/
-  justify-content: space-between;
   text-align: justify;
   width: 95%;
   margin: 10px 20px 20px 10px;
@@ -78,7 +67,8 @@ a {
 }
 
 .profile-img {
-  width: 30px;
+  width: 40px;
+  height: 40px;
 }
 
 .mypage-list-item {
@@ -91,7 +81,6 @@ a {
   box-shadow: 0 1px 3px rgba(0, 0, 0.2, 0.3);
   text-align: center;
   align-items: center; /* 내부 요소들을 가운데 정렬 */
-
 }
 
 .mypage-div {
@@ -124,6 +113,7 @@ a {
 
 .mypage-button:hover {
   background-color: #ff914d;
+  color: white;
 }
 
 .stores-button {
@@ -147,8 +137,6 @@ a {
   font-weight: bold;
   color: #959494;
 }
-
-
 
 .list-type {
   font-size: 14px;

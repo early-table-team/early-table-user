@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import instance from "../../api/axios";
-import Header from "../Header";
+import Header from "../HeaderV2";
 import "../css/WriteReview.css";
 
 const ModifyReview = () => {

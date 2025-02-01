@@ -28,7 +28,6 @@ export const SSEProvider = ({ children }) => {
           {
             headers: { "Content-Type": "application/json" },
             withCredentials: true, // HttpOnly 쿠키 자동 전송
-
           }
         );
 
@@ -65,7 +64,6 @@ export const SSEProvider = ({ children }) => {
         setRetryCount(0); // 🔹 재연결 횟수 초기화
       };
 
-
       const handleMessage = (event) => {
         setMessages((prev) => [...prev, event]);
       };
@@ -89,7 +87,7 @@ export const SSEProvider = ({ children }) => {
       // 🔹 3️⃣ SSE 에러 핸들러
       eventSource.onerror = async (error) => {
         console.log("❌ SSE 에러 발생:", error);
-        
+
         eventSource.close(); // 기존 SSE 닫기
 
         // 🔹 401 에러 발생 시 토큰 갱신 후 재연결
@@ -107,7 +105,6 @@ export const SSEProvider = ({ children }) => {
             connectSSE();
           }, 3000);
         }
-
       };
 
       // 🔹 4️⃣ 10분 후 자동 재연결
