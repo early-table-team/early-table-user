@@ -51,10 +51,10 @@ const MyReview = () => {
     <div className="app">
       <div className="home-container">
         <div className="header-container">
-          <Header navText="내 리뷰" navLink="/mypage"/>
+          <Header navText="내 리뷰" navLink="/mypage" />
         </div>
         <div className="home">
-          <div className="mypage-div">
+          <div>
             <h2 className="section-title">
               내가 쓴 리뷰 총 {reviews.length}개
             </h2>
@@ -64,33 +64,42 @@ const MyReview = () => {
               <p>
                 <br />
                 <br />
-                작성한 리뷰가 없습니다.</p>
+                작성한 리뷰가 없습니다.
+              </p>
             ) : (
               <ul className="reviews-container">
                 {reviews.map((review) => (
                   <li key={review.reviewId} className="review-item">
                     <div className="review-info">
                       <h3>{review.storeName}</h3>
-                      <p>평점: {Array.from({ length: review.rating }, (_, i) => "⭐").join("")}</p>
+                      <p>
+                        평점:{" "}
+                        {Array.from(
+                          { length: review.rating },
+                          (_, i) => "⭐"
+                        ).join("")}
+                      </p>
                       <p>리뷰 내용: {review.reviewContents || "내용 없음"}</p>
                       <p>
-                        작성일: {new Date(review.createdAt).toLocaleDateString()}
+                        작성일:{" "}
+                        {new Date(review.createdAt).toLocaleDateString()}
                       </p>
                     </div>
                     <Link
-                    className="modify-button"
-                        to="/review/modify"
-                        state={{
-                          storeName: review.storeName,
-                          reviewId: review.reviewId,
-                          rating: review.rating,
-                          reviewContent: review.reviewContents,
-                          reviewImageList: Object.values(
-                            review.reviewImageUrlMap || {}
-                          ),
-                        }}
-                      >수정하기</Link>
-                    
+                      className="modify-button"
+                      to="/review/modify"
+                      state={{
+                        storeName: review.storeName,
+                        reviewId: review.reviewId,
+                        rating: review.rating,
+                        reviewContent: review.reviewContents,
+                        reviewImageList: Object.values(
+                          review.reviewImageUrlMap || {}
+                        ),
+                      }}
+                    >
+                      수정하기
+                    </Link>
                   </li>
                 ))}
               </ul>

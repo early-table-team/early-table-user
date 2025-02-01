@@ -1,13 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import Header from "../Header";
+import Header from "../HeaderV2";
 import Footer from "../Footer";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { fetchUserInfo } from "./userService";
 import "../css/MyInfo.css"; // CSS 파일 불러오기
-import "../../assets/company-logo.png"
-
-
-
+import "../../assets/company-logo.png";
 
 const MyInfo = () => {
   const navigate = useNavigate(); // useNavigate 훅 초기화
@@ -37,7 +34,6 @@ const MyInfo = () => {
     };
 
     getUserInfo();
-
   }, []); // 컴포넌트 마운트 시 한 번 실행
 
   if (loading) return <p>Loading...</p>; // 로딩 중일 때
@@ -47,15 +43,13 @@ const MyInfo = () => {
     return (
       <div>
         {imageUrl ? (
-          <img
-            src={user.imageUrl}
-            alt="프로필 이미지"
-          />
+          <img src={user.imageUrl} alt="프로필 이미지" />
         ) : (
           <img
             src={require("../../assets/company-logo.png")}
             alt="기본 프로필 이미지"
-          />)}
+          />
+        )}
       </div>
     );
   };
@@ -71,8 +65,9 @@ const MyInfo = () => {
           {/* 내 정보 섹션 */}
           <div className="categories-container">
             <div className="img-container">
-              <ProfileImage imageUrl={user.imageUrl}
-              className="profileImg"
+              <ProfileImage
+                imageUrl={user.imageUrl}
+                className="profileImg"
               ></ProfileImage>
             </div>
             <h2 className="info-title">닉네임</h2>
@@ -83,20 +78,15 @@ const MyInfo = () => {
 
             <h2 className="info-title">휴대폰 번호</h2>
             <p className="info-contents">{user.phoneNumber}</p>
-
           </div>
           {/* 버튼 섹션 */}
-          <div className="buttons-container">
-            <button
-              className="buttons"
-              onClick={goToInfo}
-            >내 정보 수정
+          <div className="myInfo-buttons-container">
+            <button className="buttons" onClick={goToInfo}>
+              내 정보 수정
             </button>
 
-            <button
-              className="buttons"
-              onClick={goToPassword}
-            >비밀번호 변경
+            <button className="buttons" onClick={goToPassword}>
+              비밀번호 변경
             </button>
           </div>
         </div>
