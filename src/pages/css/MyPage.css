@@ -117,6 +117,30 @@ a {
   width: 140px;
 }
 
+.stores-button {
+  padding: 10px;
+  background-color: #ffffff;
+  border: #bbbbbb;
+  border-style: solid;
+  border-width: 1px;
+  cursor: pointer;
+  display: flex;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stores-button p {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #959494;
+}
+
+
+
 .list-type {
   font-size: 14px;
   font-weight: bold;

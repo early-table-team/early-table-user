@@ -93,7 +93,10 @@ const MyPage = ({ onEdit }) => {
               웨이팅 | {userReservationCount.waitingCount} 건<br></br>
               <br />
               <Link to="/home">
-                <button className="mypage-button">매장 둘러보기</button>
+                <button className="stores-button"><img
+                  src={require("../../assets/icon-spot.png")}/>
+                  <p>매장 둘러보기</p>
+                </button>
               </Link>
             </div>
           </div>
