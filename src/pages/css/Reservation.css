@@ -7,6 +7,12 @@
   position: relative; /* button-container의 기준점 */
 }
 
+.store-contents-info-title {
+
+  flex-direction: column;
+  /* 세로로 정렬 */
+}
+
 /* 일시 및 인원 컨테이너 */
 .select1-container {
   display: flex;
@@ -218,6 +224,7 @@
   font-weight: bold;
   color: #333;
   margin-bottom: 15px;
+  margin-left: 15px;
 }
 
 /* 개별 메뉴 */
@@ -226,7 +233,7 @@
   padding: 15px;
   margin-bottom: 10px;
   display: flex;
-  width: 80%;
+  width: 100%;
   flex-direction: column;
   align-items: flex-start;
 }
@@ -265,7 +272,7 @@
   border-radius: 12px;
   border: #ff914d 1px solid;
   font-size: 14px;
-  height: 18px;
+  height: auto;
   margin-left: 10px;
   display: inline-block;
 }
@@ -321,7 +328,7 @@
 
 .select3-container > h4 {
   color: #ff914d;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
   margin: 0 auto;
   display: block;
@@ -329,17 +336,18 @@
 }
 
 .select3-container > p {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   margin-bottom: 0;
 }
 
 .select3-container > span {
-  font-size: 20px;
+  font-size: 15px;
   margin-bottom: 5px;
   background: white;
   border: none;
   padding: 5px;
+  margin-left: 5px;
 }
 
 .button-container {
