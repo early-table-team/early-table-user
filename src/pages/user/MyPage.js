@@ -66,11 +66,12 @@ const MyPage = ({ onEdit }) => {
     <div className="app">
       <div className="home-container">
         <div className="header-container">
-          <Header />
+          <Header navText="마이 페이지" navLink="/home" />
         </div>
         <div className="home">
           <div className="mypage-top-div">
-            <h2 className="mypage-sub-header-container">
+            <h2 className="mypage-sub-header-container"
+              onClick={() => navigate("/myinfo")}>
               {user.imageUrl ? (
                 <img
                   className="profile-img"
@@ -84,12 +85,6 @@ const MyPage = ({ onEdit }) => {
                   alt="기본 프로필 이미지"
                 />)}
               <div className="nickname">{user.nickname} 님</div>
-              <button
-                className="back-button"
-                onClick={() => navigate("/myinfo")}
-              >
-                ▶
-              </button>
             </h2>
 
             <div className="mypage-list-item">

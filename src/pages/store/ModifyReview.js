@@ -101,7 +101,7 @@ const ModifyReview = () => {
       });
 
       alert("리뷰가 수정되었습니다!");
-      navigate("/home");
+      navigate("/review");
     } catch (error) {
       console.error("Failed to update review:", error);
       alert("리뷰 수정에 실패했습니다.");

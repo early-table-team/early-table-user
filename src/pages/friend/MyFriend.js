@@ -36,7 +36,7 @@ const MyFriend = () => {
     };
 
     fetchFriendInfo();
-  }, []);
+  }, [activeTab]);
 
   const handleSearch = async () => {
     if (!token) {
