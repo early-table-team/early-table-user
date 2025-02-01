@@ -24,11 +24,11 @@
 }
 
 .section-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   color: #333;
-  margin-top: 10px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 15px;
 }
 
 /* 카테고리 카드 */
@@ -63,11 +63,19 @@
 .category-name {
   font-size: 14px;
   color: #333;
+  margin: 0px;
+}
+
+.gap-box {
+  width: 100%;
+  background-color: #f6f3f3;
+  padding-bottom: 1px;
 }
 
 /* 추천 가게 섹션 */
 .stores-container {
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .stores-slider {
@@ -88,7 +96,7 @@
   flex-direction: column;
   align-items: first baseline; /* 수평 중앙 정렬 */
   justify-content: center; /* 수직 중앙 정렬 */
-  width: 160px;
+  width: 180px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0.5, 0.1, 0.3);
@@ -97,7 +105,7 @@
 
 .store-image {
   width: 100%;
-  max-height: 160px;
+  height: 160px;
   object-fit: cover; /* 비율 유지하면서 잘라서 맞추기 */
   object-position: center; /* 이미지의 중앙을 기준으로 잘라짐 */
   border-radius: 8px;
@@ -105,18 +113,23 @@
 }
 
 .home-store-name {
-  padding-left: 10px;
-  font-size: 16px;
+  padding-left: 4px;
+  font-size: 15px;
   font-weight: bold;
   color: #333;
-  height: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
+  margin-top: 5px;
 }
 
 .home-store-start {
   margin-top: 5px;
   margin-bottom: 10px;
-  padding-left: 10px;
+  padding-left: 6px;
   font-size: 16px;
-  color: #777;
+  color: #474747;
+}
+
+.store-category-box {
+  font-size: 12px;
+  color: gray;
 }

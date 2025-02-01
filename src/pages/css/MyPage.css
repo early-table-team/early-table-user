@@ -7,6 +7,7 @@
   background-color: #f0f2f5;
 }
 
+
 a {
   text-decoration: none;
 }
@@ -24,10 +25,8 @@ a {
   background-color: #ffffff;
   height: 760px;
   width: 400px;
-  overflow-y: scroll;
-  /* 위아래 스크롤 가능 */
-  scroll-behavior: smooth;
-  /* 부드러운 스크롤 */
+  overflow-y: scroll; /* 위아래 스크롤 가능 */
+  scroll-behavior: smooth; /* 부드러운 스크롤 */
 }
 
 .section-title {
@@ -64,6 +63,11 @@ a {
 }
 
 .mypage-sub-header-container {
+  display: flex; /*내부의 모든 div가 가로로 정렬*/
+  justify-content: space-between;
+  text-align: justify;
+  width: 95%;
+  margin: 10px 20px 20px 10px;
   display: flex;
   justify-content: s;
   text-align: justify;
@@ -87,6 +91,7 @@ a {
   box-shadow: 0 1px 3px rgba(0, 0, 0.2, 0.3);
   text-align: center;
   align-items: center; /* 내부 요소들을 가운데 정렬 */
+
 }
 
 .mypage-div {
@@ -115,6 +120,10 @@ a {
   display: block;
   border-radius: 10px;
   width: 140px;
+}
+
+.mypage-button:hover {
+  background-color: #ff914d;
 }
 
 .stores-button {

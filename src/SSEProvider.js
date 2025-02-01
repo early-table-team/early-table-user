@@ -7,10 +7,18 @@ const SSEContext = createContext();
 
 export const SSEProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false); // 🔹 토큰 갱신 여부
+  const [retryCount, setRetryCount] = useState(0); // 🔹 재연결 횟수 카운트
   const navigate = useNavigate();
 
   useEffect(() => {
+    let eventSource = null;
+
+    // 🔹 1️⃣ 토큰 갱신 함수
     const getRefreshToken = async () => {
+      if (isRefreshing) return false; // 중복 요청 방지
+      setIsRefreshing(true);
+
       try {
         console.log("🔄 토큰 갱신 시도...");
 
@@ -18,49 +26,45 @@ export const SSEProvider = ({ children }) => {
           "/users/refresh",
           {}, // body 없음
           {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true, // 브라우저가 HttpOnly 쿠키 자동 전송
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true, // HttpOnly 쿠키 자동 전송
+
           }
         );
 
         const newAccessToken = response.data.accessToken;
-
-        if (
-          newAccessToken === null ||
-          newAccessToken === "undefined" ||
-          !newAccessToken
-        ) {
-          navigate("/login");
-          return;
-        }
+        if (!newAccessToken) throw new Error("새로운 토큰 없음");
 
         localStorage.setItem("accessToken", newAccessToken);
-
-        console.log("✅ 토큰 갱신 성공, SSE 재연결...");
-        eventSource.close();
-        connectSSE(); // 토큰 갱신 후 SSE 재연결
+        console.log("✅ 토큰 갱신 성공");
+        return true;
       } catch (err) {
         console.log("❌ 토큰 갱신 실패, 로그인 페이지로 이동");
-        eventSource.close();
         navigate("/login");
+        return false;
+      } finally {
+        setIsRefreshing(false);
       }
     };
 
+    // 🔹 2️⃣ SSE 연결 함수
     const connectSSE = () => {
-      const eventSource = new EventSourcePolyfill(
+      eventSource = new EventSourcePolyfill(
         "http://localhost:8080/notifications/subscribe",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
-          withCredentials: true, // 쿠키 자동 전송
-          heartbeatTimeout: 600000,
+          withCredentials: true,
+          heartbeatTimeout: 600000, // 10분
         }
       );
 
-      eventSource.onopen = () => console.log("✅ SSE 연결 성공");
+      eventSource.onopen = () => {
+        console.log("✅ SSE 연결 성공");
+        setRetryCount(0); // 🔹 재연결 횟수 초기화
+      };
+
 
       const handleMessage = (event) => {
         setMessages((prev) => [...prev, event]);
@@ -82,35 +86,62 @@ export const SSEProvider = ({ children }) => {
         eventSource.addEventListener(type, handleMessage)
       );
 
+      // 🔹 3️⃣ SSE 에러 핸들러
       eventSource.onerror = async (error) => {
         console.log("❌ SSE 에러 발생:", error);
-        eventSource.close();
-        navigate("/login");
+        
+        eventSource.close(); // 기존 SSE 닫기
+
+        // 🔹 401 에러 발생 시 토큰 갱신 후 재연결
+        if (error.status === 401 || retryCount >= 3) {
+          const success = await getRefreshToken();
+          if (success) {
+            console.log("🔄 SSE 재연결 시도...");
+            connectSSE();
+          }
+        } else {
+          // 🔹 기타 에러 발생 시 3초 후 재연결
+          setTimeout(() => {
+            setRetryCount(retryCount + 1);
+            console.log(`🔄 SSE 재연결 (${retryCount + 1}번째 시도)`);
+            connectSSE();
+          }, 3000);
+        }
+
       };
 
-      return eventSource;
+      // 🔹 4️⃣ 10분 후 자동 재연결
+      setTimeout(() => {
+        console.log("⏳ SSE 연결 시간 초과, 재연결 시도...");
+        eventSource.close();
+        connectSSE();
+      }, 600000);
     };
 
+    // 🔹 5️⃣ 초기 SSE 연결
     const accessToken = localStorage.getItem("accessToken");
-
     if (!accessToken || accessToken === "undefined") {
-      console.log(accessToken);
-      getRefreshToken();
+      console.log("⚠️ 액세스 토큰 없음, 토큰 갱신 시도");
+      getRefreshToken().then((success) => {
+        if (success) connectSSE();
+      });
+    } else {
+      connectSSE();
     }
 
-    const eventSource = connectSSE();
-
     return () => {
-      eventSource.close();
+      eventSource?.close(); // 언마운트 시 SSE 해제
     };
-  }, [navigate]);
+  }, [isRefreshing, retryCount, navigate]);
 
   const clearMessages = () => {
     setMessages([]);
   };
 
   return (
-    <SSEContext.Provider value={{ messages, clearMessages }}>
+    <SSEContext.Provider
+      value={{ messages, clearMessages: () => setMessages([]) }}
+    >
       {children}
     </SSEContext.Provider>
   );
