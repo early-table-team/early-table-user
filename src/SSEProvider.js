@@ -28,6 +28,7 @@ export const SSEProvider = ({ children }) => {
           {
             headers: { "Content-Type": "application/json" },
             withCredentials: true, // HttpOnly 쿠키 자동 전송
+
           }
         );
 
@@ -64,15 +65,31 @@ export const SSEProvider = ({ children }) => {
         setRetryCount(0); // 🔹 재연결 횟수 초기화
       };
 
-      // 메시지 핸들러
-      eventSource.onmessage = (event) => {
+
+      const handleMessage = (event) => {
         setMessages((prev) => [...prev, event]);
       };
+
+      const eventTypes = [
+        "STORE_VIEW",
+        "INIT",
+        "PARTY",
+        "RESERVATION",
+        "WAITING",
+        "FRIEND",
+        "REVIEW",
+        "NOTICE",
+        "MESSAGE",
+      ];
+
+      eventTypes.forEach((type) =>
+        eventSource.addEventListener(type, handleMessage)
+      );
 
       // 🔹 3️⃣ SSE 에러 핸들러
       eventSource.onerror = async (error) => {
         console.log("❌ SSE 에러 발생:", error);
-
+        
         eventSource.close(); // 기존 SSE 닫기
 
         // 🔹 401 에러 발생 시 토큰 갱신 후 재연결
@@ -90,6 +107,7 @@ export const SSEProvider = ({ children }) => {
             connectSSE();
           }, 3000);
         }
+
       };
 
       // 🔹 4️⃣ 10분 후 자동 재연결
@@ -102,7 +120,7 @@ export const SSEProvider = ({ children }) => {
 
     // 🔹 5️⃣ 초기 SSE 연결
     const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
+    if (!accessToken || accessToken === "undefined") {
       console.log("⚠️ 액세스 토큰 없음, 토큰 갱신 시도");
       getRefreshToken().then((success) => {
         if (success) connectSSE();
@@ -115,6 +133,10 @@ export const SSEProvider = ({ children }) => {
       eventSource?.close(); // 언마운트 시 SSE 해제
     };
   }, [isRefreshing, retryCount, navigate]);
+
+  const clearMessages = () => {
+    setMessages([]);
+  };
 
   return (
     <SSEContext.Provider
