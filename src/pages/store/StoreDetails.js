@@ -152,7 +152,7 @@ const StoreDetails = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="buttons-container">
           {storeTypeList.includes("RESERVATION") && (
             <button
               className="store-detail-reserve-button"
