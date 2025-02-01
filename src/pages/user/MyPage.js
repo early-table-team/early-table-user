@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
-import Header from "../Header";
+import Header from "../HeaderV3";
 import Footer from "../Footer";
 import "../css/MyPage.css";
 import { fetchUserInfo, fetchUserReservationCount } from "./userService";
@@ -66,21 +66,25 @@ const MyPage = ({ onEdit }) => {
     <div className="app">
       <div className="home-container">
         <div className="header-container">
-          <Header />
+          <Header navText="마이 페이지" navLink="/home" />
         </div>
         <div className="home">
           <div className="mypage-top-div">
-            <h2 className="mypage-sub-header-container">
-              <div className="little-profileimage">
-                <img src={user.imageUrl} alt="프로필 이미지" />
-              </div>
-              <div>{user.nickname}님 </div>
-              <button
-                className="back-button"
-                onClick={() => navigate("/myinfo")}
-              >
-                ▶
-              </button>
+            <h2 className="mypage-sub-header-container"
+              onClick={() => navigate("/myinfo")}>
+              {user.imageUrl ? (
+                <img
+                  className="profile-img"
+                  src={user.imageUrl}
+                  alt="프로필 이미지"
+                />
+              ) : (
+                <img
+                  className="profile-img"
+                  src={require("../../assets/company-logo.png")}
+                  alt="기본 프로필 이미지"
+                />)}
+              <div className="nickname">{user.nickname} 님</div>
             </h2>
 
             <div className="mypage-list-item">
@@ -89,7 +93,10 @@ const MyPage = ({ onEdit }) => {
               웨이팅 | {userReservationCount.waitingCount} 건<br></br>
               <br />
               <Link to="/home">
-                <button className="mypage-button">매장 둘러보기</button>
+                <button className="stores-button"><img
+                  src={require("../../assets/icon-spot.png")}/>
+                  <p>매장 둘러보기</p>
+                </button>
               </Link>
             </div>
           </div>
@@ -97,29 +104,47 @@ const MyPage = ({ onEdit }) => {
           <br></br>
           <div className="mypage-div">
             <h2 className="section-title">이용 정보</h2>
-            <Link to="/review">
+            <Link to="/review" className="link-container">
+              <img
+                src={require("../../assets/icon-review.png")}
+              />
               <div onClick={onEdit} style={{ marginTop: "10px" }}>
-                내 리뷰 관리
+                내 리뷰
               </div>
               <br></br>
             </Link>
-            <Link to="/friends">
+            <Link to="/friends" className="link-container">
+              <img
+                src={require("../../assets/icon-person.png")}
+              />
               <div onClick={onEdit} style={{ marginTop: "10px" }}>
                 친구 관리
               </div>
               <br></br>
             </Link>
-            <div onClick={onEdit} style={{ marginTop: "10px" }}>
-              모임 관리
-            </div>
+            {/* <Link className="link-container">
+              <img
+                src={require("../../assets/icon-people.png")}
+              />
+              <div onClick={onEdit} style={{ marginTop: "10px" }}>
+                모임 관리
+              </div>
+            </Link> */}
             <br></br>
             <br></br>
           </div>
           <div className="mypage-div">
             <h2 className="section-title">서비스 안내</h2>
-            <div onClick={onEdit} style={{ marginTop: "10px" }}>
-              공지사항
-            </div>
+            <Link className="link-container">
+
+              <img
+                src={require("../../assets/icon-announce.png")}
+              />
+              <div onClick={onEdit} style={{ marginTop: "10px" }}>
+                공지사항
+              </div>
+            </Link>
+
             <br></br>
             <br></br>
           </div>
