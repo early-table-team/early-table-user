@@ -77,8 +77,8 @@ const Home = () => {
     fetchStores();
   }, [keywords, navigate]);
 
-  const handleCardClick = (store) => {
-    navigate(`/store/${store.id}`, { state: { store } });
+  const handleCardClick = (storeId) => {
+    navigate(`/store/${storeId}`);
   };
 
   return (

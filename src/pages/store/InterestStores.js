@@ -53,6 +53,10 @@ const InterestStores = () => {
     fetchInterestStores();
   }, [navigate]);
 
+  const handleCardClick = (storeId) => {
+    navigate(`/store/${storeId}`);
+  };
+
   return (
     <div className="app">
       <div className="interest-stores-container">
@@ -64,7 +68,12 @@ const InterestStores = () => {
           <p className="section-title">관심 가게 목록</p>
           {interestStores.length > 0 ? (
             interestStores.map((store) => (
-              <div key={store.storeId} className="interest-store-card">
+              <div
+                key={store.storeId}
+                className="interest-store-card"
+                onClick={() => handleCardClick(store.storeId)}
+                style={{ cursor: "pointer" }}
+              >
                 <img
                   src={store.storeImageUrl}
                   alt={store.storeName}

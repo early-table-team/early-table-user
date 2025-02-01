@@ -22,17 +22,14 @@ const SearchResult = () => {
     } else {
       const getStores = async (requestData) => {
         try {
-          const response = await instance.get(
-            "http://localhost:8080/stores/search",
-            {
-              params: requestData,
-              paramsSerializer: (params) =>
-                qs.stringify(params, { arrayFormat: "repeat" }),
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          const response = await instance.get("/stores/search", {
+            params: requestData,
+            paramsSerializer: (params) =>
+              qs.stringify(params, { arrayFormat: "repeat" }),
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           console.log(response);
           setSearchStores(response.data);
         } catch (error) {
@@ -45,6 +42,10 @@ const SearchResult = () => {
     }
   }, [navigate, requestData]);
 
+  const handleCardClick = (storeId) => {
+    navigate(`/store/${storeId}`);
+  };
+
   return (
     <div className="app">
       <div className="interest-stores-container">
@@ -56,7 +57,12 @@ const SearchResult = () => {
           <p className="section-title">검색 결과</p>
           {searchStores.length > 0 ? (
             searchStores.map((store) => (
-              <div key={store.storeId} className="interest-store-card">
+              <div
+                key={store.storeId}
+                className="interest-store-card"
+                onClick={() => handleCardClick(store.storeId)}
+                style={{ cursor: "pointer" }}
+              >
                 <img
                   src={store.imageUrl}
                   alt={store.storeName}
