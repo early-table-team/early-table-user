@@ -6,7 +6,7 @@ const StoreSlider = ({ stores, handleCardClick }) => (
       <div
         key={index}
         className="store-card"
-        onClick={() => handleCardClick(store)}
+        onClick={() => handleCardClick(store.id)}
         style={{ cursor: "pointer" }}
       >
         <img src={store.image} alt={store.name} className="store-image" />
@@ -16,7 +16,7 @@ const StoreSlider = ({ stores, handleCardClick }) => (
           {"("}
           {store.reviewCount}
           {")"}
-          {"  "} {store.category}
+          {"  "} <span className="store-category-box">{store.category}</span>
         </p>
       </div>
     ))}

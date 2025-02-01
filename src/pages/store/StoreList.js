@@ -30,6 +30,10 @@ const StoreList = () => {
     fetchKewordStores();
   }, [keyword, navigate]);
 
+  const handleCardClick = (storeId) => {
+    navigate(`/store/${storeId}`);
+  };
+
   return (
     <div className="app">
       <div className="interest-stores-container">
@@ -41,7 +45,12 @@ const StoreList = () => {
           <p className="section-title">{keyword}</p>
           {keywordStores.length > 0 ? (
             keywordStores.map((store) => (
-              <div key={store.storeId} className="interest-store-card">
+              <div
+                key={store.storeId}
+                className="interest-store-card"
+                onClick={() => handleCardClick(store.storeId)}
+                style={{ cursor: "pointer" }}
+              >
                 <img
                   src={store.imageUrl}
                   alt={store.storeName}

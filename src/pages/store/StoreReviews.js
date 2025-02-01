@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import instance from "../../api/axios"; // axios 인스턴스
-import Header from "../Header";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import instance from "../../api/axios"; // Axios 인스턴스
+import Header from "../HeaderV2";
 import Footer from "../Footer";
-import "../css/StoreReviews.css";
+import "../css/StoreReviews.css"; // 일반 CSS 파일 적용
 
 const StoreReviews = () => {
-  const [storeReviews, setStoreReviews] = useState(null); // 가게 리뷰 상태
-  const [storeStats, setStoreStats] = useState(null); // 가게 통계 상태
-  const [loading, setLoading] = useState(true); // 로딩 상태
-  const [error, setError] = useState(null); // 에러 상태
-  const { storeId } = useParams(); // URL 파라미터로 storeId 받기
+  const location = useLocation();
   const navigate = useNavigate();
+  const { storeName } = location.state;
+  const [storeReviews, setStoreReviews] = useState([]);
+  const [storeStats, setStoreStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { storeId } = useParams();
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
-      navigate("/login"); // 로그인 페이지로 리다이렉트
+      navigate("/login");
       return;
     }
 
     const fetchData = async () => {
-      //리뷰 통계 가져오기
       try {
         const [reviewsResponse, statsResponse] = await Promise.all([
           instance.get(`/stores/${storeId}/reviews`, {
@@ -32,134 +33,186 @@ const StoreReviews = () => {
           }),
         ]);
 
-        setStoreReviews(reviewsResponse.data); // 리뷰 데이터 저장
-        setStoreStats(statsResponse.data); // 통계 데이터 저장
+        setStoreReviews(reviewsResponse.data);
+        setStoreStats(statsResponse.data);
       } catch (err) {
         setError("가게 정보를 가져오는 데 실패했습니다.");
       } finally {
-        setLoading(false); // 로딩 완료
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [storeId, navigate]);
 
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!storeReviews || !storeStats) {
-    return <div>가게 정보가 없습니다.</div>;
-  }
-
-  // 데이터 추출
-  const {
-    storeName,
-    storePhone,
-    storeDescription,
-    reviewImageUrlMap = {},
-  } = storeReviews;
-
-  const {
-    ratingStat1,
-    ratingStat2,
-    ratingStat3,
-    ratingStat4,
-    ratingStat5,
-    countTotal,
-    ratingAverage,
-  } = storeStats;
-
-  const imageUrls = Object.keys(reviewImageUrlMap).map(
-    (key) => reviewImageUrlMap[key]
-  );
+  if (loading) return <div className="loading">로딩 중...</div>;
+  if (error) return <div className="error">{error}</div>;
+  if (!storeStats) return <div className="no-data">가게 정보가 없습니다.</div>;
 
   return (
     <div className="app">
-      <div className="home-container">
-        <div className="header-container">
-          <Header />
-        </div>
+      <div>
+        <Header />
+        <div className="container">
+          <h2 className="store-name">{storeName || "가게이름"}</h2>
 
-        <div className="home">
-          <div className="sub-header-container">
-            <button className="back-button">◀</button>
-            <h2 className="sub-header-text">{storeName || "가게이름"}</h2>
+          <div className="review-summary">
+            <ReviewAverage rating={storeStats.ratingAverage} />
+            <ReviewBreakdown stats={storeStats} />
           </div>
 
-          {/* 가게 이미지들 표시 */}
-          <div className="store-image-gallery">
-            {imageUrls.length > 0 ? (
-              imageUrls.map((url, index) => (
+          <h3 className="recent-reviews-title">
+            📢 최근 리뷰 {storeStats.countTotal}개
+          </h3>
+          <ReviewList reviews={storeReviews} />
+        </div>
+        <Footer />
+      </div>
+    </div>
+  );
+};
+
+// ⭐ 평균 별점 컴포넌트
+const ReviewAverage = ({ rating }) => {
+  const fullStars = Math.floor(rating); // 완전히 채워진 별 개수
+  const decimalPart = rating - fullStars; // 소수점 부분 (0 ~ 1)
+
+  return (
+    <div className="review-average">
+      <div className="rating-title">{rating.toFixed(1)}</div>
+      <div className="stars">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className="star">
+            {i < fullStars ? (
+              // 완전히 채워진 별
+              <FullStar />
+            ) : i === fullStars && decimalPart > 0 ? (
+              // 부분적으로 채워진 별 (소수점이 있을 때)
+              <PartialStar fillPercentage={decimalPart} />
+            ) : (
+              // 비어있는 별
+              <EmptyStar />
+            )}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ⭐ 완전히 채워진 별
+const FullStar = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="gold"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M12 17.3l-6.18 3.6 1.64-7.19-5.46-4.71 7.24-.63L12 2l2.76 6.37 7.24.63-5.46 4.71 1.64 7.19z" />
+  </svg>
+);
+
+// ⭐ 부분적으로 채워진 별 (fillPercentage 만큼 색칠)
+const PartialStar = ({ fillPercentage }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <linearGradient id="halfStarGradient">
+        <stop offset={`${fillPercentage * 100}%`} stopColor="gold" />
+        <stop offset={`${fillPercentage * 100}%`} stopColor="lightgray" />
+      </linearGradient>
+    </defs>
+    <path
+      fill="url(#halfStarGradient)"
+      d="M12 17.3l-6.18 3.6 1.64-7.19-5.46-4.71 7.24-.63L12 2l2.76 6.37 7.24.63-5.46 4.71 1.64 7.19z"
+    />
+  </svg>
+);
+
+// ⭐ 비어있는 별
+const EmptyStar = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="lightgray"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M12 17.3l-6.18 3.6 1.64-7.19-5.46-4.71 7.24-.63L12 2l2.76 6.37 7.24.63-5.46 4.71 1.64 7.19z" />
+  </svg>
+);
+
+// 📊 별점별 개수 컴포넌트
+const ReviewBreakdown = ({ stats }) => {
+  const ratings = [5, 4, 3, 2, 1];
+  const maxCount = Math.max(
+    ...ratings.map((r) => stats[`ratingStat${r}`] || 0)
+  );
+
+  return (
+    <div className="review-breakdown">
+      {ratings.map((rating) => {
+        const count = stats[`ratingStat${rating}`] || 0;
+        const barWidth = maxCount ? (count / maxCount) * 100 : 0;
+        return (
+          <div key={rating} className="rating-bar">
+            <span>{rating}점</span>
+            <div className="bar-container">
+              <div
+                className="bar"
+                style={{
+                  width: `${barWidth}%`,
+                  opacity: 0.3 + (barWidth / 100) * 0.7,
+                }}
+              ></div>
+            </div>
+            <span>{count}개</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// 📝 리뷰 리스트 컴포넌트
+const ReviewList = ({ reviews }) => {
+  if (!reviews || reviews.length === 0) {
+    return <p className="no-reviews">작성된 리뷰가 없습니다.</p>;
+  }
+
+  return (
+    <div className="review-list">
+      {reviews.map((review) => (
+        <div key={review.reviewId} className="review-item">
+          {/* 닉네임과 별점 배치 */}
+          <div className="review-header">
+            <h3 className="reviewer-name">{review.reviewerNickname}</h3>
+            <p className="review-rating">⭐ {review.rating}</p>
+          </div>
+
+          {/* 리뷰 내용 */}
+          <p className="review-content">{review.reviewContents}</p>
+
+          {/* 리뷰 이미지 (가로 스크롤 적용) */}
+          {review.reviewImageUrlMap && (
+            <div className="review-images">
+              {Object.values(review.reviewImageUrlMap).map((url, index) => (
                 <img
                   key={index}
                   src={url}
-                  alt={`store-image-${index}`}
-                  className="store-reviews-image"
+                  alt={`리뷰 이미지 ${index + 1}`}
+                  className="review-image"
                 />
-              ))
-            ) : (
-              <p>이미지가 없습니다.</p>
-            )}
-          </div>
-
-          {/* 리뷰 통계 */}
-          <div className="store-review-info">
-            <div className="store-review-star">
-              <h2>{countTotal}개 리뷰 별점 평균</h2>
-              <h1>★</h1>
-              <h2>{ratingAverage}</h2>
+              ))}
             </div>
-            <div>
-              5점 : {ratingStat5}개 <br></br>
-              4점 : {ratingStat4}개 <br></br>
-              3점 : {ratingStat3}개 <br></br>
-              2점 : {ratingStat2}개 <br></br>
-              1점 : {ratingStat1}개 <br></br>
-            </div>
-          </div>
-
-          {/* 리뷰 전체 리스트 */}
-          <div className="store-reviews-list">
-            {storeReviews.length === 0 ? (
-              <p>작성된 리뷰가 없습니다.</p>
-            ) : (
-              <div>
-                {storeReviews.map((review) => (
-                  <div key={review.reviewId} className="store-review-list-item">
-                    <h3>{review.reviewerNickname}</h3>
-                    <p>★ {review.rating}</p>
-                    {review.reviewImageUrlMap && (
-                      <div className="store-review-images">
-                        {Object.values(review.reviewImageUrlMap).map(
-                          (url, index) => (
-                            <img
-                              key={index}
-                              src={url}
-                              alt={`리뷰 이미지 ${index + 1}`}
-                              className="review-image"
-                            />
-                          )
-                        )}
-                      </div>
-                    )}
-                    <h4>{review.reviewContents}</h4>
-                    <p>{new Date(review.createdAt).toLocaleDateString()}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          )}
         </div>
-
-        <div className="footer-container">
-          <Footer />
-        </div>
-      </div>
+      ))}
     </div>
   );
 };

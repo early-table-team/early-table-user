@@ -19,7 +19,7 @@ const HeaderV2 = () => {
 
   return (
     <header>
-      <div className="logo" onClick={() => navigate("/home")}>
+      <div className="logo" onClick={() => navigate(-1)}>
         <img src={back} alt="Logo" style={{ height: "28px" }} />
       </div>
       <div className="nav">
