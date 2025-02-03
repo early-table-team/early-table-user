@@ -87,22 +87,29 @@ const handleButtonUpdatePartyRequestClick = async (invitationId, status) => {
           <div className="myfriend-slide-div">
             <div>
                 <div className="myfriend-div-2">
-                  <div className="list-container">
+                  <div className="myparty-list-container">
                   {partyRequestList.filter((request) => request.status === 'PENDING').map((request) => (
                     <div className="list-item">
                     <div key={request.invitationId} className="requestlist">
-                      <div className="myfriend-button-group">
-                      [{request.source}] <br />
-                      {request.storeName} <br />
-                      {new Date(request.reservationTime).toLocaleDateString()} <br />
-                        {new Date(request.reservationTime).toLocaleTimeString()} <br />
-                        초대 by {request.nickname}
-                      <button 
-                      className="myfriend-button"
-                      onClick={() => handleButtonUpdatePartyRequestClick(request.invitationId, 'ACCEPTED')}>수락</button>
-                      <button 
-                      className="myfriend-button"
-                      onClick={() => handleButtonUpdatePartyRequestClick(request.invitationId, 'REJECTED')}>거절</button>
+                      <div className="myparty-list-group">
+                        <div>
+                          <span className="list-status">{request.source}</span>
+                        </div>
+                        <div>
+                          <h3>{request.storeName}</h3>
+                          <p>{new Date(request.reservationTime).toLocaleDateString()}</p>
+                          <p>{new Date(request.reservationTime).toLocaleTimeString()}</p>
+                          초대 by {request.nickname}
+                        </div>
+                        <div className="myparty-button-group">
+                          <button 
+                          className="myfriend-button"
+                          onClick={() => handleButtonUpdatePartyRequestClick(request.invitationId, 'ACCEPTED')}>수락</button>
+                          <button 
+                          className="myfriend-button"
+                          onClick={() => handleButtonUpdatePartyRequestClick(request.invitationId, 'REJECTED')}>거절</button>
+                        </div>
+                      
                       </div>
                     </div>
                     </div>

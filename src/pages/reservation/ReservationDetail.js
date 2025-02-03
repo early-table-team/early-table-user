@@ -17,6 +17,7 @@ const ReservationDetails = () => {
   const [searchType, setSearchType] = useState("nickname"); // 드롭다운 선택 값
   const [searchValue, setSearchValue] = useState(""); // 검색창 입력 값
   const [userList, setUserList] = useState([]);  // 사용자 검색 결과 상태
+  const [loginUser, setloginUser] = useState(); //로그인 사용자 정보
 
   useEffect(() => {
     // Fetch reservation details
@@ -35,6 +36,22 @@ const ReservationDetails = () => {
     };
 
     fetchReservationDetails();
+
+    //로그인한 사용자 정보 가져오기 (사용자 role에 따라 버튼 visible처리를 위함)
+    const fetchLoginUserData = async () => {
+      try {
+        const token = localStorage.getItem("accessToken");
+        const response = await axios.get("/users/mine", {
+          headers : {
+            Authorization : `Bearer ${token}`,
+          },
+        }); // Spring Boot의 유저 정보 API 호출
+        setloginUser(response.data);
+      } catch (error) {
+        console.error("로그인 유저 정보 가져오는 중 오류 발생", error);
+      }
+    };
+    fetchLoginUserData();
   }, [reservationId, navigate]);
 
   if (!reservationDetails) {
@@ -256,7 +273,9 @@ const ReservationDetails = () => {
           <div className="reservation-invition-button">
             {reservationDetails.reservationStatus === "PENDING" && (
               <>
-                {/* 초대장 보내기 버튼 추가 */}
+              {reservationDetails.invitationPeople.some(
+                (person) => person.partyRole === "REPRESENTATIVE" && person.userId === loginUser.id
+              ) ? (
                 <button
                   onClick={() => {
                     setIsModalOpen(true);
@@ -264,9 +283,11 @@ const ReservationDetails = () => {
                   }}>
                   + 일행관리
                 </button>
+                ) : (
                 <button onClick={() => handleLeaveParty(reservationDetails.partyId)}>
                   - 탈퇴하기
                 </button>
+                )}
               </>
             )}
           </div>
@@ -291,10 +312,18 @@ const ReservationDetails = () => {
                       ))}
 
                     {partyDetails.filter((party) => party.partyRole !== "REPRESENTATIVE").length === 0 && <p>일행이 없습니다.</p>}
-                    <button onClick={() => handleDeleteEveryParty(reservationDetails.partyId)}>전체추방</button>
                 </div>
-                <button onClick={() => setIsUserSearchModalOpen(true)}>유저 찾기</button>
-                <button onClick={closeModal}>닫기</button>
+                <div>
+                <button 
+                    className="search-button"
+                    onClick={() => handleDeleteEveryParty(reservationDetails.partyId)}>전체추방</button>
+                <button 
+                className="search-button"
+                onClick={() => setIsUserSearchModalOpen(true)}>유저 찾기</button>
+                <button 
+                className="search-button"
+                onClick={closeModal}>닫기</button>
+                </div>
               </div>
             </div>
           )}
@@ -304,7 +333,10 @@ const ReservationDetails = () => {
               <div className="modal-content">
                 <h2>유저 찾기</h2>
                 <div className="modal-search">
-                  <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                  <select 
+                    value={searchType} 
+                    className="search-criteria-dropdown"
+                    onChange={(e) => setSearchType(e.target.value)}>
                     <option value="nickname">닉네임</option>
                     <option value="email">메일</option>
                     <option value="phoneNumberBottom">전화번호(뒷자리)</option>
@@ -313,15 +345,20 @@ const ReservationDetails = () => {
                     type="text"
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
+                    className="search-user-input"
                   />
-                  <button onClick={handleSearch}>검색</button>
+                  <button 
+                    className="search-button"
+                    onClick={handleSearch}>검색</button>
                 </div>
                 <div className="modal-search-list">
                   {userList.length > 0 ? (
                     userList.map((user) => (
                       <div key={user.id} className="search-list-item">
                         <p>{user.nickname} ({user.phoneNumberBottom})</p>
-                        <button onClick={() => {
+                        <button 
+                          className="myfriend-button"
+                          onClick={() => {
                           console.log("버튼 클릭됨", user.id, reservationId);
                           sendPartyInvitation(user.id, reservationId);
                         }}>일행 초대</button>
@@ -331,7 +368,9 @@ const ReservationDetails = () => {
                     <p>검색 결과가 없습니다.</p>
                   )}
                 </div>
-                <button onClick={() => setIsUserSearchModalOpen(false)}>닫기</button>
+                <button 
+                  className="search-button"
+                  onClick={() => setIsUserSearchModalOpen(false)}>닫기</button>
               </div>
             </div>
           )}

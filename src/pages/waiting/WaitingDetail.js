@@ -18,6 +18,7 @@ const WaitingDetails = () => {
   const [searchType, setSearchType] = useState("nickname"); // 드롭다운 선택 값
   const [searchValue, setSearchValue] = useState(""); // 검색창 입력 값
   const [userList, setUserList] = useState([]);  // 사용자 검색 결과 상태
+  const [loginUser, setloginUser] = useState(); //로그인 사용자 정보
 
   useEffect(() => {
     // 웨이팅 상세 정보 가져오기
@@ -47,8 +48,23 @@ const WaitingDetails = () => {
         navigate("/home");
       }
     };
-
     fetchWaitingDetails();
+
+    //로그인한 사용자 정보 가져오기 (사용자 role에 따라 버튼 visible처리를 위함)
+    const fetchLoginUserData = async () => {
+      try {
+        const token = localStorage.getItem("accessToken");
+        const response = await axios.get("/users/mine", {
+          headers : {
+            Authorization : `Bearer ${token}`,
+          },
+        }); // Spring Boot의 유저 정보 API 호출
+        setloginUser(response.data);
+      } catch (error) {
+        console.error("로그인 유저 정보 가져오는 중 오류 발생", error);
+      }
+    };
+    fetchLoginUserData();
   }, [waitingId, navigate]); // waitingId와 navigate만 의존성 배열에 포함시킴
 
   const fetchWaitingCancel = async () => {
@@ -310,18 +326,24 @@ const WaitingDetails = () => {
           <div className="invition-button">
             {waitingDetails.waitingStatus === "PENDING" && (
               <>
-                {/* 초대장 보내기 버튼 추가 */}
-                <button
-                  onClick={() => {
-                    setIsModalOpen(true);
-                    handleGetParty(waitingDetails.partyId);
-                  }}
-                >
-                  + 일행관리
-                </button>
-                <button onClick={() => handleLeaveParty(waitingDetails.partyId)}>
-                  - 탈퇴하기
-                </button>
+                {waitingDetails.partyPeople.some(
+                  (person) => person.partyRole === "REPRESENTATIVE" && person.userId === loginUser.id
+                ) ? (
+                  // 현재 사용자가 대표자인 경우, "일행관리" 버튼만 표시
+                  <button
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      handleGetParty(waitingDetails.partyId);
+                    }}
+                  >
+                    + 일행관리
+                  </button>
+                ) : (
+                  // 대표자가 아닌 경우, "탈퇴하기" 버튼만 표시
+                  <button onClick={() => handleLeaveParty(waitingDetails.partyId)}>
+                    - 탈퇴하기
+                  </button>
+                )}
               </>
             )}
           </div>
@@ -335,21 +357,31 @@ const WaitingDetails = () => {
                     <p>예약자: {partyDetails.find((party) => party.partyRole === "REPRESENTATIVE").name}</p>
                   )}
                   {/* 일행 출력 (대표자 제외) */}
-                    <p>일행: </p>
                     {partyDetails
                       .filter((party) => party.partyRole !== "REPRESENTATIVE") // 대표자 제외
                       .map((party, index) => (
                         <div className="search-list-item" key={index}>
                           <p>{party.name}</p>
-                          <button onClick={() => handleDeletePartyOne(waitingDetails.partyId, party.userId)}>추방</button>
+                          <button 
+                          className="search-button"
+                          onClick={() => handleDeletePartyOne(waitingDetails.partyId, party.userId)}>추방</button>
                         </div>
                       ))}
 
                     {partyDetails.filter((party) => party.partyRole !== "REPRESENTATIVE").length === 0 && <p>일행이 없습니다.</p>}
-                    <button onClick={() => handleDeleteEveryParty(waitingDetails.partyId)}>전체추방</button>
+                    
                 </div>
-                <button onClick={() => setIsUserSearchModalOpen(true)}>유저 찾기</button>
-                <button onClick={closeModal}>닫기</button>
+                <div>
+                <button 
+                    className="search-button"
+                    onClick={() => handleDeleteEveryParty(waitingDetails.partyId)}>전체추방</button>
+                <button 
+                className="search-button"
+                onClick={() => setIsUserSearchModalOpen(true)}>유저 찾기</button>
+                <button 
+                className="search-button"
+                onClick={closeModal}>닫기</button>
+                </div>
               </div>
             </div>
           )}
@@ -359,7 +391,10 @@ const WaitingDetails = () => {
               <div className="modal-content">
                 <h2>유저 찾기</h2>
                 <div className="modal-search">
-                  <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                  <select 
+                    value={searchType} 
+                    className="search-criteria-dropdown"
+                    onChange={(e) => setSearchType(e.target.value)}>
                     <option value="nickname">닉네임</option>
                     <option value="email">메일</option>
                     <option value="phoneNumberBottom">전화번호(뒷자리)</option>
@@ -368,15 +403,20 @@ const WaitingDetails = () => {
                     type="text"
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
+                    className="search-user-input"
                   />
-                  <button onClick={handleSearch}>검색</button>
+                  <button 
+                  className="search-button"
+                  onClick={handleSearch}>검색</button>
                 </div>
                 <div className="modal-search-list">
                   {userList.length > 0 ? (
                     userList.map((user) => (
                       <div key={user.id} className="search-list-item">
                         <p>{user.nickname} ({user.phoneNumberBottom})</p>
-                        <button onClick={() => {
+                        <button 
+                          className="myfriend-button"
+                          onClick={() => {
                           console.log("버튼 클릭됨", user.id, waitingId);
                           sendPartyInvitation(user.id, waitingId);
                         }}>일행 초대</button>
@@ -386,7 +426,9 @@ const WaitingDetails = () => {
                     <p>검색 결과가 없습니다.</p>
                   )}
                 </div>
-                <button onClick={() => setIsUserSearchModalOpen(false)}>닫기</button>
+                <button 
+                  className="search-button"
+                  onClick={() => setIsUserSearchModalOpen(false)}>닫기</button>
               </div>
             </div>
           )}
