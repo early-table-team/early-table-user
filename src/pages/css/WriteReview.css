@@ -102,17 +102,20 @@
   opacity: 0.9; /* 호버 시 약간 투명하게 */
 }
 
-.review-submit-button {
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 8px;
+.store-detail-reserve-button {
+  width: 100%;
+  font-size: 22px;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
+  transition: background-color 0.3s;
+  border: none; /* 테두리 없앰 */
+  height: 70px;
+  background-color: #ff914d;
+  border-radius: 0px 0px 8px 8px;
+  color: white;
 }
 
-.review-submit-button:hover {
-  background-color: #218838;
+.store-detail-reserve-button:hover {
+  background-color: #0056b3;
+  color: white;
 }

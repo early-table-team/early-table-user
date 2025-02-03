@@ -121,7 +121,13 @@ const StoreDetails = () => {
             <h2 className="store-detail-name">{storeName}</h2>
             <div
               className="store-detail-review-info"
-              onClick={() => navigate(`/store/${storeId}/reviews`)}
+              onClick={() =>
+                navigate(`/store/${storeId}/reviews`, {
+                  state: {
+                    storeName: storeName,
+                  },
+                })
+              }
             >
               <span>⭐ {starPoint}</span>
               <span> 리뷰 {reviewCount}개 &gt;</span>

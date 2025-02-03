@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import instance from "../../api/axios";
-import Header from "../Header";
+import Header from "../HeaderV2";
 import "../css/WriteReview.css";
 
 const ModifyReview = () => {
@@ -101,7 +101,7 @@ const ModifyReview = () => {
       });
 
       alert("리뷰가 수정되었습니다!");
-      navigate("/home");
+      navigate("/review");
     } catch (error) {
       console.error("Failed to update review:", error);
       alert("리뷰 수정에 실패했습니다.");

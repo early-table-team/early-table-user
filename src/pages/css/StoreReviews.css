@@ -1,156 +1,243 @@
 /* 스크롤바 숨김 */
 .store-reviews::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* 가게 상세 정보 컨테이너 */
-  .store-reviews {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    width: 400px;
-    height: 760px;
-    background-color: #fff;
-    overflow-y: auto; /* 위아래 스크롤 가능 */
-    scroll-behavior: smooth; /* 부드러운 스크롤 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* 가게 이름 */
-  .store-reviews-name {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-  
-  /* 가게 이미지 */
-  .store-image-gallery {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .store-reviews-image {
-    width: 80%;
-    height: 250px;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* 가게 설명 */
-  .store-description {
-    font-size: 16px;
-    color: #666;
-    text-align: center;
-    margin-bottom: 20px;
-    line-height: 1.5;
-    letter-spacing: 0.5px;
-  }
-  
-  /* 가게 정보 섹션 */
-  .store-review-info {
-    padding: 20px;
-    font-size: 16px;
-    color: #333;
-    margin-top: 20px;
-    width: 80%;
-    background-color: #f9f9f9; /* 배경색을 밝은 회색으로 설정 */
-    border-radius: 8px; /* 모서리를 둥글게 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 효과 */
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  
-  .store-review-info p {
-    margin: 10px 0; /* 항목 간 간격을 넓혀 가독성을 높임 */
-    line-height: 1.6; /* 줄 간격을 넓혀 읽기 쉽게 */
-  }
-  
-  .store-review-info p span {
-    font-weight: bold;
-    color: #007bff; /* 항목명을 파란색으로 강조 */
-  }
-  
-  .store-review-info .store-review-info-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #444; /* 제목의 색상을 조금 더 진하게 */
-    margin-bottom: 15px; /* 제목과 내용 간의 여백을 추가 */
-    text-align: left; /* 제목을 왼쪽 정렬 */
-  }
-  
-  .store-review-info .store-review-info-detail {
-    font-size: 14px;
-    color: #555; /* 내용은 조금 더 연한 색상으로 */
-    padding-left: 10px; /* 내용에 왼쪽 패딩을 추가해 들여쓰기 효과 */
-  }
-  
-  /* 가게 정보 항목 추가적인 스타일 */
-  .store-review-info .store-review-info-detail::before {
-    content: "•"; /* 항목 앞에 원형 점 추가 */
-    color: #007bff; /* 파란색 원형 점 */
-    padding-right: 5px; /* 점과 내용 간 간격을 추가 */
-  }
+  display: none;
+}
 
-  .store-review-star {
-    text-align: center;
-  }
-  
-  /* 로딩 및 에러 메시지 스타일 */
-  .loading,
-  .error {
-    font-size: 18px;
-    color: #ff6347;
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  /* 예약하기 버튼 */
-  .reserve-button-container {
-    text-align: center; /* 버튼을 중앙 정렬 */
-    width: 100%;
-  }
-  
-  .reserve-button {
-    font-size: 22px;
-    font-weight: bold;
-    background-color: #ff914d;
-    color: #fff;
-    border: none;
-    border-radius: 0px 0px 8px 8px;
-    cursor: pointer;
-    width: 100%;
-    height: 70px;
-  }
-  
-  .reserve-button:hover {
-    background-color: #0056b3;
-    color: white;
-  }
+/* 가게 상세 정보 컨테이너 */
+.store-reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 400px;
+  height: 760px;
+  background-color: #fff;
+  overflow-y: auto; /* 위아래 스크롤 가능 */
+  scroll-behavior: smooth; /* 부드러운 스크롤 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .store-reviews-list {
-    width: 85%;
-  }
-  
-  .store-review-list-item {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    border: 0px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0.2, 0.3);
-    margin: 12px 12px 12px;
-  }
+/* 가게 이름 */
+.store-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
 
-  .store-review-images{
-    width: 100%;
-  }
+/* 가게 이미지 */
+.store-image-gallery {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.store-reviews-image {
+  width: 80%;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 가게 설명 */
+.store-description {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+
+/* 가게 정보 섹션 */
+.store-review-info {
+  padding: 20px;
+  font-size: 16px;
+  color: #333;
+  margin-top: 20px;
+  width: 80%;
+  background-color: #f9f9f9; /* 배경색을 밝은 회색으로 설정 */
+  border-radius: 8px; /* 모서리를 둥글게 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 효과 */
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.store-review-info p {
+  margin: 10px 0; /* 항목 간 간격을 넓혀 가독성을 높임 */
+  line-height: 1.6; /* 줄 간격을 넓혀 읽기 쉽게 */
+}
+
+.store-review-info p span {
+  font-weight: bold;
+  color: #007bff; /* 항목명을 파란색으로 강조 */
+}
+
+.store-review-info .store-review-info-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #444; /* 제목의 색상을 조금 더 진하게 */
+  margin-bottom: 15px; /* 제목과 내용 간의 여백을 추가 */
+  text-align: left; /* 제목을 왼쪽 정렬 */
+}
+
+.store-review-info .store-review-info-detail {
+  font-size: 14px;
+  color: #555; /* 내용은 조금 더 연한 색상으로 */
+  padding-left: 10px; /* 내용에 왼쪽 패딩을 추가해 들여쓰기 효과 */
+}
+
+/* 가게 정보 항목 추가적인 스타일 */
+.store-review-info .store-review-info-detail::before {
+  content: "•"; /* 항목 앞에 원형 점 추가 */
+  color: #007bff; /* 파란색 원형 점 */
+  padding-right: 5px; /* 점과 내용 간 간격을 추가 */
+}
+
+.store-review-star {
+  text-align: center;
+}
+
+/* 로딩 및 에러 메시지 스타일 */
+.loading,
+.error {
+  font-size: 18px;
+  color: #ff6347;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* 리뷰 요약 */
+.review-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* ⭐ 평균 별점 */
+.review-average {
+  text-align: center;
+}
+
+.stars {
+  font-size: 20px;
+  gap: 5px;
+}
+.star {
+  width: 20px;
+  height: 20px;
+}
+
+.filled {
+  color: gold;
+}
+
+/* 📊 별점별 개수 바 그래프 */
+.review-breakdown {
+  text-align: right;
+  width: 50%;
+}
+
+.rating-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.bar-container {
+  flex-grow: 1;
+  height: 10px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background-color: #ffcc00;
+  border-radius: 5px;
+}
+
+/* 최근 리뷰 제목 */
+.recent-reviews-title {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+/* 리뷰 리스트 */
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 개별 리뷰 */
+.review-item {
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 닉네임 스타일 */
+.reviewer-name {
+  font-size: 20px;
+  color: #333;
+}
+
+/* 닉네임과 별점 배치 */
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 별점 스타일 */
+.review-rating {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f7b731; /* 노란색 */
+}
+
+/* 리뷰 내용 */
+.review-content {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* 리뷰 이미지 가로 스크롤 */
+.review-images {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.review-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+/* 스크롤바 숨김 */
+.review-images::-webkit-scrollbar {
+  display: none;
+}
+
+.rating-title {
+  font-size: 45px;
+  font-weight: bold;
+  text-align: center;
+}

@@ -16,7 +16,7 @@ const StoreSlider = ({ stores, handleCardClick }) => (
           {"("}
           {store.reviewCount}
           {")"}
-          {"  "} {store.category}
+          {"  "} <span className="store-category-box">{store.category}</span>
         </p>
       </div>
     ))}

@@ -1,138 +1,78 @@
 /* 기본 레이아웃 설정 */
 .app {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f2f5;
-  }
-  
-  .home::-webkit-scrollbar {
-    display: none; /* 스크롤바 숨김 */
-  }
-  
-  .home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #ffffff;
-    height: 760px;
-    width: 400px;
-    overflow-y: scroll; /* 위아래 스크롤 가능 */
-    scroll-behavior: smooth; /* 부드러운 스크롤 */
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
 
-  .sub-header-container {
-    display: flex; /*내부의 모든 div가 가로로 정렬*/
-    justify-content: left;
-    text-align: justify;
-    gap: 10px;
-    width: 100%;
-    margin: 10px 20px 20px 10px;
-  }
+.home::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨김 */
+}
 
-  .back-button {
-    padding: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    background-color: #ffffff;
-    color: #a1a1a1;
-    border: none;
-    cursor: pointer;
-    margin-right: 10px; /* 버튼과 텍스트 간격 */
-  }
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  height: 760px;
+  width: 400px;
+  overflow-y: scroll; /* 위아래 스크롤 가능 */
+  scroll-behavior: smooth; /* 부드러운 스크롤 */
+}
 
-  .sub-header-text {
-    padding: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    background-color: #ffffff;
-    color: #000000;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #ffffff;
-    height: 700px;
-    width: 400px;
-    overflow-y: scroll; /* 위아래 스크롤 가능 */
-    scroll-behavior: smooth; /* 부드러운 스크롤 */
-  }
+.review-image {
+  width: 80%;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .review-list-container {
-    width: 85%;
-    display: flex;
-    flex-direction: column;
-  }
+.review-item {
+  display: flex;
+  justify-content: space-between; /* 양쪽 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  padding: 10px; /* 내부 여백 */
+  margin-bottom: 20px;
+}
 
-  .review-list-content h3 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #414141;
-    margin: 0 0 12px;
-  }
-  
-  .review-list-content p {
-    font-size: 14px;
-    color: #999;
-  }
-  
-  .review-list-item {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    border: 0px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0.2, 0.3);
-    margin: 12px 12px 12px;
-  }
+.myreview-div {
+  width: 100%;
+}
 
-  /* 리뷰 이미지 */
-.review-image-gallery {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .review-image {
-    width: 80%;
-    height: 250px;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+.review-info h3 {
+  height: fit-content;
+  width: fit-content;
+  margin: 7px 0 15px 0;
+}
 
+.review-info p {
+  height: fit-content;
+  width: fit-content;
+  margin: 7px 0 0 0;
+}
+.reviews-container {
+  width: 90%;
+  padding: 15px;
+  margin: 10px auto;
+  border-radius: 5px;
+}
 
-  .myreview-button {
-    padding: 3px;
-    font-size: 12px;
-    background-color: #ffffff;
-    color: #959494;
-    border: #bbbbbb;
-    border-style: solid;
-    border-width: 1px;
-    cursor: pointer;
-    display: block;
-    border-radius: 4px;
-    width: 40px;
-  }
-
-  .myreview-button-group {
-    gap: 50px;
-    display: flex;
-    justify-content: end;
-    gap: 10px;
-  }
-
-  
+.modify-button {
+  padding: 3px 7px;
+  font-size: 13px;
+  background-color: #ffffff;
+  color: #959494;
+  border: #bbbbbb;
+  border-style: solid;
+  border-width: 1px;
+  cursor: pointer;
+  display: block;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-top: auto;
+}

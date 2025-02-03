@@ -1,57 +1,64 @@
 import axios from "axios";
 
+// 🔹 Axios 인스턴스 생성
 const instance = axios.create({
   baseURL: "http://localhost:8080", // Spring Boot 서버 주소
-  withCredentials: true, // 쿠키를 포함하여 서버와 통신
+  withCredentials: true, // 쿠키 포함 요청
 });
 
+// 🔹 액세스 토큰을 가져오는 함수
+const getAccessToken = () => localStorage.getItem("accessToken");
+
+// 🔹 요청 인터셉터: 헤더에 액세스 토큰 추가
 instance.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("accessToken");
-
+    const accessToken = getAccessToken();
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
-
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
+// 🔹 리프레시 토큰을 사용해 새로운 액세스 토큰을 가져오는 함수
+const refreshAccessToken = async () => {
+  try {
+    const response = await instance.post(
+      "/users/refresh",
+      {},
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true, // HttpOnly 쿠키 포함
+      }
+    );
+
+    const newAccessToken = response.data.accessToken;
+    if (!newAccessToken) throw new Error("새로운 액세스 토큰 없음");
+
+    localStorage.setItem("accessToken", newAccessToken);
+    return newAccessToken;
+  } catch (error) {
+    console.error("❌ 리프레시 토큰 만료: 로그인 페이지로 이동");
+    localStorage.removeItem("accessToken");
+    window.location.href = "/login"; // 로그인 페이지로 리디렉션
+    return null;
+  }
+};
+
+// 🔹 응답 인터셉터: 401 응답 처리 (액세스 토큰 갱신 후 요청 재시도)
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // 401 에러 및 _retry 방지 조건 확인
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true; // 재시도 방지 플래그 설정
 
-      try {
-        const response = await instance.post(
-          "users/refresh",
-          {},
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("accessToken"),
-            },
-            withCredentials: true,
-          }
-        );
-
-        const { accessToken } = response.data;
-        localStorage.setItem("accessToken", accessToken);
-
-        // 새 토큰으로 기존 요청 헤더 갱신
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+      const newAccessToken = await refreshAccessToken();
+      if (newAccessToken) {
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return instance(originalRequest); // 요청 재시도
-      } catch (err) {
-        // 리프레시 실패 시 로그인 페이지로 이동
-        //window.location.href = "/login";
-        return Promise.reject(err);
       }
     }
 

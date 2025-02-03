@@ -39,7 +39,7 @@
   
   /* 모달 콘텐츠 */
   .modal-content {
-    background: white;
+  background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -76,56 +76,35 @@
   .modal-search {
     width: 330px;
     justify-content: space-between;
-  }
-  
-  /* 모달 등장 애니메이션 */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+    margin: 0 auto;
   }
 
   .friendlist {
-    width: 85%;
+    width: 95%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 2px;
   }
 
-  .little-profileimage {
-    width: 20px;
-    display: flex;
+  .friend-info {
+    color: black;
+    font-size: 20px;
+    margin-top: 10px;
   }
 
   .little-profileimage img {
-    width: 50px; /* 원하는 너비 */
-    height: 50px; /* 원하는 높이 */
+    width: 40px; /* 원하는 너비 */
+    height: 40px; /* 원하는 높이 */
     object-fit: cover; /* 이미지 비율 유지 */
     border-radius: 50%; /* 동그랗게 표시 (선택 사항) */
   }
 
-  .medium-profileimage img {
-    width: 150px; /* 원하는 너비 */
-    height: 150px; /* 원하는 높이 */
-    object-fit: cover; /* 이미지 비율 유지 */
-    border-radius: 20%; /* 동그랗게 표시 (선택 사항) */
-  }
-
-  .friend-info-container {
-    text-align: left;
-    width: 85%;
-  }
-
   .list-container {
-    width: 85%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin: 0 auto;
   }
 
   .friend-list-item {
@@ -141,13 +120,33 @@
     margin-bottom: 15px;
   }
 
-  .myfriend-div-1 {
+  .search-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background-color: #fff;
+    border: 0px solid #ddd;
+    border-radius: 8px;
     padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0.2, 0.3);
+    width: 85%;
+    margin: 5px auto 10px auto;
+  }
+
+  .search-list-item p {
+    color: black;
+    margin: 3px;
+  }
+
+
+  .myfriend-div-1 {
+    padding: 15px 0;
     height: 550px;
   }
   
   .myfriend-div-2 {
-    padding: 15px;
+    padding: 15px 0;
     height: 550px;
   }
 
@@ -158,22 +157,24 @@
   }
 
   .plus-button {
-    padding: 10px;
+    padding: auto;
     font-size: 30px;
     font-weight: bold;
     background-color: #ffffff;
     color: #959494;
-    border: #bbbbbb;
-    border-style: dotted;
-    border-width: 3px;
+    border: #959494 solid 1.5px;
     cursor: pointer;
     display: block;
     border-radius: 30%;
     width: 50px;
+    height: 50px;
   }
   
   .plus-button:hover {
-    background-color: #FF914D;
+    background-color: #959494;
+    color: #ffffff;
+    border: #959494 solid 1.5px;  
+    border-radius: 30%;
   }
   
   .myfriend-button {
@@ -191,7 +192,6 @@
   }
 
   .myfriend-button-group {
-    gap: 50px;
     display: flex;
     justify-content: end;
     gap: 10px;
@@ -221,8 +221,22 @@
     background-color: #FF914D;
     color: white;
     border: none;
-    padding: 8px 16px;
+    padding: 6px 16px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+  }
+
+  .link-container {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 10px; /* 요소 간 간격 */
+    text-decoration: none; /* 밑줄 제거 (선택 사항) */
+    margin-top: 5px;
+  }
+
+  .myfriend-button {
+    display: flex;
+    width: auto;
+    padding: 7px;
   }
