@@ -152,7 +152,7 @@ const WaitingDetails = () => {
 
        // reservationDetails의 invitationPeople을 갱신
       const updatedWaitingDetails = { ...waitingDetails };
-      updatedWaitingDetails.invitationPeople = updatedWaitingDetails.invitationPeople.filter(
+      updatedWaitingDetails.partyPeople = updatedWaitingDetails.partyPeople.filter(
         (person) => person.userId !== userId
       );
       setWaitingDetails(updatedWaitingDetails);
@@ -172,18 +172,17 @@ const WaitingDetails = () => {
     try {
       await deleteEveryPartyPeople(partyId);
       alert("전체 추방에 성공하였습니다.");
-      console.log("1");
+      
       //일행 목록 갱신
       await handleGetParty(partyId);
-      console.log("2");
+      
       // 예약자(대표자)는 남기고 나머지 사람들을 비우도록 처리
       const updatedWaitingDetails = { ...waitingDetails };
-      updatedWaitingDetails.invitationPeople = updatedWaitingDetails.invitationPeople.filter(
+      console.log(updatedWaitingDetails);
+      updatedWaitingDetails.partyPeople = updatedWaitingDetails.partyPeople.filter(
         (person) => person.partyRole === "REPRESENTATIVE"  // 대표자만 남기고 모두 삭제
       );
-      console.log("3");
       setWaitingDetails(updatedWaitingDetails);
-      console.log("4");
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
         // 서버에서 반환한 에러 메시지
