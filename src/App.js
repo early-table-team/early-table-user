@@ -28,6 +28,8 @@ import SearchResult from "./pages/store/SearchStoreList";
 import Notification from "./pages/Notification";
 import { onMessage } from "firebase/messaging";
 import { messaging } from "./firebase";  // firebase.js에서 messaging 가져오기
+import MyPartyRequest from "./pages/party/MyPartyRequest";
+
 
 function App() {
   useEffect(() => {
@@ -110,6 +112,7 @@ function App() {
                 />
                 <Route path="/filter" element={<SearchFilter />} />
                 <Route path="/searchResult" element={<SearchResult />} />
+                <Route path="/invitation" element={<MyPartyRequest />} />
               </Routes>
             </SSEProvider>
           }
