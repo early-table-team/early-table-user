@@ -121,6 +121,13 @@ const MyPage = ({ onEdit }) => {
               </div>
               <br></br>
             </Link>
+            <Link to="/invitation" className="link-container">
+              <img src={require("../../assets/icon-person.png")} />
+              <div onClick={onEdit} style={{ marginTop: "10px" }}>
+                일행 관리
+              </div>
+              <br></br>
+            </Link>
             {/* <Link className="link-container">
               <img
                 src={require("../../assets/icon-people.png")}
