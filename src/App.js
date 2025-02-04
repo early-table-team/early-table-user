@@ -26,6 +26,7 @@ import SearchFilter from "./pages/SearchFilter";
 import Reservation from "./pages/reservation/Reservation";
 import SearchResult from "./pages/store/SearchStoreList";
 import Notification from "./pages/Notification";
+import MyPartyRequest from "./pages/party/MyPartyRequest";
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
                 />
                 <Route path="/filter" element={<SearchFilter />} />
                 <Route path="/searchResult" element={<SearchResult />} />
+                <Route path="/invitation" element={<MyPartyRequest />} />
               </Routes>
             </SSEProvider>
           }
