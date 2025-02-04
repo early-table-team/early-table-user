@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { SSEProvider } from "./SSEProvider";
 import Register from "./pages/Register";
@@ -26,8 +26,44 @@ import SearchFilter from "./pages/SearchFilter";
 import Reservation from "./pages/reservation/Reservation";
 import SearchResult from "./pages/store/SearchStoreList";
 import Notification from "./pages/Notification";
+import { onMessage } from "firebase/messaging";
+import { messaging } from "./firebase";  // firebase.js에서 messaging 가져오기
 
 function App() {
+  useEffect(() => {
+    // FCM 메시지 리스너
+    const handleFCMMessage = (message) => {
+      const permission = localStorage.getItem('notificationPermission');
+
+      console.log("FCM 메시지 수신:", message);
+      console.log("Notification.permission", permission);
+
+      // title과 body를 서버에서 보낸 메시지에서 가져오기
+      const { title, body } = message.notification;
+
+      // FCM 메시지 처리 후 알림 권한이 'granted'일 경우 알림을 서비스워커로 전달
+      if (permission === "granted") {
+        if ('Notification' in window && navigator.serviceWorker) {
+          navigator.serviceWorker.ready.then(function(registration) {
+            registration.showNotification(title, {
+              body: body,
+              icon: 'favicon.ico',  // 아이콘
+            });
+          });
+        }
+      } else {
+        console.log("알림 권한이 없습니다.");
+      }
+    };
+
+    // onMessage 리스너 추가
+    onMessage(messaging, handleFCMMessage);
+
+    return () => {
+      // 컴포넌트 언마운트 시 리스너 해제
+    };
+  }, []);
+
   return (
     <Router>
       <Routes>

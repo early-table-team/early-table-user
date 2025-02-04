@@ -49,11 +49,18 @@ function Login() {
 
   //권한요청 -> FCM 토큰 저장
   const getFCMPermission = async () => {
-    const permission = await Notification.requestPermission();
-     if (permission !== 'granted') {
-      alert('Notification permission not granted!');
-      return;
+    
+    if (Notification.permission !== 'granted') {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        localStorage.setItem('notificationPermission', 'denied');
+        alert('Notification permission not granted!');
+      
+        return;
+      }
     }
+    localStorage.setItem('notificationPermission', 'granted');
+
     const accesstoken = localStorage.getItem("accessToken");
     try {
       const token = await getToken(messaging, { vapidKey: process.env.REACT_APP_VAPID_KEY });
@@ -69,7 +76,6 @@ function Login() {
             },
           }
         );
-
       } else {
         console.log('푸시 알림 권한이 없습니다.');
       }

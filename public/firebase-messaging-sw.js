@@ -4,6 +4,7 @@
 importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js');
 
+
 console.log('하이?')
 
 //잘돌아가던코드 절대 지우지말기//

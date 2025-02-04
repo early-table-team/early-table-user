@@ -1,6 +1,6 @@
 // src/firebase.js
 import { initializeApp } from 'firebase/app';
-import { getMessaging } from 'firebase/messaging';
+import { getMessaging,onMessage } from 'firebase/messaging';
 
 // Firebase 설정 객체 (콘솔에서 복사한 내용)
 const firebaseConfig = {
@@ -18,5 +18,9 @@ const app = initializeApp(firebaseConfig);
 
 // Firebase Cloud Messaging 초기화
 const messaging = getMessaging(app);
+
+onMessage(messaging, (message) => {
+    console.log("FCM 메시지 수신:", message);  // 메시지가 제대로 수신되는지 확인
+  });
 
 export { messaging };
