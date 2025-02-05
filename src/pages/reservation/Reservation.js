@@ -3,7 +3,15 @@ import React, { useEffect, useState, useRef } from "react";
 import instance from "../../api/axios";
 import Header from "../Header";
 import "../css/Reservation.css"; // 분리된 CSS 파일 import
-import { addDays, format, startOfToday, isSameDay, eachDayOfInterval, startOfWeek, endOfWeek } from "date-fns";
+import {
+  addDays,
+  format,
+  startOfToday,
+  isSameDay,
+  eachDayOfInterval,
+  startOfWeek,
+  endOfWeek,
+} from "date-fns";
 import { ko } from "date-fns/locale"; // 한국어 로케일
 
 const Reservation = () => {
@@ -26,9 +34,8 @@ const Reservation = () => {
     reservationDate: "",
     menuList: [],
   });
+
   const bottomRefs = useRef([]);
-
-
 
   const scrollToBottom = (index) => {
     if (bottomRefs.current[index]) {
@@ -47,9 +54,12 @@ const Reservation = () => {
     } else {
       const fetchStoreDetails = async () => {
         try {
-          const response = await instance.get(`/stores/${storeInfo.storeId}/rest-date`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          const response = await instance.get(
+            `/stores/${storeInfo.storeId}/rest-date`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
 
           setRestDates(response.data);
         } catch (error) {
@@ -61,7 +71,6 @@ const Reservation = () => {
     }
   }, [navigate, storeInfo.storeId]);
 
-
   useEffect(() => {
     if (selectedDate !== null && form.personnelCount !== null) {
       getDateTimes();
@@ -69,19 +78,21 @@ const Reservation = () => {
   }, [selectedDate, form.personnelCount]);
 
   // 오늘 날짜와 요일 포맷팅
-  const formattedToday = format(today, "yyyy년 MM월 dd일 (EEEE)", { locale: ko });
+  const formattedToday = format(today, "yyyy년 MM월 dd일 (EEEE)", {
+    locale: ko,
+  });
 
   // 예약 인원 증가
   const increaseGuestCount = () => {
     handleChange({
       target: {
         name: "personnelCount",
-        value: form.personnelCount + 1
-      }
+        value: form.personnelCount + 1,
+      },
     });
 
     scrollToBottom(0);
-  }
+  };
 
   // 예약 인원 감소 (최소값 1)
   const decreaseGuestCount = () => {
@@ -89,12 +100,12 @@ const Reservation = () => {
       handleChange({
         target: {
           name: "personnelCount",
-          value: form.personnelCount - 1
-        }
+          value: form.personnelCount - 1,
+        },
       });
     }
     scrollToBottom(0);
-  }
+  };
 
   // 오늘부터 30일간의 날짜 생성
   const days = eachDayOfInterval({
@@ -118,15 +129,15 @@ const Reservation = () => {
 
   // 날짜 클릭 핸들러
   const handleDateClick = async (date) => {
-    scrollToBottom(0)
+    scrollToBottom(0);
 
     setSelectedDate(date); // 클릭한 날짜를 상태로 저장
 
     handleChange({
       target: {
         name: "reservationDate",
-        value: ""
-      }
+        value: "",
+      },
     });
   };
 
@@ -139,7 +150,7 @@ const Reservation = () => {
         {
           params: {
             date: formattedDate,
-            personnelCount: form.personnelCount
+            personnelCount: form.personnelCount,
           }, // LocalDate에 맞게 파라미터 전달
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -156,10 +167,12 @@ const Reservation = () => {
     } catch (error) {
       setError("가게 정보를 가져오는 데 실패했습니다."); // 에러 처리
     }
-  }
+  };
   // 휴무일에 해당하는 날짜 비활성화
   const isHoliday = (date) =>
-    (restDates?.restDates || []).some((holiday) => isSameDay(date, new Date(holiday)));
+    (restDates?.restDates || []).some((holiday) =>
+      isSameDay(date, new Date(holiday))
+    );
 
   const getMenuList = async () => {
     try {
@@ -167,7 +180,7 @@ const Reservation = () => {
         `/stores/${storeInfo.storeId}/menus`,
         {
           params: {
-            personnelCount: form.personnelCount
+            personnelCount: form.personnelCount,
           }, // LocalDate에 맞게 파라미터 전달
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -176,11 +189,10 @@ const Reservation = () => {
       // 시간 순으로 정렬
 
       setMenus(response.data); // 정렬된 예약 시간 상태 업데이트
-
     } catch (error) {
       setError("가게 정보를 가져오는 데 실패했습니다."); // 에러 처리
     }
-  }
+  };
 
   // 메뉴가 업데이트되면, 수량을 메뉴의 개수만큼 초기화
   useEffect(() => {
@@ -190,15 +202,14 @@ const Reservation = () => {
   }, [menus]);
 
   const handleTimeClick = (time) => {
-    var reservationDate = format(selectedDate, "yyyy-MM-dd") + "T" + time
+    var reservationDate = format(selectedDate, "yyyy-MM-dd") + "T" + time;
     handleChange({
       target: {
         name: "reservationDate",
-        value: reservationDate
-      }
+        value: reservationDate,
+      },
     });
   };
-
 
   const handleNextClick = () => {
     if (isSelect1Visible && form.reservationDate) {
@@ -206,20 +217,21 @@ const Reservation = () => {
       setSelect2Visible(true); // select2-container 보이기
       setSelect1Visible(false); // select3-container 숨기기
 
-
       if (menus === null) {
         getMenuList();
       }
-      
     } else if (isSelect1Visible) {
-      alert("예약 일시를 선택해주세요.")
-      
-    } else if (isSelect2Visible && selectedDate && reservationTimes && quantities.reduce((sum, count) => sum + count, 0) != 0) {
+      alert("예약 일시를 선택해주세요.");
+    } else if (
+      isSelect2Visible &&
+      selectedDate &&
+      reservationTimes &&
+      quantities.reduce((sum, count) => sum + count, 0) != 0
+    ) {
       // updateMenuList();
       setReservation();
     } else if (isSelect2Visible) {
-      alert("메뉴는 한 가지 이상 선택해야합니다.")
-      
+      alert("메뉴는 한 가지 이상 선택해야합니다.");
     }
   };
 
@@ -251,26 +263,28 @@ const Reservation = () => {
     }
   };
 
-
   const setReservation = async () => {
     const menuList = menus
-    .map((menu, index) => ({
-      menuId: menu.menuId,
-      menuCount: quantities[index] || 0, // 수량이 없으면 기본값 0
-    }))
-    .filter(item => item.menuCount > 0); // 수량이 0인 항목 제거
+      .map((menu, index) => ({
+        menuId: Number(menu.menuId),
+        menuCount: Number(quantities[index] || 0),
+      }))
+      .filter((item) => item.menuCount > 0)
+      .map((item) => ({
+        menuId: item.menuId.toString(),
+        menuCount: item.menuCount,
+      }));
 
-    console.log(menuList);
     const requestData = {
       personnelCount: form.personnelCount,
       reservationDate: form.reservationDate,
       menuList: menuList,
     };
 
-
     try {
       const response = await instance.post(
-        `/stores/${storeInfo.storeId}/reservations`, requestData,
+        `/stores/${storeInfo.storeId}/reservations`,
+        requestData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -280,17 +294,20 @@ const Reservation = () => {
       );
 
       console.log(response.data);
+      localStorage.setItem("tid", response.data.tid);
+      localStorage.setItem("partnerOrderId", response.data.reservationId);
+      localStorage.setItem("partnerUserId", response.data.userId);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
+      const paymentUrl = response.data.paymentUrl; // 카카오페이 결제 URL
 
-      setSelect1Visible(false);
-      setSelect2Visible(false);
-      setSelect3Visible(true);
-
+      // 📌 페이지 이동 방식으로 카카오페이 결제 진행
+      window.location.href = paymentUrl;
     } catch (error) {
-      console.error("예약 실패:", error);
-      alert("예약에 실패했습니다. 다시 시도해주세요.");
+      console.error("결제 요청 실패:", error);
+      alert("결제 요청 중 오류가 발생했습니다.");
     }
-  }
+  };
 
   useEffect(() => {
     scrollToBottom(0);
@@ -302,21 +319,116 @@ const Reservation = () => {
     }
   }, [form.reservationDate]);
 
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const pgToken = urlParams.get("pg_token");
+    const tid = localStorage.getItem("tid");
+    const partnerOrderId = localStorage.getItem("partnerOrderId");
+    const partnerUserId = localStorage.getItem("partnerUserId");
+
+    if (pgToken) {
+      console.log("PG 토큰 확인:", pgToken);
+      completePayment(pgToken, tid, partnerOrderId, partnerUserId);
+    }
+  }, []);
+
+  const completePayment = async (
+    pgToken,
+    tid,
+    partnerOrderId,
+    partnerUserId
+  ) => {
+    console.log("결제 완료 요청 데이터:", {
+      pgToken,
+      tid,
+      partnerOrderId,
+      partnerUserId,
+    });
+
+    try {
+      // 결제 승인 API 호출 (서버로 pgToken, tid, partnerOrderId, partnerUserId 전달)
+      const response = await instance.post("/approve", null, {
+        params: {
+          tid,
+          partnerOrderId,
+          partnerUserId,
+          pgToken,
+        },
+      });
+      console.log("결제 승인 서버 응답:", response.data);
+      alert("결제가 완료되었습니다!");
+
+      // UI 상태 변경 (결제 완료 화면 표시)
+      setPaymentSuccess(true);
+    } catch (error) {
+      console.error("결제 실패:", error);
+      alert("결제 처리 중 오류가 발생했습니다.");
+    }
+  };
+
+  const [responseData, setResponseData] = useState(null);
+
+  useEffect(() => {
+    const messageListener = (event) => {
+      if (event.origin !== window.location.origin) return; // 보안: 같은 도메인에서만 처리
+
+      if (event.data.type === "paymentSuccess") {
+        const { pgToken } = event.data.payload;
+        const tid = localStorage.getItem("tid");
+        const partnerOrderId = localStorage.getItem("partnerOrderId");
+        const partnerUserId = localStorage.getItem("partnerUserId");
+
+        // 결제 승인 요청
+        completePayment(pgToken, tid, partnerOrderId, partnerUserId);
+      }
+    };
+
+    window.addEventListener("message", messageListener);
+
+    return () => {
+      window.removeEventListener("message", messageListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    // 팝업에서 `pg_token`을 부모 창으로 전달하면 여기서 받음
+    const messageListener = (event) => {
+      if (event.origin !== window.location.origin) return; // 보안 체크
+
+      if (event.data.type === "paymentSuccess") {
+        console.log("결제 성공 데이터:", event.data.payload);
+        setResponseData(event.data.payload); // 상태 업데이트
+      }
+    };
+
+    window.addEventListener("message", messageListener);
+
+    return () => {
+      window.removeEventListener("message", messageListener);
+    };
+  }, []);
+
   return (
     <div className="app">
       <div className="store-details-container">
         <Header />
         <div className="store-details">
           <div className="store-header">
-            <h2 className="store-detail-name"
+            <h2
+              className="store-detail-name"
               style={{ display: isSelect3Visible ? "none" : "flex" }}
-            >{storeInfo.storeName}</h2>
+            >
+              {storeInfo.storeName}
+            </h2>
           </div>
-          <div className="store-detail-image-gallery"
+          <div
+            className="store-detail-image-gallery"
             style={{ display: isSelect3Visible ? "none" : "flex" }}
-          >
-          </div>
-          <div className="store-contents-info-title"
+          ></div>
+          <div
+            className="store-contents-info-title"
             style={{ display: isSelect3Visible ? "none" : "flex" }}
           >
             <span>가게 설명</span>
@@ -358,16 +470,21 @@ const Reservation = () => {
                 <div className="month-header">
                   {selectedDate
                     ? format(selectedDate, "yyyy년 MM월", { locale: ko }) // 선택된 날짜로 월 표시
-                    : format(calendarDays[0], "yyyy년 MM월", { locale: ko })} {/* 첫 달이 기본 표시 */}
+                    : format(calendarDays[0], "yyyy년 MM월", {
+                        locale: ko,
+                      })}{" "}
+                  {/* 첫 달이 기본 표시 */}
                 </div>
 
                 {/* 요일 헤더 */}
                 <div className="calendar-header">
-                  {["일", "월", "화", "수", "목", "금", "토"].map((day, index) => (
-                    <div key={index} className="calendar-day-header">
-                      {day}
-                    </div>
-                  ))}
+                  {["일", "월", "화", "수", "목", "금", "토"].map(
+                    (day, index) => (
+                      <div key={index} className="calendar-day-header">
+                        {day}
+                      </div>
+                    )
+                  )}
                 </div>
 
                 {/* 날짜 */}
@@ -379,9 +496,17 @@ const Reservation = () => {
                         onClick={() => handleDateClick(day)}
                         className={`calendar-day 
                           ${isSameDay(day, selectedDate) ? "selected" : ""} 
-                          ${!days.some((validDay) => isSameDay(day, validDay)) ? "disabled" : ""} 
+                          ${
+                            !days.some((validDay) => isSameDay(day, validDay))
+                              ? "disabled"
+                              : ""
+                          } 
                           ${isHoliday(day) ? "disabled" : ""} 
-                          ${restDates?.restWeekDay?.includes(day.getDay()) ? "disabled" : ""}`}
+                          ${
+                            restDates?.restWeekDay?.includes(day.getDay())
+                              ? "disabled"
+                              : ""
+                          }`}
                         disabled={
                           !days.some((validDay) => isSameDay(day, validDay)) || // 30일 외 날짜 비활성화
                           isHoliday(day) || // 휴무일 비활성화
@@ -390,38 +515,64 @@ const Reservation = () => {
                       >
                         {format(day, "d")}
                       </button>
-                    )
+                    );
                   })}
                 </div>
 
                 <div
                   ref={(el) => (bottomRefs.current[0] = el)}
-                  className="reservation-times">
-                  {reservationTimes?.map(({ reservationTime, remainTableCount }, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        handleTimeClick(reservationTime)
-                      }
-                      }
-                      className={`time-button ${remainTableCount === 0 ? "disabled" : ""} ${form.reservationDate.includes(reservationTime.slice(0, 5)) ? "selected" : ""}`}
-                      disabled={remainTableCount === 0 || form.reservationDate.includes(reservationTime.slice(0, 5))} // 이미 선택된 시간은 비활성화
-                    >
-                      {reservationTime}
-                    </button>
-                  ))}
+                  className="reservation-times"
+                >
+                  {reservationTimes?.map(
+                    ({ reservationTime, remainTableCount }, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          handleTimeClick(reservationTime);
+                        }}
+                        className={`time-button ${
+                          remainTableCount === 0 ? "disabled" : ""
+                        } ${
+                          form.reservationDate.includes(
+                            reservationTime.slice(0, 5)
+                          )
+                            ? "selected"
+                            : ""
+                        }`}
+                        disabled={
+                          remainTableCount === 0 ||
+                          form.reservationDate.includes(
+                            reservationTime.slice(0, 5)
+                          )
+                        } // 이미 선택된 시간은 비활성화
+                      >
+                        {reservationTime}
+                      </button>
+                    )
+                  )}
                 </div>
               </div>
 
               {/* 선택된 날짜 표시 */}
               {form.reservationDate && (
-                <div className={`selected-date-info ${form.reservationDate ? "" : "hidden"}`}>
-                  <p ref={(el) => (bottomRefs.current[1] = el)}
-                  >{format(selectedDate, "yyyy년 MM월 dd일 (EE) ", { locale: ko })}
-                    {form.reservationDate ? `${form.reservationDate.slice(11, 13)}시 ${form.reservationDate.slice(14, 16)}분` : ""}</p>
+                <div
+                  className={`selected-date-info ${
+                    form.reservationDate ? "" : "hidden"
+                  }`}
+                >
+                  <p ref={(el) => (bottomRefs.current[1] = el)}>
+                    {format(selectedDate, "yyyy년 MM월 dd일 (EE) ", {
+                      locale: ko,
+                    })}
+                    {form.reservationDate
+                      ? `${form.reservationDate.slice(
+                          11,
+                          13
+                        )}시 ${form.reservationDate.slice(14, 16)}분`
+                      : ""}
+                  </p>
                 </div>
               )}
-
             </div>
           )}
 
@@ -435,17 +586,27 @@ const Reservation = () => {
                     <div key={index}>
                       <div>
                         <h4>{menu.menuName}</h4>
-                        {menu.menuStatus === 'RECOMMENDED' && <span className="recommended"> 추천!</span>}
+                        {menu.menuStatus === "RECOMMENDED" && (
+                          <span className="recommended"> 추천!</span>
+                        )}
 
                         {/* 수량 선택 */}
                         <div className="quantity-container">
-                          <button onClick={() => decreaseQuantity(index)}>−</button>
-                          <span className="menu-count">{quantities[index]}</span>
-                          <button onClick={() => increaseQuantity(index)}>+</button>
+                          <button onClick={() => decreaseQuantity(index)}>
+                            −
+                          </button>
+                          <span className="menu-count">
+                            {quantities[index]}
+                          </span>
+                          <button onClick={() => increaseQuantity(index)}>
+                            +
+                          </button>
                         </div>
                       </div>
 
-                      <p className="price">{menu.menuPrice.toLocaleString()} 원</p>
+                      <p className="price">
+                        {menu.menuPrice.toLocaleString()} 원
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -457,41 +618,54 @@ const Reservation = () => {
           {isSelect3Visible && (
             <div className="select3-container">
               <h4>예약이 완료되었습니다</h4>
-              <p className="store-name">
-                {storeInfo.storeName}</p>
+              <p className="store-name">{storeInfo.storeName}</p>
               <p className="title">예약 인원</p>
               <span className="reservation-info">{form.personnelCount} 명</span>
               <p className="title">예약 일시</p>
-              <span>{format(selectedDate, "yyyy년 MM월 dd일 (EE) ", { locale: ko })}
-                {form.reservationDate ? `${form.reservationDate.slice(11, 13)}시 ${form.reservationDate.slice(14, 16)}분` : ""}
+              <span>
+                {format(selectedDate, "yyyy년 MM월 dd일 (EE) ", { locale: ko })}
+                {form.reservationDate
+                  ? `${form.reservationDate.slice(
+                      11,
+                      13
+                    )}시 ${form.reservationDate.slice(14, 16)}분`
+                  : ""}
               </span>
-
             </div>
           )}
 
-          <div className={`button-container ${isSelect1Visible ? "sticky" : "absolute"}`}
+          <div
+            className={`button-container ${
+              isSelect1Visible ? "sticky" : "absolute"
+            }`}
           >
-            <button className={"prev-button"}
+            <button
+              className={"prev-button"}
               style={{ display: isSelect3Visible ? "none" : "flex" }}
-              onClick={handlePrevClick}>
+              onClick={handlePrevClick}
+            >
               이전
             </button>
 
-            <button className={"next-button"}
+            <button
+              className={"next-button"}
               style={{ display: isSelect3Visible ? "none" : "flex" }}
-              onClick={handleNextClick}>
+              onClick={handleNextClick}
+            >
               {isSelect1Visible ? "다음" : "예약"}
             </button>
 
-            <button className={"done-button"}
+            <button
+              className={"done-button"}
               style={{ display: isSelect3Visible ? "flex" : "none" }}
-              onClick={() => navigate("/home")}>
+              onClick={() => navigate("/home")}
+            >
               확인
             </button>
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

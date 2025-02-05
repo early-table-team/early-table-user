@@ -27,15 +27,15 @@ import Reservation from "./pages/reservation/Reservation";
 import SearchResult from "./pages/store/SearchStoreList";
 import Notification from "./pages/Notification";
 import { onMessage } from "firebase/messaging";
-import { messaging } from "./firebase";  // firebase.js에서 messaging 가져오기
+import { messaging } from "./firebase"; // firebase.js에서 messaging 가져오기
 import MyPartyRequest from "./pages/party/MyPartyRequest";
 
-
+import Processing from "./pages/reservation/KakaoPayProcessing";
 function App() {
   useEffect(() => {
     // FCM 메시지 리스너
     const handleFCMMessage = (message) => {
-      const permission = localStorage.getItem('notificationPermission');
+      const permission = localStorage.getItem("notificationPermission");
 
       console.log("FCM 메시지 수신:", message);
       console.log("Notification.permission", permission);
@@ -45,11 +45,11 @@ function App() {
 
       // FCM 메시지 처리 후 알림 권한이 'granted'일 경우 알림을 서비스워커로 전달
       if (permission === "granted") {
-        if ('Notification' in window && navigator.serviceWorker) {
-          navigator.serviceWorker.ready.then(function(registration) {
+        if ("Notification" in window && navigator.serviceWorker) {
+          navigator.serviceWorker.ready.then(function (registration) {
             registration.showNotification(title, {
               body: body,
-              icon: 'favicon.ico',  // 아이콘
+              icon: "favicon.ico", // 아이콘
             });
           });
         }
@@ -113,6 +113,7 @@ function App() {
                 <Route path="/filter" element={<SearchFilter />} />
                 <Route path="/searchResult" element={<SearchResult />} />
                 <Route path="/invitation" element={<MyPartyRequest />} />
+                <Route path="/processing" element={<Processing />} />
               </Routes>
             </SSEProvider>
           }
