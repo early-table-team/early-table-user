@@ -26,7 +26,7 @@ import SearchFilter from "./pages/SearchFilter";
 import Reservation from "./pages/reservation/Reservation";
 import SearchResult from "./pages/store/SearchStoreList";
 import Notification from "./pages/Notification";
-
+import Processing from "./pages/reservation/KakaoPayProcessing";
 function App() {
   return (
     <Router>
@@ -74,6 +74,7 @@ function App() {
                 />
                 <Route path="/filter" element={<SearchFilter />} />
                 <Route path="/searchResult" element={<SearchResult />} />
+                <Route path="/processing" element={<Processing />} />
               </Routes>
             </SSEProvider>
           }

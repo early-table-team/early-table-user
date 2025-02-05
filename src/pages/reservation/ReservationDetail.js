@@ -128,7 +128,8 @@ const ReservationDetails = () => {
                     className="reservation-party-image"
                     src={require("../../assets/company-logo.png")}
                     alt="기본 프로필 이미지"
-                  />)}
+                  />
+                )}
                 <p>{person.userName}</p>
               </div>
             ))}
