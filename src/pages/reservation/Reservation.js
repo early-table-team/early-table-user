@@ -155,15 +155,36 @@ const Reservation = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(response.data);
-      // 시간 순으로 정렬
-      const sortedTimes = response.data.sort((a, b) => {
+
+      // 시간 순으로 정렬 (원본 데이터 유지)
+      const sortedTimes = [...response.data].sort((a, b) => {
         const timeA = new Date(`1970-01-01T${a.reservationTime}Z`).getTime();
         const timeB = new Date(`1970-01-01T${b.reservationTime}Z`).getTime();
         return timeA - timeB; // 시간 순으로 오름차순 정렬
       });
-
-      setReservationTimes(sortedTimes); // 정렬된 예약 시간 상태 업데이트
+      
+      const timeMap = new Map();
+      
+      sortedTimes.forEach((item) => {
+        if (!timeMap.has(item.reservationTime)) {
+          // 해당 시간대가 처음이면 추가
+          timeMap.set(item.reservationTime, item);
+        } else {
+          const existingItem = timeMap.get(item.reservationTime);
+          // 기존 아이템의 remainTableCount가 0이고 새로운 것이 0보다 크면 교체
+          if (existingItem.remainTableCount === 0 && item.remainTableCount > 0) {
+            timeMap.set(item.reservationTime, item);
+          }
+        }
+      });
+      
+      // Map을 배열로 변환
+      const filteredTimes = Array.from(timeMap.values());
+      
+      console.log(filteredTimes);
+      
+      setReservationTimes(filteredTimes); // 정렬된 예약 시간 상태 업데이트
+      
     } catch (error) {
       setError("가게 정보를 가져오는 데 실패했습니다."); // 에러 처리
     }
@@ -221,17 +242,13 @@ const Reservation = () => {
         getMenuList();
       }
     } else if (isSelect1Visible) {
-      alert("예약 일시를 선택해주세요.");
-    } else if (
-      isSelect2Visible &&
-      selectedDate &&
-      reservationTimes &&
-      quantities.reduce((sum, count) => sum + count, 0) != 0
-    ) {
+      alert("예약 일시를 선택해주세요.")
+
+    } else if (isSelect2Visible && selectedDate && reservationTimes && quantities.reduce((sum, count) => sum + count, 0) != 0) {
       // updateMenuList();
       setReservation();
     } else if (isSelect2Visible) {
-      alert("메뉴는 한 가지 이상 선택해야합니다.");
+      alert("메뉴는 한 가지 이상 선택해야합니다.")
     }
   };
 
@@ -266,14 +283,10 @@ const Reservation = () => {
   const setReservation = async () => {
     const menuList = menus
       .map((menu, index) => ({
-        menuId: Number(menu.menuId),
-        menuCount: Number(quantities[index] || 0),
+        menuId: menu.menuId,
+        menuCount: quantities[index] || 0, // 수량이 없으면 기본값 0
       }))
-      .filter((item) => item.menuCount > 0)
-      .map((item) => ({
-        menuId: item.menuId.toString(),
-        menuCount: item.menuCount,
-      }));
+      .filter(item => item.menuCount > 0); // 수량이 0인 항목 제거
 
     const requestData = {
       personnelCount: form.personnelCount,
