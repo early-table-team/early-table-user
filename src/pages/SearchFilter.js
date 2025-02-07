@@ -32,7 +32,7 @@ const FilterScreen = () => {
   useEffect(() => {
     // API 호출하여 필터 데이터 받아오기
     axios
-      .get("http://localhost:8080/users/search/init", {
+      .get("https://api.earlytable.kr:8080/users/search/init", {
         headers: {
           Authorization: `Bearer ${token}`, // 토큰을 Authorization 헤더에 추가
         },
