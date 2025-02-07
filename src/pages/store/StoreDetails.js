@@ -99,6 +99,45 @@ const StoreDetails = () => {
     (key) => storeImageUrlMap[key]
   );
 
+  const handleReservationClick = async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      // 예약 가능 인원 체크 API 호출
+      const response = await instance.post(
+        `/${storeId}/request`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (response.status === 200) {
+        navigate("/reservation", {
+          // 예약 페이지로 이동
+          state: {
+            storeId: storeId,
+            storeName: storeName,
+            storeImageUrls: imageUrls,
+            storeContents: storeContents,
+          },
+        });
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 429) {
+        alert("예약 가능 인원이 초과되었습니다."); // TOO_MANY_REQUESTS(429) 처리
+      } else {
+        alert("예약 요청에 실패했습니다.");
+      }
+    }
+  };
+
   return (
     <div className="app">
       <div className="store-details-container">
@@ -162,16 +201,7 @@ const StoreDetails = () => {
           {storeTypeList.includes("RESERVATION") && (
             <button
               className="store-detail-reserve-button"
-              onClick={() =>
-                navigate("/reservation", {
-                  state: {
-                    storeId: storeId,
-                    storeName: storeName,
-                    storeImageUrls: imageUrls,
-                    storeContents: storeContents,
-                  },
-                })
-              }
+              onClick={handleReservationClick} // API 호출 후 이동
             >
               예약하기
             </button>
