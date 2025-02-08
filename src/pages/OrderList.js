@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../pages/Header";
+import Header from "../pages/HeaderV2";
 import Footer from "../pages/Footer";
 import "../pages/css/OrderList.css";
 import instance from "../api/axios";

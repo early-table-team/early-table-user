@@ -44,6 +44,7 @@
 
 .interest-store-details {
   flex: 1;
+  max-width: 65%;
 }
 
 .interest-store-name {

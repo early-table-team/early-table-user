@@ -8,7 +8,6 @@
 }
 
 .store-contents-info-title {
-
   flex-direction: column;
   /* 세로로 정렬 */
 }
@@ -47,8 +46,6 @@
   text-align: center;
 }
 
-
-
 /* 예약 인원 컨테이너 */
 .guest-count-container {
   display: flex;
@@ -75,7 +72,7 @@
   background-color: white;
   cursor: pointer;
   color: #ff914d;
-  margin-bottom: 2px
+  margin-bottom: 2px;
 }
 
 .guest-count-button:hover {
@@ -173,7 +170,7 @@
   max-width: 100%;
   /* 부모 요소를 넘지 않도록 설정 */
   margin-top: 20px;
-  scrollbar-width: none
+  scrollbar-width: none;
 }
 
 .time-button {
@@ -212,25 +209,13 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
-  width: 90%;
-  margin: 0 auto;
+  width: 80%;
   justify-content: space-between;
 }
 
-/* 메뉴 제목 */
-.menu-title p {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 15px;
-  margin-left: 15px;
-}
-
 /* 개별 메뉴 */
-.select2-container>div>div {
+.select2-container > div > div {
   background-color: white;
-  padding: 15px;
   margin-bottom: 10px;
   display: flex;
   width: 100%;
@@ -238,7 +223,7 @@
   align-items: flex-start;
 }
 
-.select2-container>div>div>div {
+.select2-container > div > div > div {
   background-color: white;
   display: flex;
   width: 100%;
@@ -246,7 +231,7 @@
   align-items: flex-start;
 }
 
-.select2-container>div>div>div>div {
+.select2-container > div > div > div > div {
   background-color: white;
   display: flex;
   width: 100%;
@@ -256,12 +241,8 @@
   justify-content: space-between; /* 좌우 끝으로 배치 */
 }
 
-/* 메뉴 이름 */
-.select2-container .menu-title h4 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  margin: 0;
+.menuNameBox {
+  width: 60%;
 }
 
 /* 추천! 텍스트 */
@@ -272,9 +253,8 @@
   border-radius: 12px;
   border: #ff914d 1px solid;
   font-size: 14px;
-  height: auto;
-  margin-left: 10px;
-  display: inline-block;
+  height: fit-content;
+  width: fit-content;
 }
 
 /* 메뉴 가격 */
@@ -306,7 +286,6 @@
   color: #ff914d;
   cursor: pointer;
 }
-
 
 /* 수량 표시 스타일 */
 .select2-container .menu-title .quantity-container span {
@@ -374,7 +353,6 @@
   bottom: 0;
 }
 
-
 .prev-button {
   padding: 10px 40px;
   border: 1px solid #ccc;
@@ -401,7 +379,6 @@
   color: white;
 }
 
-
 .done-button {
   width: 50%;
   padding: 10px 40px;
@@ -416,6 +393,6 @@
   color: white;
   /* 가운데 정렬 */
   display: flex;
-  justify-content: center;  /* 수평 중앙 */
-  align-items: center;      /* 수직 중앙 */
+  justify-content: center; /* 수평 중앙 */
+  align-items: center; /* 수직 중앙 */
 }

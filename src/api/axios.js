@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 🔹 Axios 인스턴스 생성
 const instance = axios.create({
-  baseURL: "https://api.earlytable.kr:8080", // Spring Boot 서버 주소
+  baseURL: "https://api.earlytable.kr", // Spring Boot 서버 주소
   withCredentials: true, // 쿠키 포함 요청
 });
 

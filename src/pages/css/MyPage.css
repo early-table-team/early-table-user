@@ -33,6 +33,7 @@ a {
   align-items: center;
   gap: 20px;
   height: fit-content;
+  margin-bottom: 12px;
 }
 
 .link-container > div {
@@ -74,18 +75,22 @@ a {
 .mypage-list-item {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: white;
+  color: black;
   border: 0px solid #ddd;
   border-radius: 8px;
   padding: 15px;
   box-shadow: 0 1px 3px rgba(0, 0, 0.2, 0.3);
   text-align: center;
   align-items: center; /* 내부 요소들을 가운데 정렬 */
+  padding-bottom: 30px;
 }
 
 .mypage-div {
   text-align: left;
   width: 85%;
+  margin-bottom: 14px;
+  margin-top: 10px;
 }
 
 .mypage-button-group {

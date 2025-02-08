@@ -26,6 +26,7 @@ import SearchFilter from "./pages/SearchFilter";
 import Reservation from "./pages/reservation/Reservation";
 import SearchResult from "./pages/store/SearchStoreList";
 import Notification from "./pages/Notification";
+import Notice from "./pages/user/Notice";
 import { onMessage } from "firebase/messaging";
 import { messaging } from "./firebase"; // firebase.js에서 messaging 가져오기
 import MyPartyRequest from "./pages/party/MyPartyRequest";
@@ -81,6 +82,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/notice" element={<Notice />} />
                 <Route path="/store/:storeId" element={<StoreDetails />} />
                 <Route path="/stores/keyword" element={<StoreList />} />
                 <Route path="/interest" element={<InterestStores />} />

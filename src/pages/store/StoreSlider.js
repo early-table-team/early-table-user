@@ -1,4 +1,5 @@
 import React from "react";
+import StoreName from "./StoreName";
 
 const StoreSlider = ({ stores, handleCardClick }) => (
   <div className="stores-slider">
@@ -10,7 +11,7 @@ const StoreSlider = ({ stores, handleCardClick }) => (
         style={{ cursor: "pointer" }}
       >
         <img src={store.image} alt={store.name} className="store-image" />
-        <p className="home-store-name">{store.name}</p>
+        <StoreName name={store.name} />
         <p className="home-store-start">
           ⭐{store.starPoint}
           {"("}

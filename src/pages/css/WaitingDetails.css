@@ -211,3 +211,9 @@
   text-align: center;
   margin-top: 20px;
 }
+
+.waiting-user-search-button-group {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 8%;
+}

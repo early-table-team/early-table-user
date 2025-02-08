@@ -188,7 +188,7 @@ const ReviewList = ({ reviews }) => {
   return (
     <div className="review-list">
       {reviews.map((review) => (
-        <div key={review.reviewId} className="review-item">
+        <div key={review.reviewId} className="review-item-store">
           {/* 닉네임과 별점 배치 */}
           <div className="review-header">
             <h3 className="reviewer-name">{review.reviewerNickname}</h3>

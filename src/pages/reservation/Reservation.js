@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import instance from "../../api/axios";
 import Header from "../Header";
+import StoreName from "../store/StoreName";
 import "../css/Reservation.css"; // 분리된 CSS 파일 import
 import {
   addDays,
@@ -22,7 +23,7 @@ const Reservation = () => {
   const today = startOfToday(); // 오늘 날짜
   const [restDates, setRestDates] = useState();
   const [reservationTimes, setReservationTimes] = useState();
-  const [error, setError] = useState(null); // 에러 상태
+  const [, setError] = useState(null); // 에러 상태
   const token = localStorage.getItem("accessToken");
   const [menus, setMenus] = useState(null);
   const [isSelect1Visible, setSelect1Visible] = useState(true); // select1-container 보이게 하는 상태
@@ -162,9 +163,9 @@ const Reservation = () => {
         const timeB = new Date(`1970-01-01T${b.reservationTime}Z`).getTime();
         return timeA - timeB; // 시간 순으로 오름차순 정렬
       });
-      
+
       const timeMap = new Map();
-      
+
       sortedTimes.forEach((item) => {
         if (!timeMap.has(item.reservationTime)) {
           // 해당 시간대가 처음이면 추가
@@ -172,19 +173,21 @@ const Reservation = () => {
         } else {
           const existingItem = timeMap.get(item.reservationTime);
           // 기존 아이템의 remainTableCount가 0이고 새로운 것이 0보다 크면 교체
-          if (existingItem.remainTableCount === 0 && item.remainTableCount > 0) {
+          if (
+            existingItem.remainTableCount === 0 &&
+            item.remainTableCount > 0
+          ) {
             timeMap.set(item.reservationTime, item);
           }
         }
       });
-      
+
       // Map을 배열로 변환
       const filteredTimes = Array.from(timeMap.values());
-      
+
       console.log(filteredTimes);
-      
+
       setReservationTimes(filteredTimes); // 정렬된 예약 시간 상태 업데이트
-      
     } catch (error) {
       setError("가게 정보를 가져오는 데 실패했습니다."); // 에러 처리
     }
@@ -242,13 +245,17 @@ const Reservation = () => {
         getMenuList();
       }
     } else if (isSelect1Visible) {
-      alert("예약 일시를 선택해주세요.")
-
-    } else if (isSelect2Visible && selectedDate && reservationTimes && quantities.reduce((sum, count) => sum + count, 0) != 0) {
+      alert("예약 일시를 선택해주세요.");
+    } else if (
+      isSelect2Visible &&
+      selectedDate &&
+      reservationTimes &&
+      quantities.reduce((sum, count) => sum + count, 0) !== 0
+    ) {
       // updateMenuList();
       setReservation();
     } else if (isSelect2Visible) {
-      alert("메뉴는 한 가지 이상 선택해야합니다.")
+      alert("메뉴는 한 가지 이상 선택해야합니다.");
     }
   };
 
@@ -260,7 +267,7 @@ const Reservation = () => {
       setSelect3Visible(false);
     } else if (isSelect1Visible) {
       // select1-container가 보이는 상태일 때는 navigate 호출
-      navigate(`/store/${storeInfo.storeId}`);
+      navigate(-1);
     }
   };
 
@@ -286,7 +293,7 @@ const Reservation = () => {
         menuId: menu.menuId,
         menuCount: quantities[index] || 0, // 수량이 없으면 기본값 0
       }))
-      .filter(item => item.menuCount > 0); // 수량이 0인 항목 제거
+      .filter((item) => item.menuCount > 0); // 수량이 0인 항목 제거
 
     const requestData = {
       personnelCount: form.personnelCount,
@@ -330,9 +337,9 @@ const Reservation = () => {
     if (form.personnelCount) {
       scrollToBottom(1);
     }
-  }, [form.reservationDate]);
+  }, [form.personnelCount, form.reservationDate]);
 
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [, setPaymentSuccess] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -381,7 +388,7 @@ const Reservation = () => {
     }
   };
 
-  const [responseData, setResponseData] = useState(null);
+  const [, setResponseData] = useState(null);
 
   useEffect(() => {
     const messageListener = (event) => {
@@ -429,23 +436,7 @@ const Reservation = () => {
         <Header />
         <div className="store-details">
           <div className="store-header">
-            <h2
-              className="store-detail-name"
-              style={{ display: isSelect3Visible ? "none" : "flex" }}
-            >
-              {storeInfo.storeName}
-            </h2>
-          </div>
-          <div
-            className="store-detail-image-gallery"
-            style={{ display: isSelect3Visible ? "none" : "flex" }}
-          ></div>
-          <div
-            className="store-contents-info-title"
-            style={{ display: isSelect3Visible ? "none" : "flex" }}
-          >
-            <span>가게 설명</span>
-            <p>{storeInfo.storeContents}</p>
+            <h2 className="store-details-name">{storeInfo.storeName}</h2>
           </div>
 
           {/* select1-container: 보이거나 숨기기 */}
@@ -593,15 +584,17 @@ const Reservation = () => {
           {isSelect2Visible && (
             <div className="select2-container">
               <div className="menu-title">
-                <p>메뉴</p>
+                <h2>메뉴</h2>
                 <div>
                   {menus?.map((menu, index) => (
                     <div key={index}>
+                      {menu.menuStatus === "RECOMMENDED" && (
+                        <div className="recommended"> 추천!</div>
+                      )}
                       <div>
-                        <h4>{menu.menuName}</h4>
-                        {menu.menuStatus === "RECOMMENDED" && (
-                          <span className="recommended"> 추천!</span>
-                        )}
+                        <div className="menuNameBox">
+                          <StoreName name={menu.menuName} />
+                        </div>
 
                         {/* 수량 선택 */}
                         <div className="quantity-container">
@@ -646,36 +639,29 @@ const Reservation = () => {
               </span>
             </div>
           )}
-
-          <div
-            className={`button-container ${
-              isSelect1Visible ? "sticky" : "absolute"
-            }`}
+        </div>
+        <div className="buttons-container">
+          <button
+            className="store-detail-reserve-button-v2"
+            onClick={handlePrevClick}
           >
-            <button
-              className={"prev-button"}
-              style={{ display: isSelect3Visible ? "none" : "flex" }}
-              onClick={handlePrevClick}
-            >
-              이전
-            </button>
+            이전
+          </button>
 
-            <button
-              className={"next-button"}
-              style={{ display: isSelect3Visible ? "none" : "flex" }}
-              onClick={handleNextClick}
-            >
-              {isSelect1Visible ? "다음" : "예약"}
-            </button>
+          <button
+            className="store-detail-reserve-button"
+            onClick={handleNextClick}
+          >
+            {isSelect1Visible ? "다음" : "예약"}
+          </button>
 
-            <button
-              className={"done-button"}
-              style={{ display: isSelect3Visible ? "flex" : "none" }}
-              onClick={() => navigate("/home")}
-            >
-              확인
-            </button>
-          </div>
+          <button
+            className="store-detail-reserve-button"
+            style={{ display: isSelect3Visible ? "" : "none" }}
+            onClick={() => navigate("/home")}
+          >
+            확인
+          </button>
         </div>
       </div>
     </div>
