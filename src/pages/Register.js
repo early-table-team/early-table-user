@@ -42,6 +42,23 @@ function Register() {
     }
   };
 
+  function formatPhoneNumber(event) {
+    const rawValue = event.target.value.replace(/[^0-9]/g, ""); // 숫자만 추출
+
+    // 전화번호 포맷팅
+    const formattedValue = rawValue
+      .replace(/^(\d{3})(\d{4})(\d{1,4})$/, "$1-$2-$3") // 010-1234-5678
+      .replace(/^(\d{3})(\d{1,4})$/, "$1-$2"); // 입력 중간 포맷팅
+
+    // handleChange 호출 시 올바른 이벤트 객체 형식 전달
+    handleChange({
+      target: {
+        name: "phoneNumber", // 적절한 name 값
+        value: formattedValue, // 포맷팅된 전화번호 값
+      },
+    });
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -124,7 +141,10 @@ function Register() {
             id="phone"
             name="phone"
             value={form.phone}
-            onChange={handleChange}
+            onChange={(e) => {
+              handleChange(e); // 입력값 관리
+              formatPhoneNumber(e); // 포맷팅 처리
+            }}
             className="register-input"
           />
           <label htmlFor="role" className="register-label">

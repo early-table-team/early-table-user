@@ -79,24 +79,23 @@
 }
 
 .stores-slider {
+  padding-left: 4px;
+  padding-right: 4px;
   display: flex;
   gap: 20px;
   overflow-x: auto; /* 가로 스크롤 활성화 */
   padding-bottom: 10px; /* 아래 여백 추가 */
   scroll-behavior: smooth; /* 부드러운 스크롤 효과 */
-  scrollbar-width: none; /* Firefox용 스크롤바 숨김 */
-}
-
-.stores-slider::-webkit-scrollbar {
-  display: none; /* Chrome 및 Safari용 스크롤바 숨김 */
+  white-space: nowrap; /* 내부 요소들이 줄 바꿈되지 않도록 설정 */
+  flex-wrap: nowrap; /* flex 아이템이 한 줄로 유지되도록 설정 */
 }
 
 .store-card {
   display: flex;
   flex-direction: column;
-  align-items: first baseline; /* 수평 중앙 정렬 */
+  align-items: flex-start; /* 왼쪽 정렬 */
   justify-content: center; /* 수직 중앙 정렬 */
-  width: 180px;
+  min-width: 180px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0.5, 0.1, 0.3);
@@ -114,7 +113,10 @@
 
 .home-store-name {
   padding-left: 4px;
-  font-size: 15px;
+  max-width: 100%; /* 부모 요소 크기를 넘지 않도록 설정 */
+  font-size: clamp(12px, 2vw, 16px); /* 글자 크기 자동 조정 */
+  text-align: center; /* 중앙 정렬 */
+  white-space: nowrap; /* 줄 바꿈 방지 */
   font-weight: bold;
   color: #333;
   margin-bottom: 2px;

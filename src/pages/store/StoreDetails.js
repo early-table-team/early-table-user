@@ -13,6 +13,8 @@ const StoreDetails = () => {
   const { messages } = useSSE(); // 전역 메시지 가져오기
   const navigate = useNavigate();
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 이미지 인덱스
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
@@ -77,6 +79,19 @@ const StoreDetails = () => {
       }
     });
   }, [messages, storeId]);
+
+  // 이미지 슬라이드 로직
+  const goToNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === imageUrls.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const goToPrevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? imageUrls.length - 1 : prevIndex - 1
+    );
+  };
 
   if (error) return <div>{error}</div>;
   if (!storeDetails) return <div>가게 정보가 없습니다.</div>;
@@ -143,15 +158,23 @@ const StoreDetails = () => {
       <div className="store-details-container">
         <Header />
         <div className="store-details">
+          {/* 캐러셀 배너 이미지 */}
           <div className="store-detail-image-gallery">
-            {imageUrls.map((url, index) => (
+            {imageUrls.length > 0 && (
               <img
-                key={index}
-                src={url}
-                alt={`store-image-${index}`}
+                src={imageUrls[currentImageIndex]}
+                alt={`store-image-${currentImageIndex}`}
                 className="store-detail-image"
               />
-            ))}
+            )}
+            {/* 이전 버튼 */}
+            <button className="carousel-button prev" onClick={goToPrevImage}>
+              &#10094;
+            </button>
+            {/* 다음 버튼 */}
+            <button className="carousel-button next" onClick={goToNextImage}>
+              &#10095;
+            </button>
           </div>
           <div className="store-view-count">
             <p>지금 {currentViewers}명이 보고 있어요</p>

@@ -94,7 +94,7 @@
 }
 
 .register-preview {
-  width: 200px; /* 프리뷰 이미지 크기 */
+  width: 100%; /* 프리뷰 이미지 크기 */
   height: fit-content;
   object-fit: cover;
   border-radius: 10%;

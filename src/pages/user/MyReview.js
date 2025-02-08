@@ -44,7 +44,6 @@ const MyReview = () => {
     fetchReviews();
   }, [token]); // 컴포넌트 마운트 시 한 번 실행
 
-  if (loading) return <p>Loading...</p>; // 로딩 중일 때
   if (error) return <p>리뷰 데이터를 불러오는 중 문제가 발생했습니다.</p>; // 에러가 발생했을 때
 
   return (
@@ -69,38 +68,53 @@ const MyReview = () => {
             ) : (
               <ul className="reviews-container">
                 {reviews.map((review) => (
-                  <li key={review.reviewId} className="review-item">
-                    <div className="review-info">
-                      <h3>{review.storeName}</h3>
-                      <p>
-                        평점:{" "}
-                        {Array.from(
-                          { length: review.rating },
-                          (_, i) => "⭐"
-                        ).join("")}
-                      </p>
-                      <p>리뷰 내용: {review.reviewContents || "내용 없음"}</p>
-                      <p>
-                        작성일:{" "}
-                        {new Date(review.createdAt).toLocaleDateString()}
-                      </p>
+                  <div key={review.reviewId} className="review-item-store">
+                    {/* 닉네임과 별점 배치 */}
+                    <div className="review-header">
+                      <h3 className="reviewer-name">{review.storeName}</h3>
+                      <p className="review-rating">⭐ {review.rating}</p>
                     </div>
-                    <Link
-                      className="modify-button"
-                      to="/review/modify"
-                      state={{
-                        storeName: review.storeName,
-                        reviewId: review.reviewId,
-                        rating: review.rating,
-                        reviewContent: review.reviewContents,
-                        reviewImageList: Object.values(
-                          review.reviewImageUrlMap || {}
-                        ),
-                      }}
-                    >
-                      수정하기
-                    </Link>
-                  </li>
+
+                    {/* 리뷰 내용 */}
+                    <p className="review-content">{review.reviewContents}</p>
+
+                    {/* 리뷰 이미지 (가로 스크롤 적용) */}
+                    {review.reviewImageUrlMap && (
+                      <>
+                        <div className="review-images">
+                          {Object.values(review.reviewImageUrlMap).map(
+                            (url, index) => (
+                              <img
+                                key={index}
+                                src={url}
+                                alt={`리뷰 이미지 ${index + 1}`}
+                                className="review-image"
+                              />
+                            )
+                          )}
+                        </div>
+                        <p>
+                          작성일:{" "}
+                          {new Date(review.createdAt).toLocaleDateString()}
+                        </p>
+                        <Link
+                          className="modify-button"
+                          to="/review/modify"
+                          state={{
+                            storeName: review.storeName,
+                            reviewId: review.reviewId,
+                            rating: review.rating,
+                            reviewContent: review.reviewContents,
+                            reviewImageList: Object.values(
+                              review.reviewImageUrlMap || {}
+                            ),
+                          }}
+                        >
+                          수정하기
+                        </Link>
+                      </>
+                    )}
+                  </div>
                 ))}
               </ul>
             )}
@@ -110,6 +124,13 @@ const MyReview = () => {
           <Footer />
         </div>
       </div>
+      {/* ✅ 로딩 오버레이 (로딩 중일 때만 표시) */}
+      {loading && (
+        <div className="loading-overlay">
+          <div className="spinner"></div>
+          <p>마이페이지 정보를 불러오는 중...</p>
+        </div>
+      )}
     </div>
   );
 };

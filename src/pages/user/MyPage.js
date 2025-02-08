@@ -5,15 +5,14 @@ import Header from "../HeaderV2";
 import Footer from "../Footer";
 import "../css/MyPage.css";
 import { fetchUserInfo, fetchUserReservationCount } from "./userService";
-//import "./css/Register.css"; /////수정//
 
 const MyPage = ({ onEdit }) => {
-  const navigate = useNavigate(); // useNavigate 훅 초기화
+  const navigate = useNavigate();
 
-  const [user, setUser] = useState(null); // 유저 정보를 저장할 상태
+  const [user, setUser] = useState(null);
   const [userReservationCount, setUserReservationCount] = useState(null);
-  const [loading, setLoading] = useState(true); // 로딩 상태
-  const [error, setError] = useState(null); // 에러 상태
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,19 +30,15 @@ const MyPage = ({ onEdit }) => {
     };
 
     fetchData();
-  }, []); // 컴포넌트 마운트 시 한 번 실행
-
-  if (loading) return <p>Loading...</p>; // 로딩 중일 때
-  if (error) return <p>{error}</p>; // 에러가 발생했을 때
+  }, []);
 
   const handleButtonDeleteUserClick = () => {
-    navigate(`/users/delete-user`); //
+    navigate(`/users/delete-user`);
   };
 
   const token = localStorage.getItem("accessToken");
 
   const handleButtonLogoutClick = async () => {
-    //navigate(`/users/logout`);
     try {
       await axios.post(
         "/users/logout",
@@ -74,107 +69,86 @@ const MyPage = ({ onEdit }) => {
               className="mypage-sub-header-container"
               onClick={() => navigate("/myinfo")}
             >
-              {user.imageUrl ? (
-                <img
-                  className="profile-img"
-                  src={user.imageUrl}
-                  alt="프로필 이미지"
-                />
-              ) : (
-                <img
-                  className="profile-img"
-                  src={require("../../assets/company-logo.png")}
-                  alt="기본 프로필 이미지"
-                />
-              )}
-              <div className="nickname">{user.nickname} 님</div>
+              <img
+                className="profile-img"
+                src={user?.imageUrl || require("../../assets/company-logo.png")}
+                alt="프로필 이미지"
+              />
+              <div className="nickname">{user?.nickname || "사용자"} 님</div>
             </h2>
 
             <div className="mypage-list-item">
               <h3>이용 예정 내역</h3>
-              예약 | {userReservationCount.reservationCount} 건<br></br>
-              웨이팅 | {userReservationCount.waitingCount} 건<br></br>
-              <br />
-              <Link to="/home">
-                <button className="stores-button">
-                  <img src={require("../../assets/icon-spot.png")} />
-                  <p>매장 둘러보기</p>
-                </button>
-              </Link>
+              예약 | {userReservationCount?.reservationCount ?? 0} 건<br></br>
+              웨이팅 | {userReservationCount?.waitingCount ?? 0} 건<br></br>
             </div>
           </div>
-          <br></br>
-          <br></br>
+
           <div className="mypage-div">
             <h2 className="section-title">이용 정보</h2>
             <Link to="/review" className="link-container">
-              <img src={require("../../assets/icon-review.png")} />
-              <div onClick={onEdit} style={{ marginTop: "10px" }}>
-                내 리뷰
-              </div>
-              <br></br>
+              <img
+                src={require("../../assets/icon-review.png")}
+                alt="내 리뷰"
+              />
+              <div onClick={onEdit}>내 리뷰</div>
             </Link>
             <Link to="/friends" className="link-container">
-              <img src={require("../../assets/icon-person.png")} />
-              <div onClick={onEdit} style={{ marginTop: "10px" }}>
-                친구 관리
-              </div>
-              <br></br>
+              <img
+                src={require("../../assets/icon-person.png")}
+                alt="친구 관리"
+              />
+              <div onClick={onEdit}>친구 관리</div>
             </Link>
             <Link to="/invitation" className="link-container">
-              <img src={require("../../assets/icon-person.png")} />
-              <div onClick={onEdit} style={{ marginTop: "10px" }}>
-                일행 관리
-              </div>
-              <br></br>
-            </Link>
-            {/* <Link className="link-container">
               <img
-                src={require("../../assets/icon-people.png")}
+                src={require("../../assets/icon-person.png")}
+                alt="일행 관리"
               />
-              <div onClick={onEdit} style={{ marginTop: "10px" }}>
-                모임 관리
-              </div>
-            </Link> */}
-            <br></br>
-            <br></br>
+              <div onClick={onEdit}>일행 관리</div>
+            </Link>
           </div>
+
           <div className="mypage-div">
             <h2 className="section-title">서비스 안내</h2>
-            <Link className="link-container">
-              <img src={require("../../assets/icon-announce.png")} />
-              <div onClick={onEdit} style={{ marginTop: "10px" }}>
-                공지사항
-              </div>
+            <Link to="/notice" className="link-container">
+              <img
+                src={require("../../assets/icon-announce.png")}
+                alt="공지사항"
+              />
+              <div onClick={onEdit}>공지사항</div>
             </Link>
-
-            <br></br>
-            <br></br>
           </div>
+
           <div className="mypage-button-group">
             <Link to="/delete-user">
               <button
                 className="mypage-button"
-                onClick={() => handleButtonDeleteUserClick()} // 카드 클릭 이벤트 추가
-                style={{ cursor: "pointer", marginTop: "10px" }} // 클릭 가능하게 스타일 추가
+                onClick={handleButtonDeleteUserClick}
               >
                 회원탈퇴
               </button>
             </Link>
-            <button
-              className="mypage-button"
-              onClick={() => handleButtonLogoutClick()} // 카드 클릭 이벤트 추가
-              style={{ cursor: "pointer", marginTop: "10px" }} // 클릭 가능하게 스타일 추가
-            >
+            <button className="mypage-button" onClick={handleButtonLogoutClick}>
               로그아웃
             </button>
           </div>
         </div>
+
         <div className="footer-container">
           <Footer />
         </div>
       </div>
+
+      {/* ✅ 로딩 오버레이 (로딩 중일 때만 표시) */}
+      {loading && (
+        <div className="loading-overlay">
+          <div className="spinner"></div>
+          <p>마이페이지 정보를 불러오는 중...</p>
+        </div>
+      )}
     </div>
   );
 };
+
 export default MyPage;

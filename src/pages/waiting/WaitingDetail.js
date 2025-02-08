@@ -5,7 +5,13 @@ import Header from "../HeaderV2";
 import Footer from "../Footer";
 import instance from "../../api/axios";
 import "../css/WaitingDetails.css";
-import { fetchPartypeopleList, deletePartyPeopleOne, deleteEveryPartyPeople, sendPartyRequestFromWaiting, leaveParty } from "../party/partyService";
+import {
+  fetchPartypeopleList,
+  deletePartyPeopleOne,
+  deleteEveryPartyPeople,
+  sendPartyRequestFromWaiting,
+  leaveParty,
+} from "../party/partyService";
 
 const WaitingDetails = () => {
   const { waitingId } = useParams(); // URL에서 waitingId를 가져옴
@@ -17,7 +23,7 @@ const WaitingDetails = () => {
   const [isUserSearchModalOpen, setIsUserSearchModalOpen] = useState(false);
   const [searchType, setSearchType] = useState("nickname"); // 드롭다운 선택 값
   const [searchValue, setSearchValue] = useState(""); // 검색창 입력 값
-  const [userList, setUserList] = useState([]);  // 사용자 검색 결과 상태
+  const [userList, setUserList] = useState([]); // 사용자 검색 결과 상태
   const [loginUser, setloginUser] = useState(); //로그인 사용자 정보
 
   useEffect(() => {
@@ -55,8 +61,8 @@ const WaitingDetails = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get("/users/mine", {
-          headers : {
-            Authorization : `Bearer ${token}`,
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
         }); // Spring Boot의 유저 정보 API 호출
         setloginUser(response.data);
@@ -134,7 +140,8 @@ const WaitingDetails = () => {
     const params = {
       nickname: searchType === "nickname" ? searchValue.trim() : null,
       email: searchType === "email" ? searchValue.trim() : null,
-      phoneNumberBottom: searchType === "phoneNumberBottom" ? searchValue.trim() : null,
+      phoneNumberBottom:
+        searchType === "phoneNumberBottom" ? searchValue.trim() : null,
     };
 
     try {
@@ -147,7 +154,7 @@ const WaitingDetails = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setUserList([]);  // 검색 결과 초기화
+    setUserList([]); // 검색 결과 초기화
   };
 
   const handleGetParty = async (partyId) => {
@@ -166,15 +173,20 @@ const WaitingDetails = () => {
       alert("파티원 추방에 성공하였습니다.");
       await handleGetParty(partyId);
 
-       // reservationDetails의 invitationPeople을 갱신
+      // reservationDetails의 invitationPeople을 갱신
       const updatedWaitingDetails = { ...waitingDetails };
-      updatedWaitingDetails.partyPeople = updatedWaitingDetails.partyPeople.filter(
-        (person) => person.userId !== userId
-      );
+      updatedWaitingDetails.partyPeople =
+        updatedWaitingDetails.partyPeople.filter(
+          (person) => person.userId !== userId
+        );
       setWaitingDetails(updatedWaitingDetails);
     } catch (error) {
       // 서버에서 에러 메시지가 있는 경우
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         // 서버에서 반환한 에러 메시지
         alert(`[파티원 추방 실패]: ${error.response.data.message}`);
       } else {
@@ -188,19 +200,24 @@ const WaitingDetails = () => {
     try {
       await deleteEveryPartyPeople(partyId);
       alert("전체 추방에 성공하였습니다.");
-      
+
       //일행 목록 갱신
       await handleGetParty(partyId);
-      
+
       // 예약자(대표자)는 남기고 나머지 사람들을 비우도록 처리
       const updatedWaitingDetails = { ...waitingDetails };
       console.log(updatedWaitingDetails);
-      updatedWaitingDetails.partyPeople = updatedWaitingDetails.partyPeople.filter(
-        (person) => person.partyRole === "REPRESENTATIVE"  // 대표자만 남기고 모두 삭제
-      );
+      updatedWaitingDetails.partyPeople =
+        updatedWaitingDetails.partyPeople.filter(
+          (person) => person.partyRole === "REPRESENTATIVE" // 대표자만 남기고 모두 삭제
+        );
       setWaitingDetails(updatedWaitingDetails);
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         // 서버에서 반환한 에러 메시지
         alert(`[전체 추방 실패]: ${error.response.data.message}`);
       } else {
@@ -208,7 +225,7 @@ const WaitingDetails = () => {
         alert("전체 추방에 실패했습니다. 다시 시도해주세요.");
       }
     }
-  }
+  };
 
   const sendPartyInvitation = async (userId, waitingId) => {
     try {
@@ -216,7 +233,11 @@ const WaitingDetails = () => {
       console.log("초대 버튼 클릭됨", userId, waitingId);
       alert("파티 초대에 성공하였습니다.");
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         // 서버에서 반환한 에러 메시지
         alert(`[파티 초대 실패]: ${error.response.data.message}`);
       } else {
@@ -224,23 +245,27 @@ const WaitingDetails = () => {
         alert("파티 초대에 실패했습니다. 다시 시도해주세요.");
       }
     }
-  }
+  };
 
-    const handleLeaveParty = async (partyId) => {
-      try {
-        const response = await leaveParty(partyId);
-        alert("파티 탈퇴 성공하였습니다.");
-        navigate(`/orderlist`);
-      } catch (error) {
-        if (error.response && error.response.data && error.response.data.message) {
-          // 서버에서 반환한 에러 메시지
-          alert(`[파티 탈퇴 실패]: ${error.response.data.message}`);
-        } else {
-          // 그 외의 에러 처리
-          alert("파티 탈퇴에 실패했습니다. 다시 시도해주세요.");
-        }
+  const handleLeaveParty = async (partyId) => {
+    try {
+      const response = await leaveParty(partyId);
+      alert("파티 탈퇴 성공하였습니다.");
+      navigate(`/orderlist`);
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // 서버에서 반환한 에러 메시지
+        alert(`[파티 탈퇴 실패]: ${error.response.data.message}`);
+      } else {
+        // 그 외의 에러 처리
+        alert("파티 탈퇴에 실패했습니다. 다시 시도해주세요.");
       }
     }
+  };
 
   return (
     <div className="app">
@@ -317,7 +342,8 @@ const WaitingDetails = () => {
                     className="party-image"
                     src={require("../../assets/company-logo.png")}
                     alt="기본 프로필 이미지"
-                  />)}
+                  />
+                )}
                 <p>{person.userName}</p>
               </div>
             ))}
@@ -327,7 +353,9 @@ const WaitingDetails = () => {
             {waitingDetails.waitingStatus === "PENDING" && (
               <>
                 {waitingDetails.partyPeople.some(
-                  (person) => person.partyRole === "REPRESENTATIVE" && person.userId === loginUser.id
+                  (person) =>
+                    person.partyRole === "REPRESENTATIVE" &&
+                    person.userId === loginUser.id
                 ) ? (
                   // 현재 사용자가 대표자인 경우, "일행관리" 버튼만 표시
                   <button
@@ -340,7 +368,9 @@ const WaitingDetails = () => {
                   </button>
                 ) : (
                   // 대표자가 아닌 경우, "탈퇴하기" 버튼만 표시
-                  <button onClick={() => handleLeaveParty(waitingDetails.partyId)}>
+                  <button
+                    onClick={() => handleLeaveParty(waitingDetails.partyId)}
+                  >
                     - 탈퇴하기
                   </button>
                 )}
@@ -353,34 +383,60 @@ const WaitingDetails = () => {
                 <h2>일행관리</h2>
                 <div>
                   {/* 예약자 출력 */}
-                  {partyDetails.find((party) => party.partyRole === "REPRESENTATIVE") && (
-                    <p>예약자: {partyDetails.find((party) => party.partyRole === "REPRESENTATIVE").name}</p>
+                  {partyDetails.find(
+                    (party) => party.partyRole === "REPRESENTATIVE"
+                  ) && (
+                    <p>
+                      예약자:{" "}
+                      {
+                        partyDetails.find(
+                          (party) => party.partyRole === "REPRESENTATIVE"
+                        ).name
+                      }
+                    </p>
                   )}
                   {/* 일행 출력 (대표자 제외) */}
-                    {partyDetails
-                      .filter((party) => party.partyRole !== "REPRESENTATIVE") // 대표자 제외
-                      .map((party, index) => (
-                        <div className="search-list-item" key={index}>
-                          <p>{party.name}</p>
-                          <button 
+                  {partyDetails
+                    .filter((party) => party.partyRole !== "REPRESENTATIVE") // 대표자 제외
+                    .map((party, index) => (
+                      <div className="search-list-item" key={index}>
+                        <p>{party.name}</p>
+                        <button
                           className="search-button"
-                          onClick={() => handleDeletePartyOne(waitingDetails.partyId, party.userId)}>추방</button>
-                        </div>
-                      ))}
+                          onClick={() =>
+                            handleDeletePartyOne(
+                              waitingDetails.partyId,
+                              party.userId
+                            )
+                          }
+                        >
+                          추방
+                        </button>
+                      </div>
+                    ))}
 
-                    {partyDetails.filter((party) => party.partyRole !== "REPRESENTATIVE").length === 0 && <p>일행이 없습니다.</p>}
-                    
+                  {partyDetails.filter(
+                    (party) => party.partyRole !== "REPRESENTATIVE"
+                  ).length === 0 && <p>일행이 없습니다.</p>}
                 </div>
-                <div>
-                <button 
+                <div className="waiting-user-search-button-group">
+                  <button
                     className="search-button"
-                    onClick={() => handleDeleteEveryParty(waitingDetails.partyId)}>전체추방</button>
-                <button 
-                className="search-button"
-                onClick={() => setIsUserSearchModalOpen(true)}>유저 찾기</button>
-                <button 
-                className="search-button"
-                onClick={closeModal}>닫기</button>
+                    onClick={() =>
+                      handleDeleteEveryParty(waitingDetails.partyId)
+                    }
+                  >
+                    전체추방
+                  </button>
+                  <button
+                    className="search-button"
+                    onClick={() => setIsUserSearchModalOpen(true)}
+                  >
+                    유저 찾기
+                  </button>
+                  <button className="search-button" onClick={closeModal}>
+                    닫기
+                  </button>
                 </div>
               </div>
             </div>
@@ -391,10 +447,11 @@ const WaitingDetails = () => {
               <div className="modal-content">
                 <h2>유저 찾기</h2>
                 <div className="modal-search">
-                  <select 
-                    value={searchType} 
+                  <select
+                    value={searchType}
                     className="search-criteria-dropdown"
-                    onChange={(e) => setSearchType(e.target.value)}>
+                    onChange={(e) => setSearchType(e.target.value)}
+                  >
                     <option value="nickname">닉네임</option>
                     <option value="email">메일</option>
                     <option value="phoneNumberBottom">전화번호(뒷자리)</option>
@@ -405,30 +462,38 @@ const WaitingDetails = () => {
                     onChange={(e) => setSearchValue(e.target.value)}
                     className="search-user-input"
                   />
-                  <button 
-                  className="search-button"
-                  onClick={handleSearch}>검색</button>
+                  <button className="search-button" onClick={handleSearch}>
+                    검색
+                  </button>
                 </div>
                 <div className="modal-search-list">
                   {userList.length > 0 ? (
                     userList.map((user) => (
                       <div key={user.id} className="search-list-item">
-                        <p>{user.nickname} ({user.phoneNumberBottom})</p>
-                        <button 
+                        <p>
+                          {user.nickname} ({user.phoneNumberBottom})
+                        </p>
+                        <button
                           className="myfriend-button"
                           onClick={() => {
-                          console.log("버튼 클릭됨", user.id, waitingId);
-                          sendPartyInvitation(user.id, waitingId);
-                        }}>일행 초대</button>
+                            console.log("버튼 클릭됨", user.id, waitingId);
+                            sendPartyInvitation(user.id, waitingId);
+                          }}
+                        >
+                          일행 초대
+                        </button>
                       </div>
                     ))
                   ) : (
                     <p>검색 결과가 없습니다.</p>
                   )}
                 </div>
-                <button 
+                <button
                   className="search-button"
-                  onClick={() => setIsUserSearchModalOpen(false)}>닫기</button>
+                  onClick={() => setIsUserSearchModalOpen(false)}
+                >
+                  닫기
+                </button>
               </div>
             </div>
           )}

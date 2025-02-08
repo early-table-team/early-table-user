@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Header";
+import Header from "../HeaderV2";
 import Footer from "../Footer";
 import "../css/InterestStores.css";
 import instance from "../../api/axios";

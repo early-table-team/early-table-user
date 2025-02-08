@@ -1,14 +1,13 @@
-import axios from "../../api/axios";
+import instance from "../../api/axios";
 
 export const fetchUserInfo = async () => {
-
   try {
     //JWT 토큰 가져오기
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.get("/users/mine", {
-      headers : {
-        Authorization : `Bearer ${token}`,
+    const response = await instance.get("/users/mine", {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
     }); // Spring Boot의 유저 정보 API 호출
 
@@ -20,16 +19,15 @@ export const fetchUserInfo = async () => {
 };
 
 export const fetchUserReservationCount = async () => {
-
   try {
     //JWT 토큰 가져오기
     const token = localStorage.getItem("accessToken");
 
-    const response = await axios.get("/users/count", {
-      headers : {
-        Authorization : `Bearer ${token}`,
+    const response = await instance.get("/users/count", {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    }); 
+    });
 
     return response.data; // 유저 정보 반환
   } catch (error) {
@@ -37,4 +35,3 @@ export const fetchUserReservationCount = async () => {
     throw error;
   }
 };
-

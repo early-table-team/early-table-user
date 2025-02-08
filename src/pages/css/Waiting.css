@@ -64,11 +64,6 @@
   background-color: #e0e0e0;
 }
 
-.store-detail-reserve-button:hover {
-  background-color: #ff914d;
-  color: white;
-}
-
 .waiting-type-options {
   display: flex;
   gap: 10px;
