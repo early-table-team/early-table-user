@@ -127,6 +127,8 @@
 
 /* Store Header */
 .store-header {
+  display: flex;
+  justify-content: space-between;
   width: 80%;
   padding: 0 10px;
   padding-bottom: 10px;
@@ -154,9 +156,17 @@
   font-size: 18px;
   color: #555;
   cursor: pointer;
-  display: flex;
-  align-items: center;
+  width: 80%;
+  text-align: left;
+  padding: 0px 10px;
+  margin-bottom: 10px;
   gap: 8px;
+}
+
+.store-detail-interest-button {
+  background-color: #ffffff00;
+  border: 0;
+  font-size: 20px;
 }
 
 .store-review-info:hover {

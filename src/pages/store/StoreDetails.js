@@ -96,6 +96,34 @@ const StoreDetails = () => {
     );
   };
 
+  const handleInterestClick = async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const response = await instance.post(
+        `/interests/stores/${storeId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (response.status === 200) {
+        alert(response.data);
+        navigate(`/store/${storeId}`); // 다시 가게 화면으로 이동
+      }
+    } catch (error) {
+      alert("관심가게 등록에 실패했습니다.");
+      console.error(error.response.data);
+    }
+  };
+
   if (error) return <div>{error}</div>;
 
   // storeDetails가 null이 아니고 loading이 false일 때만 구조 분해 할당을 수행
@@ -106,10 +134,6 @@ const StoreDetails = () => {
         <p>가게 정보를 불러오는 중...</p>
       </div>
     );
-  }
-
-  if (!storeDetails) {
-    return <div>가게 정보가 없습니다.</div>;
   }
 
   const {
@@ -197,19 +221,26 @@ const StoreDetails = () => {
           </div>
           <div className="store-header">
             <h2 className="store-detail-name">{storeName}</h2>
-            <div
-              className="store-detail-review-info"
-              onClick={() =>
-                navigate(`/store/${storeId}/reviews`, {
-                  state: {
-                    storeName: storeName,
-                  },
-                })
-              }
+            {/* 관심가게 이모지 버튼 */}
+            <button
+              className="store-detail-interest-button"
+              onClick={handleInterestClick}
             >
-              <span>⭐ {starPoint}</span>
-              <span> 리뷰 {reviewCount}개 &gt;</span>
-            </div>
+              ❤️
+            </button>
+          </div>
+          <div
+            className="store-detail-review-info"
+            onClick={() =>
+              navigate(`/store/${storeId}/reviews`, {
+                state: {
+                  storeName: storeName,
+                },
+              })
+            }
+          >
+            <span>⭐ {starPoint}</span>
+            <span> 리뷰 {reviewCount}개 &gt;</span>
           </div>
           <div className="store-contents-info-title">
             <span>가게 설명</span>

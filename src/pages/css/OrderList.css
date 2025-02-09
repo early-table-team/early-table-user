@@ -113,3 +113,7 @@
   text-align: center;
   margin: 20px 0;
 }
+
+.observer-trigger {
+  height: 10px;
+}

@@ -11,6 +11,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.reservation-details-container::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨기기 */
+}
+
 /* 매장 이름 */
 .reservation-store-name {
   width: 80%;

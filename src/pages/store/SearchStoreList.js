@@ -26,7 +26,7 @@ const SearchResult = () => {
     const getStores = async (pageNum) => {
       try {
         const response = await instance.get("/stores/search", {
-          params: { ...requestData, page: pageNum, size: 10 }, // 페이지네이션 적용
+          params: { ...requestData, page: pageNum, size: 5 }, // 페이지네이션 적용
           paramsSerializer: (params) =>
             qs.stringify(params, { arrayFormat: "repeat" }),
           headers: {

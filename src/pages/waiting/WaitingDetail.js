@@ -133,7 +133,12 @@ const WaitingDetails = () => {
   };
 
   if (!waitingDetails) {
-    return <p>로딩 중...</p>;
+    return (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+        <p>예약 정보를 불러오는 중...</p>
+      </div>
+    );
   }
 
   const handleSearch = async () => {
