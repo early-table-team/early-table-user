@@ -23,7 +23,7 @@ const OrderList = () => {
     try {
       const endpoint = activeTab === "waiting" ? "/waiting" : "/reservations";
       const response = await instance.get(endpoint, {
-        params: { page: page[activeTab], size: 5 }, // 페이지네이션 적용
+        params: { page: page[activeTab], size: 7 }, // 페이지네이션 적용
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -35,7 +35,7 @@ const OrderList = () => {
         [activeTab]: [...prev[activeTab], ...newData], // 기존 데이터 유지 + 새로운 데이터 추가
       }));
 
-      if (newData.length < 5) {
+      if (newData.length < 7) {
         setHasMore((prev) => ({ ...prev, [activeTab]: false })); // 마지막 페이지 도달
       }
     } catch (error) {
@@ -45,21 +45,21 @@ const OrderList = () => {
     }
   }, [activeTab, page, hasMore, loading]);
 
-  // ✅ 데이터가 없을 때 fetchList 실행
+  // ✅ 첫 로드 시 데이터 가져오기
   useEffect(() => {
-    if (data[activeTab].length === 0) {
-      fetchList(); // 현재 탭의 데이터가 없을 때만 요청
+    if (data[activeTab].length === 0 && page[activeTab] === 0) {
+      fetchList();
     }
-  }, [activeTab, data, fetchList]);
+  }, [activeTab]);
 
-  // ✅ 페이지 번호가 변경될 때마다 fetchList 호출
+  // ✅ 페이지가 변경될 때 데이터 요청 (⚠️ 중복 요청 방지)
   useEffect(() => {
     if (page[activeTab] > 0) {
-      fetchList(); // 페이지 번호가 증가할 때마다 새로운 데이터 요청
+      fetchList();
     }
-  }, [page, activeTab, fetchList]);
+  }, [page[activeTab]]);
 
-  // ✅ 무한 스크롤 감지
+  // ✅ 무한 스크롤 감지 (⚠️ 중복 요청 방지)
   useEffect(() => {
     if (!observerRef.current) return;
 
@@ -67,13 +67,15 @@ const OrderList = () => {
       (entries) => {
         if (entries[0].isIntersecting && hasMore[activeTab] && !loading) {
           console.log("📡 스크롤 끝에 도달, 페이지 증가");
-          setPage((prev) => ({
-            ...prev,
-            [activeTab]: prev[activeTab] + 1, // 현재 탭의 페이지 증가
-          }));
+          setPage((prev) => {
+            if (!loading) {
+              return { ...prev, [activeTab]: prev[activeTab] + 1 };
+            }
+            return prev;
+          });
         }
       },
-      { threshold: 0.1 } // 10% 보일 때 트리거
+      { threshold: 1.0 }
     );
 
     observer.observe(observerRef.current);

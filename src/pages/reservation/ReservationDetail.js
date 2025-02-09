@@ -84,7 +84,7 @@ const ReservationDetails = () => {
     if (window.confirm("예약을 취소하시겠습니까?")) {
       try {
         await instance
-          .patch(`/reservations/${reservationId}`)
+          .delete(`/reservations/${reservationId}`)
           .then((success) => {
             if (success) {
               alert("예약이 취소되었습니다.");
