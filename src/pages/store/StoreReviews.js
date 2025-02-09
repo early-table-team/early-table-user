@@ -51,7 +51,7 @@ const StoreReviews = () => {
 
   return (
     <div className="app">
-      <div>
+      <div className="store-details-container">
         <Header />
         <div className="container">
           <h2 className="store-name">{storeName || "가게이름"}</h2>

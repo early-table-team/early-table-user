@@ -14,17 +14,12 @@
   scroll-behavior: smooth; /* 부드러운 스크롤 */
 }
 
-.register-preview-container {
-  width: 100%;
-  height: 250px;
-  background: white;
-}
-
 .inputs-container {
   display: flex;
   flex-direction: column; /* 세로로 정렬 */
   text-align: left;
   padding: 20px;
+  width: 100%;
 }
 
 .info-title {
@@ -54,10 +49,4 @@
   margin-left: 15px;
   margin-right: 15px;
   margin-bottom: 15px;
-}
-
-/* Footer 스타일링 */
-.footer-container {
-  width: 100%;
-  border-top: 1px solid #ddd;
 }

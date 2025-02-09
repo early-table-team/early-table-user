@@ -192,8 +192,8 @@ const MyFriend = () => {
             <div className="myfriend-div-1">
               <div className="list-container-myfriend">
                 {friendList.map((friend) => (
-                  <div className="friend-list-item">
-                    <div key={friend.userId} className="friendlist">
+                  <div key={friend.userId} className="friend-list-item">
+                    <div className="friendlist">
                       <Link
                         to={`/friends/users/${friend.userId}`}
                         className="link-container-myfriend"
@@ -211,7 +211,7 @@ const MyFriend = () => {
                             />
                           )}
                         </div>
-                        <p className="friend-info">{friend.nickName}</p>
+                        <div className="friend-info">{friend.nickName}</div>
                       </Link>
                       <div className="myfriend-button-group-v2">
                         <button
@@ -233,8 +233,11 @@ const MyFriend = () => {
             <div className="myfriend-div-2">
               <div className="list-container-myfriend">
                 {friendRequestList.map((request) => (
-                  <div className="friend-list-item">
-                    <div key={request.friendRequestId} className="friendlist">
+                  <div
+                    key={request.friendRequestId}
+                    className="friend-list-item"
+                  >
+                    <div className="friendlist">
                       <Link
                         to={`/friends/users/${request.sendUserId}`}
                         className="link-container-myfriend"
@@ -252,9 +255,9 @@ const MyFriend = () => {
                             />
                           )}
                         </div>
-                        <p className="friend-info">
+                        <div className="friend-info">
                           {request.sendUserNickname}
-                        </p>
+                        </div>
                       </Link>
                       <div className="myfriend-button-group">
                         <button
@@ -328,9 +331,9 @@ const MyFriend = () => {
                               />
                             )}
                           </div>
-                          <p>
+                          <div>
                             {user.nickname} ({user.phoneNumberBottom})
-                          </p>
+                          </div>
                         </Link>
                         <button
                           className="myfriend-button"

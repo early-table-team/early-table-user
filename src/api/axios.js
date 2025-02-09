@@ -34,7 +34,14 @@ const refreshAccessToken = async () => {
     );
 
     const newAccessToken = response.data.accessToken;
-    if (!newAccessToken) throw new Error("새로운 액세스 토큰 없음");
+    if (
+      response?.status === 401 ||
+      !newAccessToken ||
+      newAccessToken === "undefined"
+    ) {
+      localStorage.removeItem("accessToken");
+      window.location.href = "/login"; // 로그인 페이지로 리디렉션
+    }
 
     localStorage.setItem("accessToken", newAccessToken);
     return newAccessToken;
@@ -46,14 +53,22 @@ const refreshAccessToken = async () => {
   }
 };
 
-// 🔹 응답 인터셉터: 401 응답 처리 (액세스 토큰 갱신 후 요청 재시도)
+const MAX_RETRY_COUNT = 2; // 최대 재시도 횟수
+
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // 재시도 방지 플래그 설정
+    if (!originalRequest._retryCount) {
+      originalRequest._retryCount = 0; // 재시도 횟수 초기화
+    }
+
+    if (
+      (error.response?.status === 401 || error.response?.status === 403) &&
+      originalRequest._retryCount < MAX_RETRY_COUNT
+    ) {
+      originalRequest._retryCount += 1; // 재시도 횟수 증가
 
       const newAccessToken = await refreshAccessToken();
       if (newAccessToken) {
@@ -62,7 +77,7 @@ instance.interceptors.response.use(
       }
     }
 
-    return Promise.reject(error);
+    return Promise.reject(error); // 최대 재시도 횟수를 초과하면 에러 반환
   }
 );
 

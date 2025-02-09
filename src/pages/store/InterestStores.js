@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../HeaderV2";
 import Footer from "../Footer";
+import StoreName from "./StoreName";
 import "../css/InterestStores.css";
 import instance from "../../api/axios";
 import { useNavigate } from "react-router-dom"; // useNavigate 사용
@@ -9,6 +10,7 @@ import Cookies from "js-cookie";
 const InterestStores = () => {
   const [interestStores, setInterestStores] = useState([]);
   const navigate = useNavigate(); // useNavigate 훅을 사용
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchInterestStores = async () => {
@@ -47,6 +49,8 @@ const InterestStores = () => {
         if (error.response?.status === 401) {
           navigate("/login"); // 인증 실패 시 로그인 페이지로 이동
         }
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -56,6 +60,15 @@ const InterestStores = () => {
   const handleCardClick = (storeId) => {
     navigate(`/store/${storeId}`);
   };
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+        <p>가게 정보를 불러오는 중...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="app">
@@ -80,7 +93,9 @@ const InterestStores = () => {
                   className="interest-store-image"
                 />
                 <div className="interest-store-details">
-                  <p className="interest-store-name">{store.storeName}</p>
+                  <p className="interest-store-name">
+                    <StoreName name={store.storeName} />
+                  </p>
                   <p className="interest-store-contents">
                     {store.storeContents.length > 10
                       ? `${store.storeContents.slice(0, 10)}...`

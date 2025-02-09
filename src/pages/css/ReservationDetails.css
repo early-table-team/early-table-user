@@ -102,17 +102,21 @@
 /* 파티 인원 */
 .reservation-party-people {
   width: 80%;
+  min-height: fit-content; /* 부모의 높이가 자식 요소에 따라 조정되도록 */
   display: flex;
   gap: 15px;
+  white-space: nowrap; /* 자식 요소 줄바꿈 방지 */
   overflow-x: scroll;
-  scrollbar-width: none;
+}
+
+.reservation-party-people::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨기기 */
 }
 
 .reservation-party-person {
   display: inline-flex; /* inline-flex로 가로 정렬 */
   flex-direction: column; /* 세로로 정렬 */
   align-items: center;
-  height: fit-content;
 }
 
 .reservation-party-image {

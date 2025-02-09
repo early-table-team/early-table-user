@@ -28,6 +28,7 @@ const categories = [
 ];
 
 const Home = () => {
+  const [loading, setLoading] = useState(true);
   const [stores, setStores] = useState({});
   const [keywords] = useState([
     "웨이팅 핫플!",
@@ -77,6 +78,8 @@ const Home = () => {
           setStores(storesObject);
         } catch (error) {
           console.error("가게 정보 가져오기 실패:", error);
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -87,6 +90,15 @@ const Home = () => {
   const handleCardClick = (storeId) => {
     navigate(`/store/${storeId}`);
   };
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+        <p>가게 정보를 불러오는 중...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="app">

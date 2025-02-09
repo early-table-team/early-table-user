@@ -9,6 +9,7 @@ const StoreDetails = () => {
   const [storeDetails, setStoreDetails] = useState(null);
   const [error, setError] = useState(null);
   const [currentViewers, setCurrentViewers] = useState(0); // 실시간 조회자 수
+  const [loading, setLoading] = useState(true);
   const { storeId } = useParams();
   const { messages } = useSSE(); // 전역 메시지 가져오기
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ const StoreDetails = () => {
           setStoreDetails(response.data);
         } catch (error) {
           setError("가게 정보를 가져오는 데 실패했습니다.");
+        } finally {
+          setLoading(false);
         }
       };
 
@@ -94,7 +97,20 @@ const StoreDetails = () => {
   };
 
   if (error) return <div>{error}</div>;
-  if (!storeDetails) return <div>가게 정보가 없습니다.</div>;
+
+  // storeDetails가 null이 아니고 loading이 false일 때만 구조 분해 할당을 수행
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+        <p>가게 정보를 불러오는 중...</p>
+      </div>
+    );
+  }
+
+  if (!storeDetails) {
+    return <div>가게 정보가 없습니다.</div>;
+  }
 
   const {
     storeName,
@@ -160,7 +176,7 @@ const StoreDetails = () => {
         <div className="store-details">
           {/* 캐러셀 배너 이미지 */}
           <div className="store-detail-image-gallery">
-            {imageUrls.length > 0 && (
+            {imageUrls?.length > 0 && (
               <img
                 src={imageUrls[currentImageIndex]}
                 alt={`store-image-${currentImageIndex}`}

@@ -36,23 +36,7 @@ const MyInfo = () => {
     getUserInfo();
   }, []); // 컴포넌트 마운트 시 한 번 실행
 
-  if (loading) return <p>Loading...</p>; // 로딩 중일 때
   if (error) return <p>{error}</p>; // 에러가 발생했을 때
-
-  const ProfileImage = ({ imageUrl }) => {
-    return (
-      <div>
-        {imageUrl ? (
-          <img src={user.imageUrl} alt="프로필 이미지" />
-        ) : (
-          <img
-            src={require("../../assets/company-logo.png")}
-            alt="기본 프로필 이미지"
-          />
-        )}
-      </div>
-    );
-  };
 
   return (
     <div className="app">
@@ -65,19 +49,24 @@ const MyInfo = () => {
           {/* 내 정보 섹션 */}
           <div className="categories-container">
             <div className="img-container">
-              <ProfileImage
-                imageUrl={user.imageUrl}
-                className="profileImg"
-              ></ProfileImage>
+              {user?.imageUrl ? (
+                <img src={user.imageUrl} alt="프로필 이미지" />
+              ) : (
+                <img
+                  src={require("../../assets/company-logo.png")}
+                  alt="기본 프로필 이미지"
+                  className="profileImg"
+                />
+              )}
             </div>
             <h2 className="info-title">닉네임</h2>
-            <p className="info-contents">{user.nickname}</p>
+            <p className="info-contents">{user?.nickname}</p>
 
             <h2 className="info-title">이메일</h2>
-            <p className="info-contents">{user.email}</p>
+            <p className="info-contents">{user?.email}</p>
 
             <h2 className="info-title">휴대폰 번호</h2>
-            <p className="info-contents">{user.phoneNumber}</p>
+            <p className="info-contents">{user?.phoneNumber}</p>
           </div>
           {/* 버튼 섹션 */}
           <div className="myInfo-buttons-container">
@@ -95,6 +84,13 @@ const MyInfo = () => {
           <Footer />
         </div>
       </div>
+      {/* ✅ 로딩 오버레이 (로딩 중일 때만 표시) */}
+      {loading && (
+        <div className="loading-overlay">
+          <div className="spinner"></div>
+          <p>나의 정보를 불러오는 중...</p>
+        </div>
+      )}
     </div>
   );
 };

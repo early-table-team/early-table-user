@@ -47,7 +47,7 @@ const ReservationDetails = () => {
     const fetchLoginUserData = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const response = await axios.get("/users/mine", {
+        const response = await instance.get("/users/mine", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -75,8 +75,25 @@ const ReservationDetails = () => {
     });
   };
 
-  const handleModify = (item) => {
-    navigate(`/reservation/${reservationId}/change`);
+  const handleCancel = async (reservationId) => {
+    if (window.confirm("예약을 취소하시겠습니까?")) {
+      try {
+        await instance
+          .patch(`/reservations/${reservationId}`)
+          .then((success) => {
+            if (success) {
+              alert("예약이 취소되었습니다.");
+              navigate("/home");
+            } else {
+              alert("예약 취소가 실패하였습니다.");
+              navigate("/home");
+            }
+          });
+      } catch (error) {
+        alert("예약 취소가 실패하였습니다.");
+        navigate("/home");
+      }
+    }
   };
 
   const handleSearch = async () => {
@@ -88,7 +105,7 @@ const ReservationDetails = () => {
     };
 
     try {
-      const response = await axios.get("/users/search", { params });
+      const response = await instance.get("/users/search", { params });
       setUserList(response.data);
     } catch (error) {
       console.error("검색 실패:", error);
@@ -112,7 +129,7 @@ const ReservationDetails = () => {
 
   const handleDeletePartyOne = async (partyId, userId) => {
     try {
-      const response = await deletePartyPeopleOne(partyId, userId);
+      await deletePartyPeopleOne(partyId, userId);
       alert("파티원 추방에 성공하였습니다.");
       await handleGetParty(partyId);
 
@@ -141,7 +158,7 @@ const ReservationDetails = () => {
 
   const handleDeleteEveryParty = async (partyId) => {
     try {
-      const response = await deleteEveryPartyPeople(partyId);
+      await deleteEveryPartyPeople(partyId);
       alert("전체 추방에 성공하였습니다.");
 
       //일행 목록 갱신
@@ -171,7 +188,7 @@ const ReservationDetails = () => {
 
   const sendPartyInvitation = async (userId, reservationId) => {
     try {
-      const response = await sendPartyRequest(userId, reservationId);
+      await sendPartyRequest(userId, reservationId);
       console.log("초대 버튼 클릭됨", userId, reservationId);
       alert("파티 초대에 성공하였습니다.");
     } catch (error) {
@@ -191,7 +208,7 @@ const ReservationDetails = () => {
 
   const handleLeaveParty = async (partyId) => {
     try {
-      const response = await leaveParty(partyId);
+      await leaveParty(partyId);
       alert("파티 탈퇴 성공하였습니다.");
       navigate(`/orderlist`);
     } catch (error) {
@@ -458,7 +475,9 @@ const ReservationDetails = () => {
             {reservationDetails.reservationStatus === "PENDING" && (
               <>
                 <button onClick={() => navigate(-1)}>목록</button>
-                <button onClick={handleModify}>예약 변경</button>
+                <button onClick={() => handleCancel(reservationId)}>
+                  예약 취소
+                </button>
               </>
             )}
             {reservationDetails.reservationStatus === "COMPLETED" && (

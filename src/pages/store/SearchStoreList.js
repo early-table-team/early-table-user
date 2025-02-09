@@ -14,6 +14,7 @@ const SearchResult = () => {
   const [page, setPage] = useState(1); // 현재 페이지 번호
   const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
   const observer = useRef(null); // Intersection Observer 참조
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -41,6 +42,8 @@ const SearchResult = () => {
       } catch (error) {
         console.error("검색 중 오류 발생:", error);
         alert("검색에 실패했습니다!");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -67,6 +70,15 @@ const SearchResult = () => {
   const handleCardClick = (storeId) => {
     navigate(`/store/${storeId}`);
   };
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+        <p>가게 정보를 불러오는 중...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="app">

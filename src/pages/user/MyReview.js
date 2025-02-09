@@ -128,7 +128,7 @@ const MyReview = () => {
       {loading && (
         <div className="loading-overlay">
           <div className="spinner"></div>
-          <p>마이페이지 정보를 불러오는 중...</p>
+          <p>나의 리뷰 정보를 불러오는 중...</p>
         </div>
       )}
     </div>

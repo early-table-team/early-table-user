@@ -33,6 +33,14 @@ import MyPartyRequest from "./pages/party/MyPartyRequest";
 
 import Processing from "./pages/reservation/KakaoPayProcessing";
 function App() {
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  useEffect(() => {
+    setScreenSize();
+  });
+
   useEffect(() => {
     // FCM 메시지 리스너
     const handleFCMMessage = (message) => {

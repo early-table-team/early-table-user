@@ -10,7 +10,6 @@ footer {
   z-index: 1000;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
   border-top: 1px solid #ddd; /* 위쪽에 border 추가 */
-  border-radius: 0px 0px 8px 8px;
 }
 
 footer button {

@@ -9,6 +9,7 @@ const OrderList = () => {
   const [activeTab, setActiveTab] = useState("waiting"); // "waiting" or "reservation"
   const [waitingList, setWaitingList] = useState([]);
   const [reservationList, setReservationList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,13 +25,15 @@ const OrderList = () => {
         setWaitingList(response.data);
       } catch (error) {
         console.error("웨이팅 목록을 가져오는 중 오류 발생:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     // 예약 목록 가져오기
     const fetchReservationList = async () => {
       try {
-        const response = await instance.get("reservations", {
+        const response = await instance.get("/reservations", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
@@ -53,6 +56,15 @@ const OrderList = () => {
       navigate(`/reservation/${item.reservationId}`);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+        <p>가게 정보를 불러오는 중...</p>
+      </div>
+    );
+  }
 
   const renderList = () => {
     const list = activeTab === "waiting" ? waitingList : reservationList;

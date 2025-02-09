@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import instance from "../../api/axios"; // Axios 인스턴스 가져오기
+import Header from "../Header";
+import Footer from "../Footer";
 
 const Processing = () => {
   const location = useLocation();
@@ -52,12 +54,26 @@ const Processing = () => {
     } catch (error) {
       console.error("결제 실패:", error);
       alert("결제 처리 중 오류가 발생했습니다.");
+      navigate("/home");
     }
   };
 
   return (
-    <div>
-      <h2>⏳ 결제 승인 처리 중...</h2>
+    <div className="app">
+      <div className="home-container">
+        <div className="header-container">
+          <Header />
+        </div>
+        <div className="content-container">
+          <div className="loading-overlay">
+            <div className="spinner"></div>
+            <p>⏳ 결제 승인 처리 중...</p>
+          </div>
+        </div>
+        <div className="footer-container">
+          <Footer />
+        </div>
+      </div>
     </div>
   );
 };

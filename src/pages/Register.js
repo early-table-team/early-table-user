@@ -15,7 +15,6 @@ function Register() {
     profileImage: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
-  const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,14 +33,6 @@ function Register() {
     document.getElementById("profileImage").click(); // 프리뷰 클릭 시 파일 선택 창 띄우기
   };
 
-  const validatePassword = () => {
-    if (form.password !== form.confirmPassword) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
-    } else {
-      setPasswordError("");
-    }
-  };
-
   function formatPhoneNumber(event) {
     const rawValue = event.target.value.replace(/[^0-9]/g, ""); // 숫자만 추출
 
@@ -53,7 +44,7 @@ function Register() {
     // handleChange 호출 시 올바른 이벤트 객체 형식 전달
     handleChange({
       target: {
-        name: "phoneNumber", // 적절한 name 값
+        name: "phone", // 적절한 name 값
         value: formattedValue, // 포맷팅된 전화번호 값
       },
     });
@@ -81,7 +72,7 @@ function Register() {
       alert("회원가입 성공");
       navigate("/login");
     } catch (error) {
-      alert("회원가입 실패");
+      alert(error.response.data.message);
     }
   };
 
@@ -170,7 +161,6 @@ function Register() {
             name="password"
             value={form.password}
             onChange={handleChange}
-            onBlur={validatePassword}
             className="register-input"
           />
           <label htmlFor="confirmPassword" className="register-label">
@@ -182,10 +172,8 @@ function Register() {
             name="confirmPassword"
             value={form.confirmPassword}
             onChange={handleChange}
-            onBlur={validatePassword}
             className="register-input"
           />
-          {passwordError && <span className="error">{passwordError}</span>}
           <input
             type="file"
             id="profileImage"

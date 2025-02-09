@@ -101,21 +101,3 @@
   transform: scale(1.05); /* 호버 시 약간 확대 */
   opacity: 0.9; /* 호버 시 약간 투명하게 */
 }
-
-.store-detail-reserve-button {
-  width: 100%;
-  font-size: 22px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  border: none; /* 테두리 없앰 */
-  height: 70px;
-  background-color: #ff914d;
-  border-radius: 0px 0px 8px 8px;
-  color: white;
-}
-
-.store-detail-reserve-button:hover {
-  background-color: #fd7b2a;
-  color: white;
-}

@@ -117,9 +117,7 @@ function Login() {
               <button className="login-button">회원가입</button>
             </Link>
           </div>
-          <Link to="/forgot-password" className="forgot-password">
-            비밀번호 찾기
-          </Link>
+          <Link to="/forgot-password" className="forgot-password"></Link>
         </form>
       </div>
     </div>

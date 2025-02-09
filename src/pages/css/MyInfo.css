@@ -1,12 +1,3 @@
-/* 기본 레이아웃 설정 */
-.app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f2f5;
-}
-
 .myinfo::-webkit-scrollbar {
   display: none; /* 스크롤바 숨김 */
 }
@@ -42,12 +33,6 @@
   padding: 10px;
 }
 
-.buttons-container {
-  display: flex;
-  justify-content: center;
-  max-width: 100%;
-}
-
 .buttons {
   padding: 10px 20px;
   margin: 10px;
@@ -62,6 +47,6 @@
 
 /* Footer 스타일링 */
 .footer-container {
-  width: 100%;
+  width: 400px;
   border-top: 1px solid #ddd;
 }

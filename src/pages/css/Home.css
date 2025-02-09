@@ -1,14 +1,29 @@
 /* 기본 레이아웃 설정 */
+.app::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨김 */
+}
+
 .app {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: #f0f2f5;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
 }
 
 .home::-webkit-scrollbar {
   display: none; /* 스크롤바 숨김 */
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  width: 100%;
 }
 
 .home {
@@ -134,4 +149,142 @@
 .store-category-box {
   font-size: 12px;
   color: gray;
+}
+
+/* 📌 모바일 화면 대응 */
+@media (max-width: 1080px) {
+  .header-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .footer-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .buttons-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .tab-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .list-page-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .interest-stores-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .store-details-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .myinfo-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .info-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .password-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+  }
+
+  .home {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .store-details {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .login-form-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(var(--vh, 1vh) * 100) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .register-form {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(var(--vh, 1vh) * 100) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .content-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 190px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .reservation-details-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .interest-stores {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .review-write {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .myinfo {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+    padding: 15px; /* 모바일에서 padding을 줄여 공간 확보 */
+  }
+
+  .info {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .password {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .waiting-details-container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .notification {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
+
+  .container {
+    width: 100% !important; /* 모바일에서는 가로 크기를 화면에 맞춤 */
+    height: calc(
+      var(--vh, 1vh) * 100 - 130px
+    ) !important; /* 전체 화면 높이로 설정 */
+  }
 }

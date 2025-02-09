@@ -32,7 +32,7 @@ const FilterScreen = () => {
   useEffect(() => {
     // API 호출하여 필터 데이터 받아오기
     axios
-      .get("https://api.earlytable.kr:8080/users/search/init", {
+      .get("https://api.earlytable.kr/users/search/init", {
         headers: {
           Authorization: `Bearer ${token}`, // 토큰을 Authorization 헤더에 추가
         },
@@ -47,8 +47,9 @@ const FilterScreen = () => {
       })
       .catch((error) => {
         console.error("필터 데이터 로드 실패:", error);
+        navigate("/login");
       });
-  }, [token]);
+  }, [navigate, token]);
 
   const handleFilterChange = (type, value) => {
     setSelectedFilters((prevFilters) => ({
@@ -296,7 +297,7 @@ const FilterScreen = () => {
   };
   return (
     <div className="app">
-      <div>
+      <div className="home-container">
         <div className="header-container">
           <HeaderV2 />
         </div>
